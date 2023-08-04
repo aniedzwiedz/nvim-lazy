@@ -1,0 +1,15 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+
+-- local map = require("lazy.util")
+--
+-- -- turn off, using <localleader>w to save instead instead
+-- map({ "i", "v", "n", "s" }, "<C-s>", "")
+--
+-- --  access system clipboard
+-- map({ "v", "n" }, "|", '"+', { desc = "System Clipboard" })
+--
+-- -- better indent
+-- map("n", ">", ">>", { desc = "Single Press Indent" })
+-- map("n", "<", "<<", { desc = "Single Press Unkndent" })
