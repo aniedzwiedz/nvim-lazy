@@ -38,6 +38,8 @@ keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", opts)
 keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts)
 keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 
+-- ["<F2>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
+
 -- Gitsigns
 -- Add toggle gitsigns blame line
 if Util.has("gitsigns.nvim") then

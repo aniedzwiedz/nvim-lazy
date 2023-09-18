@@ -3,67 +3,6 @@ return {
   -- require("notify").setup({
   --   background_colour = "#000000",
   -- }),
-  --
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      transparent_background = true,
-      integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = false,
-        mini = false,
-      },
-    },
-  },
-
-  {
-    "ellisonleao/gruvbox.nvim",
-    opts = {
-      undercurl = true,
-      underline = true,
-      bold = true,
-      italic = {
-        strings = true,
-        comments = true,
-        operators = false,
-        folds = true,
-      },
-      strikethrough = true,
-      invert_selection = false,
-      invert_signs = false,
-      invert_tabline = false,
-      invert_intend_guides = false,
-      inverse = true, -- invert background for search, diffs, statuslines and errors
-      contrast = "soft", -- can be "hard", "soft" or empty string
-      palette_overrides = {},
-      overrides = {
-        -- SignColumn = { bg = "#ff9900" },
-      },
-      dim_inactive = false,
-      transparent_mode = true,
-    },
-  },
-  {
-    "folke/tokyonight.nvim",
-    opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
-    },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "gruvbox",
-    },
-  },
 
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -153,5 +92,38 @@ return {
     keys = function()
       return {}
     end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = { "ToggleTerm", "TermExec" },
+    opts = {
+      highlights = {
+        Normal = { link = "Normal" },
+        NormalNC = { link = "NormalNC" },
+        NormalFloat = { link = "NormalFloat" },
+        FloatBorder = { link = "FloatBorder" },
+        StatusLine = { link = "StatusLine" },
+        StatusLineNC = { link = "StatusLineNC" },
+        WinBar = { link = "WinBar" },
+        WinBarNC = { link = "WinBarNC" },
+      },
+      size = 10,
+      on_create = function()
+        vim.opt.foldcolumn = "0"
+        vim.opt.signcolumn = "no"
+      end,
+      open_mapping = [[<F7>]],
+      shading_factor = 2,
+      direction = "float",
+      float_opts = { border = "rounded" },
+    },
   },
 }
