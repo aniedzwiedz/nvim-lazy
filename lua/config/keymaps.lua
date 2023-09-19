@@ -43,5 +43,6 @@ keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 if Util.has("gitsigns.nvim") then
   keymap.set("n", "<leader>ub", "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>", {
     desc = "Toggle current line blame",
+    keymap.set("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " }),
   })
 end

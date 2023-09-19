@@ -31,6 +31,7 @@ return {
         diagnostics.terraform_validate,
         diagnostics.hadolint, -- docker
         diagnostics.zsh,
+        diagnostics.puppet_lint,
         formatting.shfmt.with({
           condition = function(utils)
             return utils.root_has_file({
