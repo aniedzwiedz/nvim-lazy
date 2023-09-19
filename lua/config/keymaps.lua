@@ -40,6 +40,21 @@ keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 
 -- ["<F2>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
 
+-- save file
+-- keymap.set("n", "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
+-- vim.api.nvim_set_keymap("n", "<leader>w", ":w<cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("n", "<leader>L", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>l", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>E", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>`", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>,", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>-", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>|", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ww", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wd", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>w-", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>w|", "", { noremap = true, silent = true })
+
 -- Gitsigns
 -- Add toggle gitsigns blame line
 if Util.has("gitsigns.nvim") then
