@@ -1,4 +1,5 @@
 local Util = require("lazyvim.util")
+
 return {
 
   -- require("notify").setup({

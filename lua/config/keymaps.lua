@@ -54,6 +54,7 @@ vim.api.nvim_set_keymap("n", "<leader>ww", "", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>wd", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w-", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w|", "", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>w", ":w <cr><esc>", { desc = "Save file" })
 
 -- Gitsigns
 -- Add toggle gitsigns blame line
