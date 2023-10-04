@@ -1,5 +1,5 @@
 return {
-  "jose-elias-alvarez/null-ls.nvim", -- configure formatters & linters
+  "nvimtools/none-ls.nvim", -- "jose-elias-alvarez/null-ls.nvim", -- configure formatters & linters
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     -- import null-ls plugin
@@ -31,7 +31,18 @@ return {
         diagnostics.terraform_validate,
         diagnostics.hadolint, -- docker
         diagnostics.zsh,
-        diagnostics.puppet_lint,
+        diagnostics.commitlint,
+        diagnostics.npm_groovy_lint.with({
+          filetypes = { "Jenkinsfile" },
+          extra_args = { "-r", "/home/aniedzwiedz/.config/LazyVim/codenarc/jenkinsfile.groovy" },
+        }),
+
+        diagnostics.npm_groovy_lint.with({
+          filetypes = { "groovy" },
+          extra_args = { "-r", "/home/aniedzwiedz/.config/LazyVim/codenarc/default.groovy", "--no-parse" },
+        }),
+        diagnostics.ansiblelint,
+
         formatting.shfmt.with({
           condition = function(utils)
             return utils.root_has_file({
