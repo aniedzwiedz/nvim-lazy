@@ -78,6 +78,7 @@ return {
         eslint = {},
         terraformls = {},
         dockerls = {},
+        jdtls = {},
         docker_compose_language_service = {},
         lua_ls = {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
@@ -202,7 +203,10 @@ return {
         --   return true
         -- end,
         -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
+        jdtls = function()
+          return true -- avoid duplicate servers
+        end, -- ["*"] = function(server, opts) end,
+
         eslint = function() -- https://www.lazyvim.org/configuration/recipes
           require("lazyvim.util").on_attach(function(client)
             if client.name == "eslint" then
