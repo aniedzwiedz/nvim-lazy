@@ -4,11 +4,10 @@
 local addtype = vim.filetype.add
 -- Disable autoformat for lua files
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  -- pattern = { "bash", "zsh" },
-  pattern = { "lua" },
+  pattern = { "bash", "zsh", "yml" },
   callback = function()
     ---@diagnostic disable-next-line: inject-field
-    vim.b.autoformat = true
+    vim.b.autoformat = false
   end,
 })
 
