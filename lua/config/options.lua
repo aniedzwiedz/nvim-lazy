@@ -35,3 +35,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+-- Set completeopt to have a better completion experience
+opt.completeopt = 'menuone,noselect'
+

@@ -4,6 +4,16 @@ require("notify").setup({
   background_colour = "#000000",
 })
 
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   config = function()
+  --     require("notify").setup({
+  --       background_colour = "#000000",
+  --     })
+  --   end
+  -- },
+  --
+
 -- Enable true color support
 vim.o.termguicolors = true
 

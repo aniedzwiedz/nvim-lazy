@@ -2,12 +2,23 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 local addtype = vim.filetype.add
+
 -- Disable autoformat for lua files
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "bash", "zsh", "yml" },
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = { "bash", "zsh", "yml" },
+--   callback = function()
+--     ---@diagnostic disable-next-line: inject-field
+--     vim.b.autoformat = false
+--   end,
+-- })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'sh',
   callback = function()
-    ---@diagnostic disable-next-line: inject-field
-    vim.b.autoformat = false
+    vim.lsp.start({
+      name = 'bash-language-server',
+      cmd = { 'bash-language-server', 'start' },
+    })
   end,
 })
 

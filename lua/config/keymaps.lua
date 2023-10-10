@@ -54,7 +54,15 @@ vim.api.nvim_set_keymap("n", "<leader>ww", "", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>wd", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w-", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w|", "", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("n", "<leader>w", ":w <cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("n", "<leader>sH", "", { noremap = true, silent = true })
+
+-- vim.keymap.set('n', '<leader>?', function()
+--   -- You can pass additional configuration to telescope to change theme, layout, etc.
+--   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--     winblend = 10,
+--     previewer = false,
+--   })
+-- end, { desc = '[?] Fuzzily search in current buffer]' })
 
 -- Gitsigns
 -- Add toggle gitsigns blame line

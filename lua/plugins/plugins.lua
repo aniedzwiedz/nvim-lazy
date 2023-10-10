@@ -30,11 +30,6 @@ return {
   -- },
 
   {
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-  },
-
-  {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
@@ -65,6 +60,36 @@ return {
           "ruby",
         })
       end
+    end,
+  },
+
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    -- event = "LazyFile",
+    opts = {
+      -- symbol = "▏",
+      symbol = "⁝ ",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
     end,
   },
 
@@ -200,16 +225,16 @@ return {
       { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+      -- { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
       { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+      -- { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Vim Options" },
       { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
       { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+      -- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
       { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+      -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
       { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
       {
         "<leader>ss",
@@ -295,6 +320,31 @@ return {
     },
   },
 
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = { "ToggleTerm", "TermExec" },
+    opts = {
+      highlights = {
+        Normal = { link = "Normal" },
+        NormalNC = { link = "NormalNC" },
+        NormalFloat = { link = "NormalFloat" },
+        FloatBorder = { link = "FloatBorder" },
+        StatusLine = { link = "StatusLine" },
+        StatusLineNC = { link = "StatusLineNC" },
+        WinBar = { link = "WinBar" },
+        WinBarNC = { link = "WinBarNC" },
+      },
+      size = 10,
+      on_create = function()
+        vim.opt.foldcolumn = "0"
+        vim.opt.signcolumn = "no"
+      end,
+      open_mapping = [[<F7>]],
+      shading_factor = 2,
+      direction = "float",
+      float_opts = { border = "rounded" },
+    },
+  },
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -302,4 +352,27 @@ return {
       { "<leader>E", false },
     },
   },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    -- event = "LazyFile",
+    opts = {
+      signs = {
+        -- add = { text = "➕" },
+        add = { hl = "GitSignsAdd", text = "➕", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+        change = { text = "❗" },
+        delete = { text = "❌" },
+        topdelete = { text = "‾" },
+        -- changedelete = { text = "~" },
+        changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+        untracked = { text = "❓" },
+      },
+    },
+  },
+
+  {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+  },
+
 }

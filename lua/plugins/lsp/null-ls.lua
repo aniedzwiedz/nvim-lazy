@@ -28,6 +28,8 @@ return {
         formatting.stylua, -- lua formatter
         formatting.terraform_fmt, -- https://www.lazyvim.org/extras/lang/terraform
         formatting.beautysh,
+        formatting.puppet_lint,
+        diagnostics.puppet_lint,
         diagnostics.terraform_validate,
         diagnostics.hadolint, -- docker
         diagnostics.zsh,
