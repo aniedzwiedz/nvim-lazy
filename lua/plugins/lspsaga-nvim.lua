@@ -19,6 +19,7 @@ return {
     { "<leader>cN", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Lspsaga diagnostic_jump_next" },
     { "<leader>cP", "<cmd>Lspsaga peek_definition<cr>", desc = "Lspsaga peek_definition" },
     { "<leader>cK", "<cmd>Lspsaga hover_doc<cr>", desc = "Lspsaga hover_doc" },
+    { "<leader>cA", "<cmd>Lspsaga code_action<cr>", desc = "Lspsaga code_action" },
   },
   dependencies = {
     "nvim-treesitter/nvim-treesitter",

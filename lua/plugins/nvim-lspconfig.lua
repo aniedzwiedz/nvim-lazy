@@ -15,6 +15,15 @@ return {
         },
       },
     },
+    json = {
+      schemas = require("schemastore").json.schemas({
+        select = {
+          ".eslintrc",
+          "package.json",
+        },
+      }),
+      validate = { enable = true },
+    },
     yamlls = {
       -- Have to add this for yamlls to understand that we support line folding
       capabilities = {
@@ -26,6 +35,9 @@ return {
         },
       },
       -- lazy-load schemastore when needed
+      dependencies = {
+        "b0o/SchemaStore.nvim",
+      },
       on_new_config = function(new_config)
         new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
         vim.list_extend(new_config.settings.yaml.schemas, require("schemastore").yaml.schemas())
