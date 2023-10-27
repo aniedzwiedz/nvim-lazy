@@ -12,6 +12,13 @@ local addtype = vim.filetype.add
 --   end,
 -- })
 
+-- Autocommands (https://neovim.io/doc/user/autocmd.html)
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.json", "*.jsonc" },
+  -- enable wrap mode for json files only
+  command = "setlocal wrap",
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "sh",
   callback = function()
@@ -44,6 +51,15 @@ addtype({
 })
 
 -- Ansible support
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.yml" },
+--   -- command = "setfiletype yaml.ansible",
+--   callback = function()
+--     -- let treesitter use bash highlight for zsh files as well
+--     require("lvim.lsp.manager").setup("ansiblels", opts)
+--   end,
+-- })
+--
 local function set_ansible(bufnr)
   local content = vim.filetype.getlines(bufnr, 1, 10)
   local matcher = { "^- hosts:", "^- name:" }
