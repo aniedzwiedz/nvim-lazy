@@ -37,7 +37,8 @@ return {
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.shfmt,
         nls.builtins.completion.spell,
-        nls.builtins.diagnostics.hadolint,  -- docker none-ls
+        nls.builtins.diagnostics.hadolint, -- docker none-ls
+        nls.builtins.diagnostics.markdownlint,
       })
     end,
   },

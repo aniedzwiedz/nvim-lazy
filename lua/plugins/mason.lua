@@ -23,6 +23,9 @@ return {
         "markdownlint",
         "marksman",
         "hadolint", -- docker mason
+        "java-test",
+        "java-debug-adapter",
+        "solargraph",
         "shellcheck",
       },
     },
