@@ -22,6 +22,7 @@ return {
         "flake8",
         "markdownlint",
         "marksman",
+        "hadolint", -- docker mason
         "shellcheck",
       },
     },
