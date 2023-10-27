@@ -66,8 +66,17 @@ vim.api.nvim_set_keymap("n", "<leader>sH", "", { noremap = true, silent = true }
 -- Gitsigns
 -- Add toggle gitsigns blame line
 if Util.has("gitsigns.nvim") then
-  keymap.set("n", "<leader>ub", "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>", {
-    desc = "Toggle current line blame",
-    keymap.set("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " }),
-  })
+  keymap.set(
+    "n",
+    "<leader>ub",
+    "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
+    { desc = "Toggle current line blame" }
+  )
+  keymap.set("n", "<leader>gl", function()
+    require("gitsigns").blame_line({ full = false })
+  end, { desc = "View full Blame" })
+  keymap.set("n", "<leader>gL", function()
+    require("gitsigns").blame_line({ full = true })
+  end, { desc = "View full Git Blame" })
+  -- keymap.set("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
