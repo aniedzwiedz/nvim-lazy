@@ -97,7 +97,7 @@ return {
             ["schemas/conf/jenkins/boa/components.json"] = "conf/jenkins/boa/components.yaml",
             ["schemas/conf/jenkins/boa/config.json"] = "conf/jenkins/boa/config.yaml",
             ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
-            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/config.yaml",
+            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
             ["schemas/conf/jenkins/tpm/components.json"] = "conf/jenkins/tpm/components.yaml",
             ["schemas/conf/jenkins/tpm/config.json"] = "conf/jenkins/tpm/config.yaml",
             ["schemas/conf/jenkins/config.json"] = "conf/jenkins/apw/config.yaml",
