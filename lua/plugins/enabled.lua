@@ -122,7 +122,7 @@ return {
       },
     },
   },
-  { "b0o/schemastore.nvim" },
+  { "b0o/SchemaStore.nvim" },
   {
     "ruifm/gitlinker.nvim",
     event = "BufRead",
