@@ -100,20 +100,21 @@ return {
       float_opts = { border = "rounded" },
     },
   }, -- file explorer
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    keys = {
-      { "<leader>E", false },
-    },
-  },
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   keys = {
+  --     { "<leader>E", false },
+  --   },
+  -- },
   {
     "lewis6991/gitsigns.nvim",
     -- event = "LazyFile",
     opts = {
       signs = {
         -- add = { text = "➕" },
-        add = { hl = "GitSignsAdd", text = "➕", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-        change = { text = "❗" },
+        add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+        -- add = { text  = "🟢" },
+        -- change = { text ="⁉" },
         delete = { text = "❌" },
         topdelete = { text = "‾" },
         -- changedelete = { text = "~" },
