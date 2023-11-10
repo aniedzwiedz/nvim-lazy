@@ -172,6 +172,10 @@ return {
       },
     },
     setup = {
+      clangd = function(_, opts)
+        opts.capabilities.offsetEncoding = { "utf-16" }
+      end,
+
       ruff_lsp = function()
         require("lazyvim.util").lsp.on_attach(function(client, _)
           if client.name == "ruff_lsp" then

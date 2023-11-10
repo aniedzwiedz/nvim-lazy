@@ -28,8 +28,8 @@ return {
       sources = cmp.config.sources({
         { name = "nvim_lsp" }, -- lsp
         { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
         { name = "path" }, -- file system paths
+        { name = "buffer" }, -- text within current buffer
       }),
       -- configure lspkind for vs-code like icons
       formatting = {
@@ -42,8 +42,8 @@ return {
   end,
   dependencies = {
     "onsails/lspkind.nvim",
+    "hrsh7th/cmp-emoji",
     {
-
       "L3MON4D3/LuaSnip",
       -- follow latest release.
       version = "2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
@@ -51,4 +51,8 @@ return {
       build = "make install_jsregexp",
     },
   },
+  opts = function(_, opts)
+    local cmp = require("cmp")
+    opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+  end,
 }

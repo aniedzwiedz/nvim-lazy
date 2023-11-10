@@ -152,6 +152,7 @@ return {
       -- vim.cmd("colorscheme hardhacker")
     end,
   },
+  { "chriskempson/base16-vim" },
 
   { "LunarVim/primer.nvim" },
   {

@@ -27,6 +27,7 @@ return {
         "java-debug-adapter",
         "solargraph",
         "shellcheck",
+        "clangd",
       },
     },
   },
