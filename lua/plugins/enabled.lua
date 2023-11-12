@@ -16,7 +16,7 @@ return {
       defaults = {
         -- layout_strategy = "horizontal",
         layout_strategy = "vertical",
-        layout_config = { prompt_position = "top", vertical = { width = 0.7 } },
+        layout_config = { prompt_position = "top", vertical = { width = 0.8 } },
         sorting_strategy = "ascending",
         winblend = 0,
       },
@@ -69,6 +69,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     keys = {
       { "<leader>gD", "<cmd>DiffviewOpen <cr>", desc = "Open DiffviewOpen" },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
@@ -95,8 +96,10 @@ return {
         vim.opt.signcolumn = "no"
       end,
       open_mapping = [[<F7>]],
-      shading_factor = 2,
+      shading_factor = 2, -- the percentage by which to lighten terminal background, default: -30 (gets multiplied by -3 if background is light)
       direction = "float",
+      auto_scroll = true, -- automatically scroll to the bottom on terminal output
+      close_on_exit = true, -- close the terminal window when the process exits
       float_opts = { border = "rounded" },
     },
   }, -- file explorer
@@ -109,19 +112,74 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     -- event = "LazyFile",
-    opts = {
-      signs = {
-        -- add = { text = "➕" },
-        add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-        -- add = { text  = "🟢" },
-        -- change = { text ="⁉" },
-        delete = { text = "❌" },
-        topdelete = { text = "‾" },
-        -- changedelete = { text = "~" },
-        changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-        untracked = { text = "❓" },
-      },
-    },
+    event = "BufEnter",
+    cmd = "Gitsigns",
+    config = function()
+      local icons = require("config.icons")
+
+      require("gitsigns").setup({
+        signs = {
+          add = {
+            hl = "GitSignsAdd",
+            text = icons.ui.BoldLineLeft,
+            numhl = "GitSignsAddNr",
+            linehl = "GitSignsAddLn",
+          },
+          change = {
+            hl = "GitSignsChange",
+            text = icons.ui.BoldLineLeft,
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
+          },
+          delete = {
+            hl = "GitSignsDelete",
+            -- text = icons.ui.TriangleShortArrowRight,
+            numhl = "GitSignsDeleteNr",
+            linehl = "GitSignsDeleteLn",
+          },
+          topdelete = {
+            hl = "GitSignsDelete",
+            -- text = icons.ui.TriangleShortArrowRight,
+            numhl = "GitSignsDeleteNr",
+            linehl = "GitSignsDeleteLn",
+          },
+          changedelete = {
+            hl = "GitSignsChange",
+            -- text = icons.ui.BoldLineLeft,
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
+          },
+        },
+        watch_gitdir = {
+          interval = 1000,
+          follow_files = true,
+        },
+        attach_to_untracked = true,
+        current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
+        update_debounce = 200,
+        max_file_length = 40000,
+        preview_config = {
+          border = "rounded",
+          style = "minimal",
+          relative = "cursor",
+          row = 0,
+          col = 1,
+        },
+      })
+    end,
+    -- opts = {
+    --   signs = {
+    --     -- add = { text = "➕" },
+    --     add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+    --     -- add = { text  = "🟢" },
+    --     -- change = { text ="⁉" },
+    --     delete = { text = "❌" },
+    --     topdelete = { text = "‾" },
+    --     -- changedelete = { text = "~" },
+    --     changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+    --     untracked = { text = "❓" },
+    --   },
+    -- },
   },
   { "b0o/SchemaStore.nvim" },
   {
@@ -147,5 +205,20 @@ return {
       })
     end,
     requires = "nvim-lua/plenary.nvim",
+  },
+  -- add telescope-fzf-native
+  {
+    "telescope.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
+  },
+  {
+    "nvim-tree/nvim-web-devicons",
+    event = "VeryLazy",
   },
 }

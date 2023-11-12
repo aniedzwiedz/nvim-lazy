@@ -11,9 +11,48 @@ return {
   end,
 
   opts = {
+    diagnostics = {
+      underline = true,
+      update_in_insert = false,
+      virtual_text = {
+        spacing = 4,
+        source = "if_many",
+        prefix = "●",
+        -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+        -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+        -- prefix = "icons",
+      },
+      severity_sort = true,
+    },
+    -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+    -- Be aware that you also will need to properly configure your LSP server to
+    -- provide the inlay hints.
+    inlay_hints = {
+      enabled = false,
+    },
+    -- add any global capabilities here
+    capabilities = {},
+    -- options for vim.lsp.buf.format
+    -- `bufnr` and `filter` is handled by the LazyVim formatter,
+    -- but can be also overridden when specified
+    format = {
+      formatting_options = nil,
+      timeout_ms = nil,
+    },
+
     servers = {
+      lua_ls = {
+        workspace = {
+          checkThirdParty = false,
+        },
+        completion = {
+          callSnippet = "Replace",
+        },
+      },
+
       marksman = {},
       dockerls = {},
+      eslint = {},
       docker_compose_language_service = {},
       solargraph = {},
       jdtls = {},
@@ -45,6 +84,7 @@ return {
             format = {
               enable = true,
             },
+            schemas = require("schemastore").json.schemas(),
             validate = { enable = true },
           },
         },
@@ -95,6 +135,7 @@ return {
         -- lazy-load schemastore when needed
         dependencies = {
           "b0o/SchemaStore.nvim",
+          "folke/neodev.nvim",
         },
         on_new_config = function(new_config)
           -- new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
@@ -198,6 +239,16 @@ return {
             end
           end)
         end
+      end,
+
+      eslint = function()
+        require("lazyvim.util").lsp.on_attach(function(client)
+          if client.name == "eslint" then
+            client.server_capabilities.documentFormattingProvider = true
+          elseif client.name == "tsserver" then
+            client.server_capabilities.documentFormattingProvider = false
+          end
+        end)
       end,
     },
   },

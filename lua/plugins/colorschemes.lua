@@ -152,9 +152,12 @@ return {
       -- vim.cmd("colorscheme hardhacker")
     end,
   },
-  { "chriskempson/base16-vim" },
+  {
+    "LunarVim/primer.nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+  },
 
-  { "LunarVim/primer.nvim" },
   {
     "LazyVim/LazyVim",
     opts = {
