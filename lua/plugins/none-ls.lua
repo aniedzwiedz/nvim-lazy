@@ -39,6 +39,8 @@ return {
         -- nls.builtins.completion.spell,
         nls.builtins.diagnostics.hadolint, -- docker none-ls
         nls.builtins.diagnostics.markdownlint,
+        nls.builtins.formatting.terraform_fmt,
+        nls.builtins.diagnostics.terraform_validate,
       })
     end,
   },

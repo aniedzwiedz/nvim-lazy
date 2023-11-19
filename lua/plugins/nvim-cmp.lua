@@ -85,6 +85,7 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
+        { name = "codeium" },
         { name = "nvim_lsp" }, -- lsp
         { name = "luasnip" }, -- snippets
         { name = "path" }, -- file system paths
@@ -99,45 +100,53 @@ return {
       -- },
 
       formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-          vim_item.kind = icons.kind[vim_item.kind]
-          vim_item.menu = ({
-            nvim_lsp = "",
-            nvim_lua = "",
-            luasnip = "",
-            buffer = "",
-            path = "",
-            emoji = "",
-          })[entry.source.name]
-          if entry.source.name == "copilot" then
-            vim_item.kind = icons.git.Octoface
-            vim_item.kind_hl_group = "CmpItemKindCopilot"
-          end
-
-          if entry.source.name == "cmp_tabnine" then
-            vim_item.kind = icons.misc.Robot
-            vim_item.kind_hl_group = "CmpItemKindTabnine"
-          end
-
-          if entry.source.name == "crates" then
-            vim_item.kind = icons.misc.Package
-            vim_item.kind_hl_group = "CmpItemKindCrate"
-          end
-
-          if entry.source.name == "lab.quick_data" then
-            vim_item.kind = icons.misc.CircuitBoard
-            vim_item.kind_hl_group = "CmpItemKindConstant"
-          end
-
-          if entry.source.name == "emoji" then
-            vim_item.kind = icons.misc.Smiley
-            vim_item.kind_hl_group = "CmpItemKindEmoji"
-          end
-
-          return vim_item
-        end,
+        format = require("lspkind").cmp_format({
+          mode = "symbol",
+          maxwidth = 50,
+          ellipsis_char = "...",
+          symbol_map = { Codeium = "" },
+        }),
       },
+      -- formatting = {
+      --   fields = { "kind", "abbr", "menu" },
+      --   format = function(entry, vim_item)
+      --     vim_item.kind = icons.kind[vim_item.kind]
+      --     vim_item.menu = ({
+      --       nvim_lsp = "",
+      --       nvim_lua = "",
+      --       luasnip = "",
+      --       buffer = "",
+      --       path = "",
+      --       emoji = "",
+      --     })[entry.source.name]
+      --     if entry.source.name == "copilot" then
+      --       vim_item.kind = icons.git.Octoface
+      --       vim_item.kind_hl_group = "CmpItemKindCopilot"
+      --     end
+      --
+      --     if entry.source.name == "cmp_tabnine" then
+      --       vim_item.kind = icons.misc.Robot
+      --       vim_item.kind_hl_group = "CmpItemKindTabnine"
+      --     end
+      --
+      --     if entry.source.name == "crates" then
+      --       vim_item.kind = icons.misc.Package
+      --       vim_item.kind_hl_group = "CmpItemKindCrate"
+      --     end
+      --
+      --     if entry.source.name == "lab.quick_data" then
+      --       vim_item.kind = icons.misc.CircuitBoard
+      --       vim_item.kind_hl_group = "CmpItemKindConstant"
+      --     end
+      --
+      --     if entry.source.name == "emoji" then
+      --       vim_item.kind = icons.misc.Smiley
+      --       vim_item.kind_hl_group = "CmpItemKindEmoji"
+      --     end
+      --
+      --     return vim_item
+      --   end,
+      -- },
       confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
@@ -198,6 +207,20 @@ return {
       event = "InsertEnter",
     },
     { "onsails/lspkind.nvim", event = "InsertEnter" },
+    {
+      "Exafunction/codeium.nvim",
+      cmd = "Codeium",
+      build = ":Codeium Auth",
+      opts = {},
+    },
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      table.insert(opts.sources, 1, {
+        name = "codeium",
+        group_index = 1,
+        priority = 100,
+      })
+    end,
   },
 
   -- dependencies = {

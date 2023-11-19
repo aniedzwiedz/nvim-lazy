@@ -56,6 +56,7 @@ return {
       docker_compose_language_service = {},
       solargraph = {},
       jdtls = {},
+      terraformls = {},
       puppet = {
 
         cmd = {
@@ -227,7 +228,7 @@ return {
       end,
 
       jdtls = function()
-        return true -- avoid duplicate servers
+        return true -- avoid duplicate servers https://www.lazyvim.org/extras/lang/java
       end,
 
       yamlls = function()

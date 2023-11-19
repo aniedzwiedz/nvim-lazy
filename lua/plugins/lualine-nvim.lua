@@ -26,9 +26,15 @@
 
 return {
   "nvim-lualine/lualine.nvim",
-  options = { theme = "ayu_dark" },
+  -- options = {
+  --   theme = "ayu_dark",
+  -- },
   -- options = { theme = "nord" },
-  lazy = false,
+  -- lazy = false,
+  opts = function(_, opts)
+    table.insert(opts.sections.lualine_x, 2, require("lazyvim.util").lualine.cmp_source("codeium"))
+  end,
+  event = "VeryLazy",
   sections = {
     -- lualine_a = { {"branch", icon =""} },
     -- lualine_b = { diff },

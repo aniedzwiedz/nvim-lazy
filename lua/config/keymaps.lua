@@ -56,6 +56,8 @@ vim.api.nvim_set_keymap("n", "<leader>wd", "", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>w-", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w|", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>sH", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>|", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>,", "", { noremap = true, silent = true })
 
 -- vim.keymap.set('n', '<leader>?', function()
 --   -- You can pass additional configuration to telescope to change theme, layout, etc.
