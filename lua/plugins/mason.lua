@@ -28,6 +28,7 @@ return {
         "solargraph",
         "shellcheck",
         "clangd",
+        "prettier",
       },
     },
   },

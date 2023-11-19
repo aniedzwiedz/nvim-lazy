@@ -40,6 +40,7 @@ return {
         nls.builtins.diagnostics.hadolint, -- docker none-ls
         nls.builtins.diagnostics.markdownlint,
         nls.builtins.formatting.terraform_fmt,
+        nls.builtins.formatting.prettier,
         nls.builtins.diagnostics.terraform_validate,
       })
     end,
