@@ -29,6 +29,7 @@ return {
         "shellcheck",
         "clangd",
         "prettier",
+        'stylua',
       },
     },
   },
