@@ -12,6 +12,14 @@ local addtype = vim.filetype.add
 --   end,
 -- })
 
+-- Format buffer with conform -- https://github.com/stevearc/conform.nvim
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*",
+--   callback = function(args)
+--     require("conform").format({ bufnr = args.buf })
+--   end,
+-- })
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = { "*.json", "*.jsonc" },
@@ -25,6 +33,18 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.lsp.start({
       name = "bash-language-server",
       cmd = { "bash-language-server", "start" },
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "gitcommit" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+    vim.lsp.start({
+      name = "gitlint",
+      cmd = { "gitlint" },
     })
   end,
 })
