@@ -20,7 +20,7 @@ return {
     require("luasnip/loaders/from_vscode").lazy_load()
 
     vim.opt.completeopt = "menu,menuone,noselect"
-    local icons = require("config.icons")
+    -- local icons = require("config.icons")
 
     cmp.setup({
       snippet = {
@@ -85,11 +85,12 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "codeium" },
-        { name = "nvim_lsp" }, -- lsp
-        { name = "luasnip" }, -- snippets
-        { name = "path" }, -- file system paths
-        { name = "buffer" }, -- text within current buffer
+        { name = "codeium", keyword_length = 3, max_item_count = 10 },
+        { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
+        { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
+        { name = "crates" },
+        { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
+        { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
       }),
       -- configure lspkind for vs-code like icons
       -- formatting = {
@@ -98,12 +99,21 @@ return {
       --     ellipsis_char = "...",
       --   }),
       -- },
-
+      -- formatting = {
+      --   format = function(entry, item)
+      --     item.menu = ({
+      --       nvim_lsp = "[L]",
+      --       vim_lsp = "[V]",
+      --       buffer = "[B]",
+      --     })[entry.source.name]
+      --     return item
+      --   end,
+      --  },
       formatting = {
         format = require("lspkind").cmp_format({
-          mode = "symbol",
-          maxwidth = 50,
-          ellipsis_char = "...",
+          -- mode = "symbol",
+          maxwidth = 100,
+          ellipsis_char = ".....",
           symbol_map = { Codeium = "" },
         }),
       },
@@ -171,6 +181,15 @@ return {
     })
   end,
   dependencies = {
+    {
+      "Saecki/crates.nvim",
+      event = { "BufRead Cargo.toml" },
+      opts = {
+        src = {
+          cmp = { enabled = true },
+        },
+      },
+    },
     {
       "hrsh7th/cmp-nvim-lsp",
       event = "InsertEnter",

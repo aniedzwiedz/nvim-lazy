@@ -121,19 +121,19 @@ return {
         signs = {
           add = {
             hl = "GitSignsAdd",
-            text = icons.ui.BoldLineLeft,
+            text = icons.git.LineAdded,
             numhl = "GitSignsAddNr",
             linehl = "GitSignsAddLn",
           },
           change = {
             hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
+            text = icons.git.LineModified,
             numhl = "GitSignsChangeNr",
             linehl = "GitSignsChangeLn",
           },
           delete = {
             hl = "GitSignsDelete",
-            -- text = icons.ui.TriangleShortArrowRight,
+            text = icons.git.LineRemoved,
             numhl = "GitSignsDeleteNr",
             linehl = "GitSignsDeleteLn",
           },

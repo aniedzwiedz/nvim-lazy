@@ -2,8 +2,12 @@ return {
   { "nvim-neotest/neotest-plenary" },
   {
     "nvim-neotest/neotest",
+    "rouge8/neotest-rust",
     opts = {
-      adapters = { "neotest-plenary" },
+      adapters = {
+        "neotest-plenary",
+        ["neotest-rust"] = {},
+      },
       status = { virtual_text = true },
       output = { open_on_run = true },
       quickfix = {

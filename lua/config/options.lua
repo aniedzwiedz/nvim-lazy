@@ -32,6 +32,14 @@ opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true -- Ignore case
 opt.inccommand = "nosplit" -- preview incremental substitute
 opt.laststatus = 3 -- global statusline
+-- opt.listchars = { eol = "↵" }   -- End of line characters
+opt.listchars = {
+  eol = "⤶",
+  -- space = "❤",
+  -- trail = "✚",
+  extends = "◀",
+  precedes = "▶",
+}
 opt.list = true -- Show some invisible characters (tabs...
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
