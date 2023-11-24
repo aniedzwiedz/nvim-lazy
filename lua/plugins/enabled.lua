@@ -41,7 +41,11 @@ return {
     opts = {
       -- symbol = "▏",
       symbol = "⁝ ",
-      options = { try_as_border = true },
+      options = {
+        border = "both",
+        indent_at_cursor = true,
+        try_as_border = true,
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
@@ -62,6 +66,43 @@ return {
         end,
       })
     end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim", -- NOTE: disabled.lua
+    event = "LazyFile",
+    config = function()
+      local highlight = {
+        "CursorColumn",
+        "Whitespace",
+      }
+      require("ibl").setup({
+        indent = { highlight = highlight, char = "" },
+        whitespace = {
+          highlight = highlight,
+          remove_blankline_trail = true,
+        },
+        scope = { enabled = true },
+      })
+    end,
+    opts = {
+      -- scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+      },
+    },
+    main = "ibl",
   },
   {
     "sindrets/diffview.nvim",
@@ -118,38 +159,40 @@ return {
       local icons = require("config.icons")
 
       require("gitsigns").setup({
+
         signs = {
           add = {
             hl = "GitSignsAdd",
-            text = icons.git.LineAdded,
+            text = icons.ui.BoldLineLeft,
             numhl = "GitSignsAddNr",
             linehl = "GitSignsAddLn",
           },
           change = {
             hl = "GitSignsChange",
-            text = icons.git.LineModified,
+            text = icons.ui.BoldLineLeft,
             numhl = "GitSignsChangeNr",
             linehl = "GitSignsChangeLn",
           },
           delete = {
             hl = "GitSignsDelete",
-            text = icons.git.LineRemoved,
+            text = icons.ui.TriangleShortArrowRight,
             numhl = "GitSignsDeleteNr",
             linehl = "GitSignsDeleteLn",
           },
           topdelete = {
             hl = "GitSignsDelete",
-            -- text = icons.ui.TriangleShortArrowRight,
+            text = icons.ui.TriangleShortArrowRight,
             numhl = "GitSignsDeleteNr",
             linehl = "GitSignsDeleteLn",
           },
           changedelete = {
             hl = "GitSignsChange",
-            -- text = icons.ui.BoldLineLeft,
+            text = icons.ui.BoldLineLeft,
             numhl = "GitSignsChangeNr",
             linehl = "GitSignsChangeLn",
           },
         },
+
         watch_gitdir = {
           interval = 1000,
           follow_files = true,
