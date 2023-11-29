@@ -161,7 +161,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "primer_dark",
+      colorscheme = "gruvbox",
       -- colorscheme = "nord",
     },
   },

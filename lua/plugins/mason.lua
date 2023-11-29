@@ -32,6 +32,7 @@ return {
         "stylua",
         "codelldb",
         "commitlint",
+        "css-lsp",
       },
     },
   },

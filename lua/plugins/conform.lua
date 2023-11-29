@@ -34,5 +34,20 @@ return {
       tf = { "terraform_fmt" },
       ["terraform-vars"] = { "terraform_fmt" },
     },
+    -- format_on_save = {
+    --   -- These options will be passed to conform.format()
+    --   timeout_ms = 500,
+    --   async = false,
+    --   -- lsp_fallback = true,
+    --   lsp_fallback = false,
+    -- },
   },
+  -- vim.keymap.set({ "n", "v" }, "<space>bf", function()  -- TODO: check this one
+  --   conform.format({
+  --     timeout_ms = 500,
+  --     async = false,
+  --     -- lsp_fallback = true,
+  --     lsp_fallback = false,
+  --   })
+  -- end, { desc = "Buffer format" }),
 }
