@@ -39,9 +39,14 @@ return {
         -- nls.builtins.completion.spell,
         nls.builtins.diagnostics.hadolint, -- docker none-ls
         nls.builtins.diagnostics.markdownlint,
+        nls.builtins.formatting.isort,
         nls.builtins.formatting.terraform_fmt,
-        nls.builtins.formatting.prettier,
+        nls.builtins.formatting.prettier.with({
+          extra_filetypes = { "svelte" }, -- js/ts formatter
+        }),
         nls.builtins.diagnostics.terraform_validate,
+        nls.builtins.code_actions.gitsigns,
+        nls.builtins.code_actions.shellcheck,
       })
     end,
   },

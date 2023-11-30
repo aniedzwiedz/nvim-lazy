@@ -16,7 +16,6 @@ return {
         },
       },
       ensure_installed = {
-        "stylua",
         "shellcheck",
         "shfmt",
         "flake8",
@@ -28,12 +27,20 @@ return {
         "solargraph",
         "shellcheck",
         "clangd",
-        "prettier",
-        "stylua",
         "codelldb",
         "commitlint",
         "css-lsp",
+        "html-lsp",
+        "tailwindcss-language-server",
+        "prettier", -- prettier formatter
+        "stylua", -- lua formatter
+        "isort", -- python formatter
+        "black", -- python formatter
+        "pylint", -- python linter
+        "eslint_d", -- js linter
       },
+      -- auto-install configured servers (with lspconfig)
+      automatic_installation = true, -- not the same as ensure_installed
     },
   },
 }

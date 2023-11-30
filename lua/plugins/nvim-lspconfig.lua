@@ -211,6 +211,9 @@ return {
         },
       },
       pyright = {},
+      emmet_ls = {
+        filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+      },
       ruff_lsp = {
         keys = {
           {

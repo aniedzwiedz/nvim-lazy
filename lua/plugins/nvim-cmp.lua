@@ -10,14 +10,13 @@ return {
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
     require("luasnip/loaders/from_vscode").lazy_load()
+    require("luasnip.loaders.from_vscode").load({ paths = { "./snippets/" } }) -- Load snippets from my-snippets folder
     require("luasnip").filetype_extend("typescriptreact", { "html" })
 
     local check_backspace = function()
       local col = vim.fn.col(".") - 1
       return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
     end
-
-    require("luasnip/loaders/from_vscode").lazy_load()
 
     vim.opt.completeopt = "menu,menuone,noselect"
     -- local icons = require("config.icons")
