@@ -10,6 +10,14 @@ return {
         function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
         desc = "Find Plugin File",
       },
+      {
+        "<leader>gC",
+        function()
+          -- require("telescope.builtin").git_bcommits(require("telescope.themes").get_dropdown({}))
+          require("telescope.builtin").git_bcommits()
+        end,
+        desc = "commits for current file ",
+      },
     },
     -- change some options
     opts = {
@@ -21,6 +29,7 @@ return {
         winblend = 0,
       },
       -- lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({ winblend = 10 }))
+
       -- pickers = {
       --   find_files = {
       --     theme = "ivy",
@@ -30,6 +39,9 @@ return {
       --   },
       --   grep_string = {
       --     theme = "ivy",
+      --   },
+      --   git_bcommits = {
+      --     theme = "dropdown",
       --   },
       -- },
     },

@@ -157,12 +157,22 @@ return {
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
   },
+  {
+    "sainnhe/everforest",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.everforest_diagnostic_line_highlight = 1
+      vim.g.everforest_transparent_background = 1
+      vim.g.everforest_current_word = "bold"
+    end,
+  },
 
   {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "gruvbox",
-      -- colorscheme = "nord",
+      -- colorscheme = "everforest",
     },
   },
 }

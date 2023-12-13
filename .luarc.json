@@ -1,6 +1,7 @@
 {
   "diagnostics.globals": ["Util", "vim",
         "require",
-        "icons"],
+        "icons",
+        "cmp"],
     "workspace.checkThirdParty": false
 }

@@ -1,5 +1,9 @@
 return {
   "glepnir/lspsaga.nvim",
+  dependencies = {
+    "simrat39/rust-tools.nvim",
+    "nvim-treesitter/nvim-treesitter",
+  },
   lazy = false,
   config = function()
     require("lspsaga").setup({
@@ -9,6 +13,9 @@ return {
       finder_action_keys = {
         open = "<CR>",
       },
+      -- ui = {
+      --   border = "rounded",
+      -- },
       -- use enter to open file with definition preview
       definition_action_keys = {
         edit = "<CR>",
@@ -20,8 +27,6 @@ return {
     { "<leader>cP", "<cmd>Lspsaga peek_definition<cr>", desc = "Lspsaga peek_definition" },
     { "<leader>cK", "<cmd>Lspsaga hover_doc<cr>", desc = "Lspsaga hover_doc" },
     { "<leader>cA", "<cmd>Lspsaga code_action<cr>", desc = "Lspsaga code_action" },
-  },
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter",
+    { "<leader>cO", "<cmd>Lspsaga outline<cr>", desc = "Lspsaga outline" },
   },
 }

@@ -2,11 +2,27 @@ return {
   -- add any tools you want to have installed below
   {
     "williamboman/mason.nvim",
-    -- opts = function(_, opts)
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+    },
+    -- opts = function(_, opts)  -- NOTE: test config function way with default
     --   opts.ensure_installed = opts.ensure_installed or {}
     --   vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman", "stylua", "shellcheck", "shfmt" })
     --   vim.list_extend(opts.ensure_installed, { "java-test", "java-debug-adapter" })
     -- end,
+    --
+    --   config = function()   -- NOTE: set config function way
+    -- require('mason').setup {
+    --   ui = {
+    --     icons = {
+    --       package_installed = '✓',
+    --       package_pending = '➜',
+    --       package_uninstalled = '✗',
+    --     },
+    --   },
+    -- }
+
     opts = {
       ui = {
         icons = {
@@ -19,6 +35,8 @@ return {
         "shellcheck",
         "shfmt",
         "flake8",
+        "yamllint",
+        "js-debug-adapter",
         "markdownlint",
         "marksman",
         "hadolint", -- docker mason
@@ -32,6 +50,7 @@ return {
         "css-lsp",
         "html-lsp",
         "tailwindcss-language-server",
+        "rust-analyzer",
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
         "isort", -- python formatter

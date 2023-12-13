@@ -67,6 +67,15 @@ vim.api.nvim_set_keymap("n", "<leader>,", "", { noremap = true, silent = true })
 --   })
 -- end, { desc = '[?] Fuzzily search in current buffer]' })
 
+
+-- DO NOT USE THIS IN YOU OWN CONFIG!!
+-- use `vim.keymap.set` instead
+-- local map = Util.safe_keymap_set
+
+-- map("n", "<leader>ud", function() Util.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
+-- local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+-- map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
+
 -- Gitsigns
 -- Add toggle gitsigns blame line
 if Util.has("gitsigns.nvim") then

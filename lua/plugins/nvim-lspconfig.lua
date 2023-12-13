@@ -1,5 +1,15 @@
 return {
   "neovim/nvim-lspconfig",
+  dependencies = {
+    "jose-elias-alvarez/typescript.nvim",
+    init = function()
+      require("lazyvim.util").on_attach(function(_, buffer)
+          -- stylua: ignore
+          vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
+        vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
+      end)
+    end,
+  },
   init = function()
     local keys = require("lazyvim.plugins.lsp.keymaps").get()
     -- change a keymap
@@ -57,7 +67,6 @@ return {
           globals = { "vim" },
         },
       },
-      ---@type lspconfig.options.tsserver
       tsserver = {
         keys = {
           {
@@ -107,7 +116,6 @@ return {
           },
         },
       },
-
       cssls = {},
       marksman = {},
       dockerls = {},
@@ -255,40 +263,17 @@ return {
         settings = {
           redhat = { telemetry = { enabled = false } },
           yaml = {
-            keyOrdering = false,
+            hover = true, -- Enable/disable hover
+            keyOrdering = false, -- Enforces alphabetical ordering of keys in mappings when set to true. Default is false
             format = {
-              enable = true,
+              singleQuote = true,
+              -- enable = true,
             },
             validate = true,
             schemaStore = {
               -- Must disable built-in schemaStore support to use
               -- schemas from SchemaStore.nvim plugin
               enable = false,
-              -- Schemas to support ICHA
-              -- schemas = {
-              --   ["schemas/conf/ansible.json"] = "conf/ansible.yaml",
-              --   ["schemas/conf/jenkins/endpoints.json"] = "conf/jenkins/endpoints.yaml",
-              --   ["schemas/conf/jenkins/settings.json"] = "conf/jenkins/settings.yaml",
-              --   ["schemas/conf/jenkins/acgs/components.json"] = "conf/jenkins/acgs/components.yaml",
-              --   ["schemas/conf/jenkins/acgs/config.json"] = "conf/jenkins/acgs/config.yaml",
-              --   ["schemas/conf/jenkins/acgs/streams.json"] = "conf/jenkins/acgs/streams.yaml",
-              --   ["schemas/conf/jenkins/aops/components.json"] = "conf/jenkins/aops/components.yaml",
-              --   ["schemas/conf/jenkins/aops/config.json"] = "conf/jenkins/aops/config.yaml",
-              --   ["schemas/conf/jenkins/aops/streams.json"] = "conf/jenkins/aops/streams.yaml",
-              --   ["schemas/conf/jenkins/arbus/components.json"] = "conf/jenkins/arbus/components.yaml",
-              --   ["schemas/conf/jenkins/arbus/config.json"] = "conf/jenkins/arbus/config.yaml",
-              --   ["schemas/conf/jenkins/boa/components.json"] = "conf/jenkins/boa/components.yaml",
-              --   ["schemas/conf/jenkins/boa/config.json"] = "conf/jenkins/boa/config.yaml",
-              --   ["schemas/conf/jenkins/tpm/components.json"] = "conf/jenkins/tpm/components.yaml",
-              --   ["schemas/conf/jenkins/tpm/config.json"] = "conf/jenkins/tpm/config.yaml",
-              --   ["schemas/conf/jenkins/config.json"] = "conf/jenkins/apw/config.yaml",
-              --   ["schemas/conf/jenkins/components.json"] = "conf/jenkins/apw/components.yaml",
-              --   ["schemas/conf/pullrequests.json"] = "conf/jenkins/pullrequests.yaml",
-              --   ["schemas/data/env/env_file.json"] = "data/env/*.yaml",
-              --   ["schemas/profiles.json"] = "profiles/**/*.yaml",
-              --   ["schemas/products.json"] = "products/**/*.yaml",
-              -- },
-              --
               -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
               url = "",
             },
@@ -322,6 +307,11 @@ return {
       },
     },
     setup = {
+      tsserver = function(_, opts)
+        require("typescript").setup({ server = opts })
+        return true
+      end,
+
       rust_analyzer = function(_, opts)
         local rust_tools_opts = require("lazyvim.util").opts("rust-tools.nvim")
         require("rust-tools").setup(vim.tbl_deep_extend("force", rust_tools_opts or {}, { server = opts }))
@@ -356,15 +346,15 @@ return {
         end
       end,
 
-      eslint = function()
-        require("lazyvim.util").lsp.on_attach(function(client)
-          if client.name == "eslint" then
-            client.server_capabilities.documentFormattingProvider = true
-          elseif client.name == "tsserver" then
-            client.server_capabilities.documentFormattingProvider = false
-          end
-        end)
-      end,
+      -- eslint = function()
+      --   require("lazyvim.util").lsp.on_attach(function(client)
+      --     if client.name == "eslint" then
+      --       client.server_capabilities.documentFormattingProvider = true
+      --     elseif client.name == "tsserver" then
+      --       client.server_capabilities.documentFormattingProvider = false
+      --     end
+      --   end)
+      -- end,
     },
   },
 }

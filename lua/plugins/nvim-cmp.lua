@@ -1,5 +1,35 @@
 return {
   "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
+  dependencies = {
+    {
+      "Saecki/crates.nvim",
+      event = { "BufRead Cargo.toml" },
+      opts = {
+        src = {
+          cmp = { enabled = true },
+        },
+      },
+    },
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-emoji",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "saadparwaiz1/cmp_luasnip",
+    "L3MON4D3/LuaSnip",
+    "hrsh7th/cmp-nvim-lua",
+    "onsails/lspkind.nvim",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    {
+      "Exafunction/codeium.nvim",
+      cmd = "Codeium",
+      build = ":Codeium Auth",
+      opts = {},
+    },
+  },
   config = function()
     vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
     vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#CA42F0" })
@@ -9,7 +39,7 @@ return {
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
-    require("luasnip/loaders/from_vscode").lazy_load()
+    -- require("luasnip/loaders/from_vscode").lazy_load()
     require("luasnip.loaders.from_vscode").load({ paths = { "./snippets/" } }) -- Load snippets from my-snippets folder
     require("luasnip").filetype_extend("typescriptreact", { "html" })
 
@@ -18,7 +48,6 @@ return {
       return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
     end
 
-    vim.opt.completeopt = "menu,menuone,noselect"
     -- local icons = require("config.icons")
 
     cmp.setup({
@@ -26,6 +55,9 @@ return {
         expand = function(args)
           luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
+      },
+      completion = {
+        completeopt = "menu,menuone,preview,noselect",
       },
       -- mapping = cmp.mapping.preset.insert({
       --   ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
@@ -88,8 +120,8 @@ return {
         { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
         { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
         { name = "crates" },
-        { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
         { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
+        { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
       }),
       -- configure lspkind for vs-code like icons
       -- formatting = {
@@ -178,68 +210,24 @@ return {
         ghost_text = false,
       },
     })
+    -- NOTE: https://github.com/bitterteasweetorange/nvim/blob/main/lua/plugins/cmp.lua
+    -- Set configuration for specific filetype.
+    cmp.setup.filetype("gitcommit", {
+      sources = cmp.config.sources({
+        { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+      }, {
+        { name = "buffer" },
+      }),
+    })
   end,
-  dependencies = {
-    {
-      "Saecki/crates.nvim",
-      event = { "BufRead Cargo.toml" },
-      opts = {
-        src = {
-          cmp = { enabled = true },
-        },
-      },
-    },
-    {
-      "hrsh7th/cmp-nvim-lsp",
-      event = "InsertEnter",
-    },
-    {
-      "hrsh7th/cmp-emoji",
-      event = "InsertEnter",
-    },
-    {
-      "hrsh7th/cmp-buffer",
-      event = "InsertEnter",
-    },
-    {
-      "hrsh7th/cmp-path",
-      event = "InsertEnter",
-    },
-    {
-      "hrsh7th/cmp-cmdline",
-      event = "InsertEnter",
-    },
-    {
-      "saadparwaiz1/cmp_luasnip",
-      event = "InsertEnter",
-    },
-    {
-      "L3MON4D3/LuaSnip",
-      event = "InsertEnter",
-      dependencies = {
-        "rafamadriz/friendly-snippets",
-      },
-    },
-    {
-      "hrsh7th/cmp-nvim-lua",
-      event = "InsertEnter",
-    },
-    { "onsails/lspkind.nvim", event = "InsertEnter" },
-    {
-      "Exafunction/codeium.nvim",
-      cmd = "Codeium",
-      build = ":Codeium Auth",
-      opts = {},
-    },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      table.insert(opts.sources, 1, {
-        name = "codeium",
-        group_index = 1,
-        priority = 100,
-      })
-    end,
-  },
+  ---@param opts cmp.ConfigSchema
+  opts = function(_, opts)
+    table.insert(opts.sources, 1, {
+      name = "codeium",
+      group_index = 1,
+      priority = 100,
+    })
+  end,
 
   -- dependencies = {
   --   "onsails/lspkind.nvim",
@@ -257,4 +245,5 @@ return {
   --   local cmp = require("cmp")
   --   opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
   -- end,
+  --
 }
