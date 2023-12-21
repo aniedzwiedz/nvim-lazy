@@ -44,6 +44,7 @@ return {
         --   extra_filetypes = { "svelte" }, -- js/ts formatter
         -- }),
         nls.builtins.diagnostics.terraform_validate,
+        nls.builtins.diagnostics.ansiblelint,
         -- nls.builtins.code_actions.gitsigns,
         -- nls.builtins.code_actions.shellcheck,
       })

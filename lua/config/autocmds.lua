@@ -27,6 +27,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
   command = "setlocal wrap",
 })
 
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "Jenkinsfile", },
+  -- enable wrap mode for json files only
+  command = "set filetype=groovy",
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "sh",
   callback = function()
@@ -69,53 +75,54 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Set Jenkinsfile filetype before all other code execution.
-addtype({
-  pattern = {
-    [".*.groovy"] = function(_, bufnr)
-      local content = vim.filetype.getlines(bufnr, 1)
-      if vim.filetype.matchregex(content, [[.*filetype=Jenkinsfile.*]]) then
-        return "Jenkinsfile"
-      else
-        return "groovy"
-      end
-    end,
-  },
-})
-
--- Ansible support
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.yml" },
---   -- command = "setfiletype yaml.ansible",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("lvim.lsp.manager").setup("ansiblels", opts)
---   end,
--- })
---
--- local function set_ansible(bufnr)
---   local content = vim.filetype.getlines(bufnr, 1, 10)
---   local matcher = { "^- hosts:", "^- name:" }
---   local doset = false
---   for _, m in ipairs(matcher) do
---     for _, c in ipairs(content) do
---       if string.match(c, m) then
---         doset = true
---       end
---     end
---   end
---   if doset then
---     return "yaml.ansible"
---   else
---     return "yaml"
---   end
--- end
 -- addtype({
 --   pattern = {
---     [".*.yaml"] = function(_, bufnr)
---       return set_ansible(bufnr)
---     end,
---     [".*.yml"] = function(_, bufnr)
---       return set_ansible(bufnr)
+--     [".*.groovy"] = function(_, bufnr)
+--       local content = vim.filetype.getlines(bufnr, 1)
+--       if vim.filetype.matchregex(content, [[.*filetype=Jenkinsfile.*]]) then
+--         return "Jenkinsfile"
+--       else
+--         return "groovy"
+--       end
 --     end,
 --   },
 -- })
+
+-- Ansible support
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.yml" },
+  -- command = "setfiletype yaml.ansible",
+  callback = function()
+    -- let treesitter use bash highlight for zsh files as well
+    -- require("lvim.lsp.manager").setup("ansiblels", opts)
+    require("lspconfig.configs")
+  end,
+})
+--
+local function set_ansible(bufnr)
+  local content = vim.filetype.getlines(bufnr, 1, 10)
+  local matcher = { "^- hosts:", "^- name:" }
+  local doset = false
+  for _, m in ipairs(matcher) do
+    for _, c in ipairs(content) do
+      if string.match(c, m) then
+        doset = true
+      end
+    end
+  end
+  if doset then
+    return "yaml.ansible"
+  else
+    return "yaml"
+  end
+end
+addtype({
+  pattern = {
+    [".*.yaml"] = function(_, bufnr)
+      return set_ansible(bufnr)
+    end,
+    [".*.yml"] = function(_, bufnr)
+      return set_ansible(bufnr)
+    end,
+  },
+})
