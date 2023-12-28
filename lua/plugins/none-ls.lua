@@ -34,7 +34,11 @@ return {
       opts.sources = vim.list_extend(opts.sources or {}, {
         -- nls.builtins.formatting.stylua,
         nls.builtins.diagnostics.yamllint,
-        nls.builtins.formatting.shfmt,
+        -- nls.builtins.diagnostics.rubocop,
+        nls.builtins.formatting.rubocop,
+        -- nls.builtins.formatting.shfmt,
+        -- nls.builtins.formatting.beautysh,
+        nls.builtins.diagnostics.shellcheck,
         -- nls.builtins.completion.spell,
         nls.builtins.diagnostics.hadolint, -- docker none-ls
         -- nls.builtins.diagnostics.markdownlint,

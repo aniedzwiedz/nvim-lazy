@@ -34,6 +34,7 @@ return {
       ensure_installed = {
         "shellcheck",
         "shfmt",
+        -- "beautysh",
         "flake8",
         "yamllint",
         "js-debug-adapter",
