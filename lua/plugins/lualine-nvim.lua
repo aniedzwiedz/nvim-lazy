@@ -53,17 +53,22 @@ return {
   -- end,
   event = "VeryLazy",
 
-  options = {
-    -- theme = 'tokyonight',
-    -- theme = "catppuccin",
-    theme = "auto",
-    component_separators = "|",
-    -- component_separators = { left = "", right = "" },
-    -- section_separators = { left = "", right = "" },
-    -- section_separators = { left = "", right = "" },
-    always_divide_middle = false,
-    globalstatus = false,
-  },
+  -- options = {
+  --   -- theme = 'tokyonight',
+  --   -- theme = "catppuccin",
+  --   theme = "auto",
+  --   component_separators = "|",
+  --   -- component_separators = { left = "", right = "" },
+  --   -- section_separators = { left = "", right = "" },
+  --   -- section_separators = { left = "", right = "" },
+  --   always_divide_middle = false,
+  --   globalstatus = false,
+  -- },
+  --
+  opts = function(_, opts)
+    table.insert(opts.sections.lualine_x, 2, require("lazyvim.util").lualine.cmp_source("codeium"))
+  end,
+
   sections = {
     -- lualine_a = { {"branch", icon =""} },
     -- lualine_b = { diff },
