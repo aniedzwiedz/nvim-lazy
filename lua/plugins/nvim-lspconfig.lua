@@ -153,7 +153,12 @@ return {
             format = {
               enable = true,
             },
-            schemas = require("schemastore").json.schemas(),
+            schemas = require("schemastore").json.schemas({
+              select = {
+                "Renovate",
+                "GitHub Workflow Template Properties",
+              },
+            }),
             validate = { enable = true },
           },
         },
@@ -218,6 +223,16 @@ return {
             desc = "Show Crate Documentation",
           },
         },
+        settings = {
+          evenBetterToml = {
+            schema = {
+              -- add additional schemas
+              associations = {
+                ["example\\.toml$"] = "https://json.schemastore.org/example.json",
+              },
+            },
+          },
+        },
       },
       pyright = {},
       emmet_ls = {
@@ -250,10 +265,12 @@ return {
             },
           },
         },
-        -- lazy-load schemastore when needed
+        -- lazy-load schemastore when needed  
+        -- NOTE:https://www.arthurkoziel.com/json-schemas-in-neovim/
         dependencies = {
           "b0o/SchemaStore.nvim",
           "folke/neodev.nvim",
+          "someone-stole-my-name/yaml-companion.nvim",
         },
         on_new_config = function(new_config)
           -- new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
@@ -279,6 +296,10 @@ return {
               url = "",
             },
             schemas = {
+              kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+              ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
+              ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",
               ["schemas/conf/ansible.json"] = "conf/ansible.yaml",
               ["schemas/conf/jenkins/endpoints.json"] = "conf/jenkins/endpoints.yaml",
               ["schemas/conf/jenkins/settings.json"] = "conf/jenkins/settings.yaml",
@@ -302,6 +323,8 @@ return {
               ["schemas/data/env/env_file.json"] = "data/env/*.yaml",
               ["schemas/profiles.json"] = "profiles/**/*.yaml",
               ["schemas/products.json"] = "products/**/*.yaml",
+              -- ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}"
+              -- ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",
             },
           },
         },
@@ -345,6 +368,38 @@ return {
             end
           end)
         end
+        local cfg = require("yaml-companion").setup({
+          -- detect k8s schemas based on file content
+          builtin_matchers = {
+            kubernetes = { enabled = true },
+          },
+
+          -- schemas available in Telescope picker
+          schemas = {
+            -- not loaded automatically, manually select with
+            -- :Telescope yaml_schema
+            {
+              name = "Argo CD Application",
+              uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
+            },
+            {
+              name = "SealedSecret",
+              uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json",
+            },
+            -- schemas below are automatically loaded, but added
+            -- them here so that they show up in the statusline
+            {
+              name = "Kustomization",
+              uri = "https://json.schemastore.org/kustomization.json",
+            },
+            {
+              name = "GitHub Workflow",
+              uri = "https://json.schemastore.org/github-workflow.json",
+            },
+          },
+        })
+        require("lspconfig")["yamlls"].setup(cfg)
+        require("telescope").load_extension("yaml_schema")
       end,
 
       -- eslint = function()

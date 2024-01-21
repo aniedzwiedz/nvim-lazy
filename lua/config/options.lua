@@ -106,4 +106,4 @@ vim.g.markdown_recommended_style = 0
 vim.g.python_host_prog = "/usr/sbin/python3"
 
 -- get the global variable
-local python_path = vim.g.python_host_prog
+-- local python_path = vim.g.python_host_prog

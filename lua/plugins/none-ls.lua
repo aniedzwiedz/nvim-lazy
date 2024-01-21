@@ -51,6 +51,7 @@ return {
         }),
         nls.builtins.diagnostics.terraform_validate,
         nls.builtins.diagnostics.ansiblelint,
+        -- nls.builtins.diagnostics.commitlint,
         -- nls.builtins.code_actions.gitsigns,
         -- nls.builtins.code_actions.shellcheck,
         nls.builtins.completion.spell,
