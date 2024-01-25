@@ -251,28 +251,34 @@ return {
   },
 
   {
-    "ruifm/gitlinker.nvim",
+    "linrongbin16/gitlinker.nvim",
     event = "BufRead",
+    dependencies = { { "nvim-lua/plenary.nvim" } },
     config = function()
+      local wk = require("which-key")
+      wk.register({
+        ["<leader>gy"] = { "<cmd>GitLink<cr>", "Git link" },
+        ["<leader>gY"] = { "<cmd>GitLink blame<cr>", "Git link blame" },
+      })
+
       require("gitlinker").setup({
-        opts = {
-          -- remote = 'github', -- force the use of a specific remote
-          -- adds current line nr in the url for normal mode
-          add_current_line_on_normal_mode = true,
-          -- callback for what to do with the url
-          -- action_callback = require("gitlinker.actions").open_in_browser,
-          action_callback = require("gitlinker.actions").copy_to_clipboard,
-          -- print the url after performing the action
-          print_url = true,
-          -- mapping to call url generation
-          mappings = "<leader>gy",
-        },
-        callbacks = {
-          ["git.gtech.com"] = require("gitlinker.hosts").get_bitbucket_type_url,
-        },
+        message = true,
+        -- mapping = {
+        --   ["<leader>gY"] = {
+        --     -- copy git link to clipboard
+        --     action = require("gitlinker.actions").clipboard,
+        --     desc = "Copy git link to clipboard",
+        --   },
+        --   ["<leader>gy"] = {
+        --     -- open git link in browser
+        --     action = require("gitlinker.actions").system,
+        --     desc = "Open git link in browser",
+        --   },
+        -- },
+
+        -- remote = 'github', -- force the use of a specific remote
       })
     end,
-    requires = "nvim-lua/plenary.nvim",
   },
   -- add telescope-fzf-native
   {
