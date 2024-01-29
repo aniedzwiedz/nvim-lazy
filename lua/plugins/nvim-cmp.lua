@@ -20,9 +20,7 @@ return {
     "L3MON4D3/LuaSnip",
     "hrsh7th/cmp-nvim-lua",
     "onsails/lspkind.nvim",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-    },
+    "rafamadriz/friendly-snippets",
     {
       "Exafunction/codeium.nvim",
       cmd = "Codeium",

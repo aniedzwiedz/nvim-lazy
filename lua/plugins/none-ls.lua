@@ -32,29 +32,31 @@ return {
       opts.root_dir = opts.root_dir
         or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
       opts.sources = vim.list_extend(opts.sources or {}, {
-        nls.builtins.formatting.stylua,
         nls.builtins.diagnostics.luacheck,
         nls.builtins.diagnostics.yamllint,
         -- nls.builtins.diagnostics.rubocop,
-        nls.builtins.formatting.rubocop,
-        nls.builtins.formatting.xmllint,
+        ---
+        -- nls.builtins.formatting.stylua,
+        -- nls.builtins.formatting.rubocop,
+        -- nls.builtins.formatting.xmllint,
+        -- nls.builtins.formatting.isort,
+        -- nls.builtins.formatting.terraform_fmt,
+        -- nls.builtins.formatting.prettier.with({
+        --   extra_filetypes = { "svelte" }, -- js/ts formatter
+        -- }),
+        ---
         -- nls.builtins.formatting.shfmt,
         -- nls.builtins.formatting.beautysh,
         nls.builtins.diagnostics.shellcheck,
         -- nls.builtins.completion.spell,
         nls.builtins.diagnostics.hadolint, -- docker none-ls
         -- nls.builtins.diagnostics.markdownlint,
-        nls.builtins.formatting.isort,
-        nls.builtins.formatting.terraform_fmt,
-        nls.builtins.formatting.prettier.with({
-          extra_filetypes = { "svelte" }, -- js/ts formatter
-        }),
         nls.builtins.diagnostics.terraform_validate,
         nls.builtins.diagnostics.ansiblelint,
         -- nls.builtins.diagnostics.commitlint,
         -- nls.builtins.code_actions.gitsigns,
         -- nls.builtins.code_actions.shellcheck,
-        nls.builtins.completion.spell,
+        -- nls.builtins.completion.spell,
       })
     end,
   },

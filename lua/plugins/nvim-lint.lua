@@ -26,6 +26,9 @@ return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.confi
   --     python = { "pylint" },
   --     dockerfile = { "hadolint" },
   --     markdown = { "markdownlint" },
+  --             terraform = { "tflint" },
+  -- ruby = { "standardrb" },
+
   --   }
   --
   --   local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -41,4 +44,5 @@ return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.confi
   --     lint.try_lint()
   --   end, { desc = "Trigger linting for current file" })
   -- end,
+  --
 }
