@@ -67,7 +67,6 @@ vim.api.nvim_set_keymap("n", "<leader>,", "", { noremap = true, silent = true })
 --   })
 -- end, { desc = '[?] Fuzzily search in current buffer]' })
 
-
 -- DO NOT USE THIS IN YOU OWN CONFIG!!
 -- use `vim.keymap.set` instead
 -- local map = Util.safe_keymap_set
@@ -93,3 +92,22 @@ if Util.has("gitsigns.nvim") then
   end, { desc = "View full Git Blame" })
   -- keymap.set("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
+
+-- Copy file paths
+vim.keymap.set("n", "<leader>fz", "<cmd>let @+ = expand(\"%\")<CR>", { desc = "Copy File Name" })
+vim.keymap.set("n", "<leader>fZ", "<cmd>let @+ = expand(\"%:p\")<CR>", { desc = "Copy File Path" })
+
+-- Replace word under cursor across entire buffer
+vim.keymap.set("n", "<leader>cw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "[c]hange word under cursor" })
+
+-- Run Tests
+vim.keymap.set("n", "<leader>t", "<cmd>lua require('neotest').run.run()<CR>", { desc = "Run Test" })
+vim.keymap.set("n", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+  { desc = "Run Test File" })
+vim.keymap.set("n", "<leader>td", "<cmd>lua require('neotest').run.run(vim.fn.getcwd())<CR>",
+  { desc = "Run Current Test Directory" })
+vim.keymap.set("n", "<leader>tp", "<cmd>lua require('neotest').output_panel.toggle()<CR>",
+  { desc = "Toggle Test Output Panel" })
+vim.keymap.set("n", "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", { desc = "Run Last Test" })
+vim.keymap.set("n", "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", { desc = "Toggle Test Summary" })
