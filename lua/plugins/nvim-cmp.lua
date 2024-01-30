@@ -117,7 +117,7 @@ return {
         { name = "codeium", keyword_length = 3, max_item_count = 10 },
         { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
         { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
-        { name = "crates" },
+        -- { name = "crates" },
         { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
         { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
       }),
@@ -138,14 +138,14 @@ return {
       --     return item
       --   end,
       --  },
-      formatting = {
-        format = require("lspkind").cmp_format({
-          -- mode = "symbol",
-          maxwidth = 100,
-          ellipsis_char = ".....",
-          symbol_map = { Codeium = "" },
-        }),
-      },
+      -- formatting = {
+      --   format = require("lspkind").cmp_format({
+      --     -- mode = "symbol",
+      --     maxwidth = 100,
+      --     ellipsis_char = ".....",
+      --     symbol_map = { Codeium = "" },
+      --   }),
+      -- },
       -- formatting = {
       --   fields = { "kind", "abbr", "menu" },
       --   format = function(entry, vim_item)
@@ -215,6 +215,24 @@ return {
         { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
       }, {
         { name = "buffer" },
+      }),
+    })
+
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline({ "/", "?" }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        { name = "cmdline" },
       }),
     })
   end,

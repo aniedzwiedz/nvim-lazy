@@ -2,6 +2,13 @@ return {
   -- change some telescope options and a keymap to browse plugin files
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
     keys = {
       -- add a keymap to browse plugin files
       -- stylua: ignore
@@ -19,33 +26,37 @@ return {
         desc = "commits for current file ",
       },
     },
-    -- change some options
     opts = {
       defaults = {
         -- layout_strategy = "horizontal",
         layout_strategy = "vertical",
-        layout_config = { prompt_position = "top", vertical = { width = 0.8 } },
-        sorting_strategy = "ascending",
-        winblend = 0,
+        layout_config = { prompt_position = "top", vertical = { width = 0.85 } },
+        -- layout_config = {
+        --   vertical = {
+        --     width = 0.75,
+        --   },
       },
-      -- lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({ winblend = 10 }))
-
-      -- pickers = {
-      --   find_files = {
-      --     theme = "ivy",
-      --   },
-      --   live_grep = {
-      --     theme = "ivy",
-      --   },
-      --   grep_string = {
-      --     theme = "ivy",
-      --   },
-      --   git_bcommits = {
-      --     theme = "dropdown",
-      --   },
-      -- },
+      sorting_strategy = "ascending",
+      winblend = 0,
     },
+    -- lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({ winblend = 10 }))
+
+    -- pickers = {
+    --   find_files = {
+    --     theme = "ivy",
+    --   },
+    --   live_grep = {
+    --     theme = "ivy",
+    --   },
+    --   grep_string = {
+    --     theme = "ivy",
+    --   },
+    --   git_bcommits = {
+    --     theme = "dropdown",
+    --   },
+    -- },
   },
+
   {
     "echasnovski/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -54,9 +65,9 @@ return {
       -- symbol = "▏",
       symbol = "⁝ ",
       options = {
-        border = "both",
+        -- border = "both",
         indent_at_cursor = true,
-        try_as_border = true,
+        -- try_as_border = true,
       },
     },
     init = function()
@@ -173,37 +184,45 @@ return {
       require("gitsigns").setup({
 
         signs = {
-          add = {
-            hl = "GitSignsAdd",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsAddNr",
-            linehl = "GitSignsAddLn",
-          },
-          change = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
-          delete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.TriangleShortArrowRight,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          topdelete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.TriangleShortArrowRight,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          changedelete = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
+          add = { text = "▎" },
+          change = { text = "▎" },
+          delete = { text = "" },
+          topdelete = { text = "" },
+          changedelete = { text = "▎" },
+          untracked = { text = "▎" },
         },
+        -- signs = {
+        --   add = {
+        --     hl = "GitSignsAdd",
+        --     text = icons.ui.BoldLineLeft,
+        --     numhl = "GitSignsAddNr",
+        --     linehl = "GitSignsAddLn",
+        --   },
+        --   change = {
+        --     hl = "GitSignsChange",
+        --     text = icons.ui.BoldLineLeft,
+        --     numhl = "GitSignsChangeNr",
+        --     linehl = "GitSignsChangeLn",
+        --   },
+        --   delete = {
+        --     hl = "GitSignsDelete",
+        --     text = icons.ui.TriangleShortArrowRight,
+        --     numhl = "GitSignsDeleteNr",
+        --     linehl = "GitSignsDeleteLn",
+        --   },
+        --   topdelete = {
+        --     hl = "GitSignsDelete",
+        --     text = icons.ui.TriangleShortArrowRight,
+        --     numhl = "GitSignsDeleteNr",
+        --     linehl = "GitSignsDeleteLn",
+        --   },
+        --   changedelete = {
+        --     hl = "GitSignsChange",
+        --     text = icons.ui.BoldLineLeft,
+        --     numhl = "GitSignsChangeNr",
+        --     linehl = "GitSignsChangeLn",
+        --   },
+        -- },
 
         watch_gitdir = {
           interval = 1000,
@@ -279,17 +298,6 @@ return {
         -- remote = 'github', -- force the use of a specific remote
       })
     end,
-  },
-  -- add telescope-fzf-native
-  {
-    "telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-      config = function()
-        require("telescope").load_extension("fzf")
-      end,
-    },
   },
   {
     "nvim-tree/nvim-web-devicons",

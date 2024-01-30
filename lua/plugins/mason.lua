@@ -4,7 +4,6 @@ return {
     "williamboman/mason.nvim",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     -- opts = function(_, opts)  -- NOTE: test config function way with default
     --   opts.ensure_installed = opts.ensure_installed or {}
@@ -33,13 +32,14 @@ return {
       },
       ensure_installed = {
         "shellcheck",
+        "beautysh",
+        "bashls",
         "shfmt",
         -- "beautysh",
         "flake8",
         "yamllint",
         "js-debug-adapter",
         "markdownlint",
-        "marksman",
         "hadolint", -- docker mason
         "java-test",
         "java-debug-adapter",
@@ -51,6 +51,9 @@ return {
         "css-lsp",
         "html-lsp",
         "tailwindcss-language-server",
+        "marksman",
+        -- "quick_lint_js",
+        "pyright",
         "rust-analyzer",
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
@@ -58,6 +61,11 @@ return {
         "black", -- python formatter
         "pylint", -- python linter
         "eslint_d", -- js linter
+        "debugpy",
+        "flake8",
+        "isort",
+        "mypy",
+        "pylint",
       },
       -- auto-install configured servers (with lspconfig)
       automatic_installation = true, -- not the same as ensure_installed

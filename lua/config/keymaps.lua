@@ -111,3 +111,23 @@ vim.keymap.set("n", "<leader>tp", "<cmd>lua require('neotest').output_panel.togg
   { desc = "Toggle Test Output Panel" })
 vim.keymap.set("n", "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", { desc = "Run Last Test" })
 vim.keymap.set("n", "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", { desc = "Toggle Test Summary" })
+
+-- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
+keymap.set("n", '<leader>go', function()
+  if vim.bo.filetype == 'python' then
+    vim.api.nvim_command('PyrightOrganizeImports')
+  end
+end)
+
+keymap.set("n", '<leader>tc', function()
+  if vim.bo.filetype == 'python' then
+    require('dap-python').test_class();
+  end
+end)
+
+keymap.set("n", '<leader>tm', function()
+  if vim.bo.filetype == 'python' then
+    require('dap-python').test_method();
+  end
+end)
+

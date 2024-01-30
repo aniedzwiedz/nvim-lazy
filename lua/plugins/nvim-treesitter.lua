@@ -1,5 +1,32 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  event = "VeryLazy",
+  dependencies = {
+    -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    "nvim-treesitter/nvim-treesitter-textobjects",
+  },
+
+  -- build = ":TSUpdate",
+  opts = {
+    indent = { enable = true },
+    auto_install = true, -- automatically install syntax support when entering new file type buffer
+    autotag = {
+      enable = true,
+    },
+
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = true,
+    },
+    ensure_installed = {
+      "lua",
+    },
+  },
+
+  config = function(_, opts)
+    local configs = require("nvim-treesitter.configs")
+    configs.setup(opts)
+  end,
 
   -- opts = function(_, opts)  -- NOTE: dodatkowe opcje konfigu
   --   -- add tsx and treesitter
@@ -8,46 +35,4 @@ return {
   --     "typescript",
   --   })
   -- end,
-
-  opts = function(_, opts)
-    if type(opts.ensure_installed) == "table" then
-      vim.list_extend(opts.ensure_installed, {
-        "dockerfile",
-        "java",
-        "markdown",
-        "markdown_inline",
-        "terraform",
-        "hcl",
-        "ninja",
-        "python",
-        "rst",
-        "toml",
-        "json",
-        "json5",
-        "jsonc",
-        "ruby",
-        "tsx",
-        "typescript",
-        "rust",
-        "html",
-        "regex",
-      })
-      -- vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml" })
-      -- vim.list_extend(opts.ensure_installed, { "json", "json5", "jsonc", "ruby" })
-    end
-  end,
-  indent = {
-    enable = true,
-  },
-  autotag = {
-    enable = true,
-  },
-  event = {
-    "BufReadPre",
-    "BufNewFile",
-  },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = true,
-  },
 }

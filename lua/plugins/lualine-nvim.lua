@@ -1,220 +1,122 @@
--- local config = function()
---   local theme = require("lualine.themes.gruvbox")
---
---   -- -- set bg transparency in all modes
---   -- theme.normal.c.bg = nil
---   -- theme.insert.c.bg = nil
---   -- theme.visual.c.bg = nil
---   -- theme.replace.c.bg = nil
---   -- theme.command.c.bg = nil
---
---   require("lualine").setup({
---     options = {
---       theme = theme,
---       globalstatus = true,
---     },
---     tabline = {
---       lualine_a = { "mode" },
---       lualine_b = { "buffers" },
---       lualine_x = { "encoding", "fileformat", "filetype" },
---       lualine_y = { "progress" },
---       lualine_z = { "location" },
---     },
---     sections = {},
---   })
--- end
-
 return {
   "nvim-lualine/lualine.nvim",
-  -- dependencies = { { "nvim-tree/nvim-web-devicons", lazy = true } },
-  -- options = {
-  --   theme = "ayu_dark",
-  -- },
-  -- options = { theme = "nord" },
-  -- lazy = false,
-  -- opts = function(_, opts)
-  --   table.insert(opts.sections.lualine_x, 2, require("lazyvim.util").lualine.cmp_source("codeium"))
-  --   local function lspClients()
-  --     -- local msg = "No Active Lsp"
-  --     local msg = ""
-  --     local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-  --     local clients = vim.lsp.get_active_clients()
-  --     if next(clients) == nil then
-  --       return msg
-  --     end
-  --     for _, client in ipairs(clients) do
-  --       local filetypes = client.config.filetypes
-  --       if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-  --         return client.name
-  --       end
-  --     end
-  --     return msg
-  --   end
-  -- end,
-  event = "VeryLazy",
-
-  -- options = {
-  --   -- theme = 'tokyonight',
-  --   -- theme = "catppuccin",
-  --   theme = "auto",
-  --   component_separators = "|",
-  --   -- component_separators = { left = "", right = "" },
-  --   -- section_separators = { left = "", right = "" },
-  --   -- section_separators = { left = "", right = "" },
-  --   always_divide_middle = false,
-  --   globalstatus = false,
-  -- },
-  --
-  opts = function(_, opts)
-    table.insert(opts.sections.lualine_x, 2, require("lazyvim.util").lualine.cmp_source("codeium"))
-  end,
-
-  sections = {
-    -- lualine_a = { {"branch", icon =""} },
-    -- lualine_b = { diff },
-    -- lualine_c = { "diagnostics" },
-    -- lualine_x = { copilot },
-    -- lualine_y = { "filetype" },
-    -- lualine_z = { "progress" },
-    -- lualine_a = { "mode", right_padding = 2, icon = "" },
-    -- lualine_b = { "branch" },
-    -- lualine_b = { { "branch", icon = "" } },
-    -- lualine_c = { diff },
-    -- lualine_x = { "diagnostics", copilot },
-    -- lualine_y = { "filetype" },
-    -- lualine_z = { "progress" },
-
-    lualine_x = {
-      -- "mason",
-      {
-        require("lazy.status").updates,
-        cond = require("lazy.status").has_updates,
-        color = { fg = "#ff9e64" },
-      },
-    },
+  dependencies = {
+    -- https://github.com/nvim-tree/nvim-web-devicons
+    "nvim-tree/nvim-web-devicons", -- fancy icons
+    -- https://github.com/linrongbin16/lsp-progress.nvim
+    "linrongbin16/lsp-progress.nvim", -- LSP loading progress
   },
-  extensions = { "quickfix", "man", "fugitive" },
-  -- config = config,
-  -- config = function(_, opts)
-  --   -- local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
-  --   -- vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
-  --   local icons = require("config.icons")
-  --   local diff = {
-  --     "diff",
-  --     colored = true,
-  --     symbols = { added = icons.git.LineAdded, modified = icons.git.LineModified, removed = icons.git.LineRemoved }, -- Changes the symbols used by the diff.
-  --   }
-  -- end,
+  event = "VeryLazy",
+  init = function()
+    vim.g.lualine_laststatus = vim.o.laststatus
+    if vim.fn.argc(-1) > 0 then
+      -- set an empty statusline till lualine loads
+      vim.o.statusline = " "
+    else
+      -- hide the statusline on the starter page
+      vim.o.laststatus = 0
+    end
+  end,
+  opts = function()
+    local lualine_require = require("lualine_require")
+    lualine_require.require = require
+
+    local icons = require("lazyvim.config").icons
+    local Util = require("lazyvim.util")
+    local linters = require("lint").get_running()
+
+    vim.o.laststatus = vim.g.lualine_laststatus
+
+    return {
+      options = {
+        theme = "auto",
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+        disabled_filetypes = { -- Filetypes to disable lualine for.
+          disabled_filetypes = {
+            statusline = { "dashboard", "alpha", "starter" },
+            winbar = {},
+          },
+        },
+        globalstatus = true,
+      },
+      sections = {
+        lualine_a = {
+          "mode",
+          -- icons_enabled = true, -- Enables the display of icons alongside the component.
+        },
+        lualine_b = { { "branch", icon = { "", align = "right" } } },
+        lualine_c = {
+          Util.lualine.root_dir(),
+          {
+            "diagnostics",
+            symbols = {
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warn,
+              info = icons.diagnostics.Info,
+              hint = icons.diagnostics.Hint,
+            },
+          },
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { Util.lualine.pretty_path() },
+        },
+        lualine_x = {
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.command.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            color = Util.ui.fg("Statement"),
+          },
+          -- stylua: ignore
+          {
+            function() return require("noice").api.status.mode.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+            color = Util.ui.fg("Constant"),
+          },
+          -- stylua: ignore
+          {
+            function() return "  " .. require("dap").status() end,
+            cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
+            color = Util.ui.fg("Debug"),
+          },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = Util.ui.fg("Special"),
+          },
+          {
+            "diff",
+            symbols = {
+              added = icons.git.added,
+              modified = icons.git.modified,
+              removed = icons.git.removed,
+            },
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              if gitsigns then
+                return {
+                  added = gitsigns.added,
+                  modified = gitsigns.changed,
+                  removed = gitsigns.removed,
+                }
+              end
+            end,
+          },
+        },
+
+        lualine_y = {
+          { "progress", separator = " ", padding = { left = 1, right = 0 } },
+          { "location", padding = { left = 0, right = 1 } },
+        },
+
+        lualine_z = {
+
+          -- function()
+          --   return " " .. os.date("%R")
+          -- end,
+        },
+      },
+      extensions = { "neo-tree", "lazy" },
+    }
+  end,
 }
---
-
--- local M = {
---   "nvim-lualine/lualine.nvim",
--- }
---
--- function M.config()
---   local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
---   vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
---   local icons = require("config.icons")
---   local diff = {
---     "diff",
---     colored = true,
---     symbols = { added = icons.git.LineAdded, modified = icons.git.LineModified, removed = icons.git.LineRemoved }, -- Changes the symbols used by the diff.
---   }
---
---   local copilot = function()
---     local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
---     if #buf_clients == 0 then
---       return "LSP Inactive"
---     end
---
---     local buf_client_names = {}
---     local copilot_active = false
---
---     for _, client in pairs(buf_clients) do
---       if client.name ~= "null-ls" and client.name ~= "copilot" then
---         table.insert(buf_client_names, client.name)
---       end
---
---       if client.name == "copilot" then
---         copilot_active = true
---       end
---     end
---
---     if copilot_active then
---       return "%#Copilot#" .. icons.git.Octoface .. "%*"
---     end
---     return ""
---   end
---
---   require("lualine").setup({
---     options = {
---       -- component_separators = { left = "", right = "" },
---       -- section_separators = { left = "", right = "" },
---       component_separators = { left = "", right = "" },
---       section_separators = { left = "", right = "" },
---       opts = function(_, opts)
---         table.insert(opts.sections.lualine_x, 2, require("lazyvim.util").lualine.cmp_source("codeium"))
---       end,
---       --   event = "VeryLazy",
---       -- ignore_focus = { "NvimTree" },
---     },
---     sections = {
---       -- lualine_a = { {"branch", icon =""} },
---       -- lualine_b = { diff },
---       -- lualine_c = { "diagnostics" },
---       -- lualine_x = { copilot },
---       -- lualine_y = { "filetype" },
---       -- lualine_z = { "progress" },
---       -- lualine_a = { "mode" },
---       lualine_b = { "branch" },
---       lualine_c = { diff },
---       lualine_x = { "diagnostics", copilot },
---       lualine_y = { "filetype" },
---       lualine_z = { "progress" },
---     },
---     extensions = { "quickfix", "man", "fugitive" },
---   })
--- end
---
--- return M
-
--- return {
---   "nvim-lualine/lualine.nvim",
---   dependencies = { "nvim-tree/nvim-web-devicons" },
---   config = function()
---     local lualine = require("lualine")
---     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
---
---     local colors = {
---       blue = "#65D1FF",
---       green = "#3EFFDC",
---       violet = "#FF61EF",
---       yellow = "#FFDA7B",
---       red = "#FF4A4A",
---       fg = "#c3ccdc",
---       bg = "#112638",
---       inactive_bg = "#2c3043",
---     }
---
---     -- configure lualine with modified theme
---     lualine.setup({
---       options = {
---         theme = require("lualine.themes.auto"),
--- --   local theme = require("lualine.themes.gruvbox")
---       },
---       sections = {
---         lualine_x = {
---           {
---             lazy_status.updates,
---             cond = lazy_status.has_updates,
---             color = { fg = "#ff9e64" },
---           },
---           { "encoding" },
---           { "fileformat" },
---           { "filetype" },
---         },
---       },
---     })
---   end,
--- }

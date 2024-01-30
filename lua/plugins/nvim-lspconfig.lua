@@ -2,6 +2,11 @@ return {
   "neovim/nvim-lspconfig",
   dependencies = {
     "jose-elias-alvarez/typescript.nvim",
+    "folke/neodev.nvim",
+    {
+      "j-hui/fidget.nvim",
+      opts = {},
+    },
     init = function()
       require("lazyvim.util").lsp.on_attach(function(_, buffer)
           -- stylua: ignore
@@ -27,12 +32,25 @@ return {
       virtual_text = {
         spacing = 4,
         source = "if_many",
-        prefix = "●",
+        -- prefix = "●",
         -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
         -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-        -- prefix = "icons",
+        prefix = "icons",
       },
       severity_sort = true,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
+          [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
+          [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
+          [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
+        },
+      },
+      handlers = {
+        -- Add borders to LSP popups
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+      },
     },
     -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
     -- Be aware that you also will need to properly configure your LSP server to
@@ -52,20 +70,30 @@ return {
 
     servers = {
       lua_ls = {
-        workspace = {
-          checkThirdParty = false,
-          library = vim.api.nvim_get_runtime_file("", true), -- Make the server aware of Neovim runtime files
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = { "vim" },
+            },
+          },
         },
-        completion = {
-          callSnippet = "Replace",
-        },
-        telemetry = {
-          enable = false,
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
+        -- workspace = {
+        --   checkThirdParty = false,
+        --   library = vim.api.nvim_get_runtime_file("", true), -- Make the server aware of Neovim runtime files
+        -- },
+        -- completion = {
+        --   callSnippet = "Replace",
+        -- },
+        -- telemetry = {
+        --   enable = false,
+        -- },
       },
       tsserver = {
         keys = {
@@ -265,11 +293,10 @@ return {
             },
           },
         },
-        -- lazy-load schemastore when needed  
+        -- lazy-load schemastore when needed
         -- NOTE:https://www.arthurkoziel.com/json-schemas-in-neovim/
         dependencies = {
           "b0o/SchemaStore.nvim",
-          "folke/neodev.nvim",
           "someone-stole-my-name/yaml-companion.nvim",
         },
         on_new_config = function(new_config)
