@@ -324,6 +324,12 @@ return {
             },
             schemas = {
               kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
+              ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+                "ci/*.yml",
+                ".gitlab-ci.yml",
+              },
               ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
               ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}",
               ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",

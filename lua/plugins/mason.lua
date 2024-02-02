@@ -33,7 +33,6 @@ return {
       ensure_installed = {
         "shellcheck",
         "beautysh",
-        "bashls",
         "shfmt",
         -- "beautysh",
         "flake8",
