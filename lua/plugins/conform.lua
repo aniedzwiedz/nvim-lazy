@@ -4,6 +4,11 @@ return {
   lazy = true,
   event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
   opts = {
+    format = {
+      timeout_ms = 3000,
+      async = false, -- not recommended to change
+      quiet = false, -- not recommended to change
+    },
     formatters_by_ft = {
       lua = { "stylua" },
       svelte = { { "prettierd", "prettier" } },
@@ -59,61 +64,64 @@ return {
       --     ["terraform-vars"] = { "terraform_fmt" },
       --   },
     },
+    formatters = {
+      injected = { options = { ignore_errors = true } },
+    },
   },
-  -- format_on_save = {
-  --   lsp_fallback = true,
-  --   async = false,
-  --   timeout_ms = 500,
-  -- },
-  --
-  -- notify_on_error = true,
-
-  --   vim.keymap.set({ "n", "v" }, "<space>bf", function() -- TODO: check this one
-  --     conform.format({
-  --       timeout_ms = 500,
-  --       async = false,
-  --       -- lsp_fallback = true,
-  --       lsp_fallback = false,
-  --     })
-  --   end, { desc = "Buffer format" }),
-  --
-
-  -- { -- https://github.com/exosyphon/nvim/blob/main/lua/exosyphon/lazy.lua
-  --   "stevearc/conform.nvim",
-  --   event = { "BufReadPre", "BufNewFile" },
-  -- config = function()
-  --   local conform = require("conform")
-  --
-  --   conform.setup({
-  --     formatters_by_ft = {
-  --       lua = { "stylua" },
-  --       svelte = { { "prettierd", "prettier" } },
-  --       javascript = { { "prettierd", "prettier" } },
-  --       typescript = { { "prettierd", "prettier" } },
-  --       javascriptreact = { { "prettierd", "prettier" } },
-  --       typescriptreact = { { "prettierd", "prettier" } },
-  --       json = { { "prettierd", "prettier" } },
-  --       graphql = { { "prettierd", "prettier" } },
-  --       java = { "google-java-format" },
-  --       kotlin = { "ktlint" },
-  --       ruby = { "standardrb" },
-  --       markdown = { { "prettierd", "prettier" } },
-  --       erb = { "htmlbeautifier" },
-  --       html = { "htmlbeautifier" },
-  --       bash = { "beautysh" },
-  --       proto = { "buf" },
-  --       rust = { "rustfmt" },
-  --       yaml = { "yamlfix" },
-  --       toml = { "taplo" },
-  --       css = { { "prettierd", "prettier" } }   --   })
-  --
-  --   vim.keymap.set({ "n", "v" }, "<leader>l", function()
-  --     conform.format({
-  --       lsp_fallback = true,
-  --       async = false,
-  --       timeout_ms = 500,
-  --     })
-  --   end, { desc = "Format file or range (in visual mode)" })
-  -- end,
-  -- },
 }
+-- format_on_save = {
+--   lsp_fallback = true,
+--   async = false,
+--   timeout_ms = 500,
+-- },
+--
+-- notify_on_error = true,
+
+--   vim.keymap.set({ "n", "v" }, "<space>bf", function() -- TODO: check this one
+--     conform.format({
+--       timeout_ms = 500,
+--       async = false,
+--       -- lsp_fallback = true,
+--       lsp_fallback = false,
+--     })
+--   end, { desc = "Buffer format" }),
+--
+
+-- { -- https://github.com/exosyphon/nvim/blob/main/lua/exosyphon/lazy.lua
+--   "stevearc/conform.nvim",
+--   event = { "BufReadPre", "BufNewFile" },
+-- config = function()
+--   local conform = require("conform")
+--
+--   conform.setup({
+--     formatters_by_ft = {
+--       lua = { "stylua" },
+--       svelte = { { "prettierd", "prettier" } },
+--       javascript = { { "prettierd", "prettier" } },
+--       typescript = { { "prettierd", "prettier" } },
+--       javascriptreact = { { "prettierd", "prettier" } },
+--       typescriptreact = { { "prettierd", "prettier" } },
+--       json = { { "prettierd", "prettier" } },
+--       graphql = { { "prettierd", "prettier" } },
+--       java = { "google-java-format" },
+--       kotlin = { "ktlint" },
+--       ruby = { "standardrb" },
+--       markdown = { { "prettierd", "prettier" } },
+--       erb = { "htmlbeautifier" },
+--       html = { "htmlbeautifier" },
+--       bash = { "beautysh" },
+--       proto = { "buf" },
+--       rust = { "rustfmt" },
+--       yaml = { "yamlfix" },
+--       toml = { "taplo" },
+--       css = { { "prettierd", "prettier" } }   --   })
+--
+--   vim.keymap.set({ "n", "v" }, "<leader>l", function()
+--     conform.format({
+--       lsp_fallback = true,
+--       async = false,
+--       timeout_ms = 500,
+--     })
+--   end, { desc = "Format file or range (in visual mode)" })
+-- end,
+-- },

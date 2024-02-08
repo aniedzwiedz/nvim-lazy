@@ -114,12 +114,12 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "codeium", keyword_length = 3, max_item_count = 10 },
-        { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
-        { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
+        { name = "codeium", keyword_length = 2, max_item_count = 10 },
+        { name = "nvim_lsp", keyword_length = 2, max_item_count = 10 }, -- lsp
+        { name = "luasnip", keyword_length = 2, max_item_count = 10 }, -- snippets
         -- { name = "crates" },
-        { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
-        { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
+        { name = "buffer", keyword_length = 2, max_item_count = 10 }, -- text within current buffer
+        { name = "path", keyword_length = 2, max_item_count = 10 }, -- file system paths
       }),
       -- configure lspkind for vs-code like icons
       -- formatting = {

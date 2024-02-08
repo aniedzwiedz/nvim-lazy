@@ -25,6 +25,7 @@ return {
     local Util = require("lazyvim.util")
     local linters = require("lint").get_running()
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
+    local progress = require("lsp-progress").progress()
 
     vim.o.laststatus = vim.g.lualine_laststatus
 
@@ -69,6 +70,8 @@ return {
           },
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
           { Util.lualine.pretty_path() },
+          -- require('lsp-progress').progress,
+          linters,
         },
 
         lualine_x = {

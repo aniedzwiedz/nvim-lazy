@@ -9,8 +9,8 @@ return {
     },
     init = function()
       require("lazyvim.util").lsp.on_attach(function(_, buffer)
-          -- stylua: ignore
-          vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
+        ---@diagnostic disable-next-line: 631
+        vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
         vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
       end)
     end,
@@ -146,7 +146,20 @@ return {
       },
       cssls = {},
       marksman = {},
-      azure_pipelines_ls = {},
+      -- azure_pipelines_ls = {
+      --   settings = {
+      --     yaml = {
+      --       schemas = {
+      --         ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+      --           "/azure-pipeline*.y*l",
+      --           "/*.azure*",
+      --           "Azure-Pipelines/**/*.y*l",
+      --           "Pipelines/*.y*l",
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
       eslint = {},
       dockerls = {},
       docker_compose_language_service = {},
@@ -323,12 +336,23 @@ return {
               url = "",
             },
             schemas = {
-              kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+              -- kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
               ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
               -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
+              ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = {
+                "/*.k8s.yaml",
+                "k8s**.yaml",
+                "kube*/*.yaml",
+              },
               ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
                 "ci/*.yml",
                 ".gitlab-ci.yml",
+              },
+              ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+                "/azure-pipeline*.y*l",
+                "/*.azure*",
+                "Azure-Pipelines/**/*.y*l",
+                "Pipelines/*.y*l",
               },
               ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
               ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}",
@@ -364,6 +388,19 @@ return {
       },
     },
     setup = {
+
+      -- azure_pipelines_ls = function(opts)
+      --   local util = require("lspconfig.util")
+      --   require("lspconfig").azure_pipelines_ls.setup({
+      --     default_config = {
+      --       filetypes = { "wl" },
+      --       root_dir = util.root_pattern("azure-pipelines.yml"),
+      --       single_file_support = true,
+      --       autostart = false, -- Whether to autostart
+      --     },
+      --   })
+      -- end,
+
       tsserver = function(_, opts)
         require("typescript").setup({ server = opts })
         return true
@@ -415,10 +452,10 @@ return {
               name = "Argo CD Application",
               uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
             },
-            {
-              name = "SealedSecret",
-              uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json",
-            },
+            -- {
+            --   name = "SealedSecret",
+            --   uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json",
+            -- },
             -- schemas below are automatically loaded, but added
             -- them here so that they show up in the statusline
             {
@@ -428,6 +465,10 @@ return {
             {
               name = "GitHub Workflow",
               uri = "https://json.schemastore.org/github-workflow.json",
+            },
+            {
+              name = "Azure pipeline",
+              uri = "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json",
             },
           },
         })

@@ -56,6 +56,7 @@ return {
         "rust-analyzer",
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
+        "luacheck", 
         "isort", -- python formatter
         "black", -- python formatter
         "pylint", -- python linter

@@ -12,9 +12,12 @@ return {
     keys = {
       -- add a keymap to browse plugin files
       -- stylua: ignore
+      {"<leader>bb"  , "<cmd>Telescope buffers previewer=false<cr>", desc = "Find Buffers" },
       {
         "<leader>fp",
-        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
+        function()
+          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
+        end,
         desc = "Find Plugin File",
       },
       {
@@ -38,6 +41,41 @@ return {
       },
       sorting_strategy = "ascending",
       winblend = 0,
+      extensions = {
+        fzf = {
+          fuzzy = true, -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true, -- override the file sorter
+          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+        },
+      },
+      opts = function(_, opts)
+        local Util = require("lazyvim.util")
+        if not Util.has("flash.nvim") then
+          return
+        end
+        local function flash(prompt_bufnr)
+          require("flash").jump({
+            pattern = "^",
+            label = { after = { 0, 0 } },
+            search = {
+              mode = "search",
+              exclude = {
+                function(win)
+                  return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "TelescopeResults"
+                end,
+              },
+            },
+            action = function(match)
+              local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+              picker:set_selection(match.pos[1] - 1)
+            end,
+          })
+        end
+        opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
+          mappings = { n = { s = flash }, i = { ["<c-s>"] = flash } },
+        })
+      end,
     },
     -- lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({ winblend = 10 }))
 
@@ -166,20 +204,22 @@ return {
       close_on_exit = true, -- close the terminal window when the process exits
       float_opts = { border = "rounded" },
     },
-  }, -- file explorer
-  -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   keys = {
-  --     { "<leader>E", false },
-  --   },
-  -- },
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim", -- file explorer
+    keys = {
+      { "<leader>E", false },
+      { "<leader>,", false },
+    },
+  },
+
   {
     "lewis6991/gitsigns.nvim",
     -- event = "LazyFile",
     event = "BufEnter",
     cmd = "Gitsigns",
     config = function()
-      local icons = require("config.icons")
+      -- local icons = require("config.icons")
 
       require("gitsigns").setup({
 

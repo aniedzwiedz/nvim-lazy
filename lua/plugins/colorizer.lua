@@ -1,7 +1,27 @@
 return {
   "NvChad/nvim-colorizer.lua",
   event = { "BufReadPre", "BufNewFile" },
-  config = true,
+  config = function()
+    require("colorizer").setup({
+      filetypes = {
+        "typescript",
+        "typescriptreact",
+        "javascript",
+        "javascriptreact",
+        "css",
+        "html",
+        "astro",
+        "lua",
+      },
+      user_default_options = {
+        names = false,
+        rgb_fn = true,
+        hsl_fn = true,
+        tailwind = "both",
+      },
+      buftypes = {},
+    })
+  end,
 }
 
 -- local M = {

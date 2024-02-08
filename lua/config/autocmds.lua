@@ -28,9 +28,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "Jenkinsfile", },
+  pattern = { "Jenkinsfile" },
   -- enable wrap mode for json files only
   command = "set filetype=groovy",
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "docker-compose*.y*l" },
+  command = "set filetype=yaml.docker-compose",
 })
 
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -50,6 +55,14 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.opt_local.spell = true
   end,
 })
+
+-- listen lsp-progress event and refresh lualine
+-- vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+-- vim.api.nvim_create_autocmd("User", {
+--   group = "lualine_augroup",
+--   pattern = "LspProgressStatusUpdated",
+--   callback = require("lualine").refresh,
+-- })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = {
