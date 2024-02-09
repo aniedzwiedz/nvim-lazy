@@ -118,7 +118,17 @@ return {
         { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
         { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
         -- { name = "crates" },
-        { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
+        -- { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
+        {
+          name = "buffer",
+          priority_weight = 2,
+          option = {
+            keyword_length = 2,
+            get_bufnrs = function()
+              return vim.api.nvim_list_bufs()
+            end,
+          },
+        },
         { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
       }),
       -- configure lspkind for vs-code like icons

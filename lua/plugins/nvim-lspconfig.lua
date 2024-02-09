@@ -146,7 +146,7 @@ return {
       },
       cssls = {},
       marksman = {},
-      azure_pipelines_ls = {},
+      -- azure_pipelines_ls = {},
       eslint = {},
       dockerls = {},
       docker_compose_language_service = {},
@@ -323,7 +323,7 @@ return {
               url = "",
             },
             schemas = {
-              kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+              -- kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
               ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
               -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
               ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
@@ -411,6 +411,8 @@ return {
           schemas = {
             -- not loaded automatically, manually select with
             -- :Telescope yaml_schema
+            ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
+            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
             {
               name = "Argo CD Application",
               uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
