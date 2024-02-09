@@ -5,13 +5,45 @@ return {
     priority = 1000,
     opts = {
       transparent_background = true,
+      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+      dim_inactive = {
+        enabled = false, -- dims the background color of inactive window
+        shade = "dark",
+        percentage = 0.15, -- percentage of the shade to apply to the inactive window
+      },
       integrations = {
         cmp = true,
         gitsigns = true,
         nvimtree = true,
         treesitter = true,
-        notify = false,
-        mini = false,
+        notify = true,
+        alpha = true,
+        mason = true,
+        which_key = true,
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = { "italic" },
+            hints = { "italic" },
+            warnings = { "italic" },
+            information = { "italic" },
+          },
+          underlines = {
+            errors = { "underline" },
+            hints = { "underline" },
+            warnings = { "underline" },
+            information = { "underline" },
+          },
+          inlay_hints = {
+            background = true,
+          },
+        },
+        neogit = true,
+        mini = {
+          enabled = true,
+          indentscope_color = "",
+        },
       },
     },
   },
@@ -237,7 +269,7 @@ return {
     },
     config = function(_, opts)
       require("kanagawa").setup(opts) -- Replace this with your favorite colorscheme
-      vim.cmd("colorscheme kanagawa") -- Replace this with your favorite colorscheme
+      -- vim.cmd("colorscheme kanagawa") -- Replace this with your favorite colorscheme
 
       -- Custom diff colors
       vim.cmd([[
@@ -257,7 +289,8 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "kanagawa",
+      colorscheme = "catppuccin",
+      -- colorscheme = "kanagawa",
       -- colorscheme = "gruvbox",
       -- colorscheme = "everforest",
     },
