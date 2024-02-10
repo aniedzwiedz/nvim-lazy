@@ -448,6 +448,8 @@ return {
           schemas = {
             -- not loaded automatically, manually select with
             -- :Telescope yaml_schema
+            ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
+            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
             {
               name = "Argo CD Application",
               uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
