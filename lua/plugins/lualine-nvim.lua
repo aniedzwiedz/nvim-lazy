@@ -1,3 +1,7 @@
+if true then
+  return {}   -- NOTE: przesuniete do lualine.lua
+end
+
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
@@ -112,7 +116,6 @@ return {
         },
 
         lualine_z = {
-
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,

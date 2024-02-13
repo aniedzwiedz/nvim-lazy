@@ -3,5 +3,6 @@
         "require",
         "icons",
         "cmp"],
-    "workspace.checkThirdParty": false
+    "workspace.checkThirdParty": false,
+    "completion.autoRequire": false
 }
