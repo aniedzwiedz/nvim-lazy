@@ -162,6 +162,28 @@ return {
       transparent_mode = true,
     },
   },
+  -- {
+  --   "oxfist/night-owl.nvim",
+  --   enable = false,
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     local night_owl = require("night-owl")
+  --
+  --     -- 👇 Add your own personal settings here
+  --     night_owl.setup({
+  --       transparent_background = true,
+  --       -- These are the default settings
+  --       bold = false,
+  --       italics = false,
+  --       underline = false,
+  --       undercurl = false,
+  --     })
+  --
+  --     -- load the colorscheme here
+  --     -- vim.cmd.colorscheme("night-owl")
+  --   end,
+  -- },
   {
     "folke/tokyonight.nvim",
     opts = {

@@ -1,3 +1,8 @@
+if true then
+  return {-- NOTE: in nonels.lua
+  }
+end
+
 return {
   {
     "nvimtools/none-ls.nvim",

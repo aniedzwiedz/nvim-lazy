@@ -12,8 +12,8 @@ return {
 
     require("lualine").setup({
       options = {
-        -- theme = "auto",
-        theme = "catppuccin",
+        theme = "auto",
+        -- theme = "catppuccin",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = { -- Filetypes to disable lualine for.

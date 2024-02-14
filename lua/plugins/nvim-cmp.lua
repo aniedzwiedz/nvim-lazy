@@ -19,7 +19,7 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "L3MON4D3/LuaSnip",
     "hrsh7th/cmp-nvim-lua",
-    "onsails/lspkind.nvim",
+    "onsails/lspkind.nvim", -- Adds vscode-like pictograms
     "rafamadriz/friendly-snippets",
     {
       "Exafunction/codeium.nvim",
@@ -46,7 +46,7 @@ return {
       return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
     end
 
-    -- local icons = require("config.icons")
+    local kind_icons = require("config.icons")
 
     cmp.setup({
       snippet = {
@@ -114,8 +114,9 @@ return {
 
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "codeium", keyword_length = 3, max_item_count = 10 },
+        -- { name = "codeium", keyword_length = 3, max_item_count = 10 },
         { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
+        { name = "nvim_lua" },
         { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
         -- { name = "crates" },
         -- { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
@@ -130,7 +131,32 @@ return {
           },
         },
         { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
+        { name = "crates" },
       }),
+---@diagnostic disable-next-line: missing-fields
+      formatting = {
+        format = function(entry, vim_item)
+          local lspkind_ok, lspkind = pcall(require, "lspkind")
+          if not lspkind_ok then
+            -- From kind_icons array
+            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+            -- Source
+            vim_item.menu = ({
+              -- codeium = "[Codeium]",
+              -- copilot = "[Copilot]",
+              nvim_lsp = "[LSP]",
+              nvim_lua = "[Lua]",
+              luasnip = "[LuaSnip]",
+              buffer = "[Buffer]",
+              path = "[Path]",
+            })[entry.source.name]
+            return vim_item
+          else
+            -- From lspkind
+            return lspkind.cmp_format()(entry, vim_item)
+          end
+        end,
+      },
       -- configure lspkind for vs-code like icons
       -- formatting = {
       --   format = lspkind.cmp_format({

@@ -1,3 +1,10 @@
+
+
+if true then return {
+-- NOTE: added in nonels.lua
+
+} end
+
 return {
   "stevearc/conform.nvim", -- https://github.com/stevearc/conform.nvim formatter plugin
   -- -- optional = true,

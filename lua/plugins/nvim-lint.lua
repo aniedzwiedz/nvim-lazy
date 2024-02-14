@@ -10,6 +10,12 @@
 --   },
 -- }
 
+if true then
+  return {
+    -- NOTE: added in nonels.lua
+  }
+end
+
 return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/linting.lua
   "mfussenegger/nvim-lint",
   events = { "BufWritePost", "BufReadPost", "InsertLeave" },
