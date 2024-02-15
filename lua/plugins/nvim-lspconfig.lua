@@ -166,7 +166,7 @@ return {
       eslint = {},
       dockerls = {},
       docker_compose_language_service = {},
-      -- solargraph = {},
+      solargraph = {},
       jdtls = {},
       terraformls = {},
       puppet = {

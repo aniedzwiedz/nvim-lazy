@@ -42,12 +42,14 @@ return {
 
         sources = {
           formatting.stylua,
-          formatting.prettier,
+          formatting.prettier.with({
+            filetypes = { "html", "json", "yaml", "markdown", "vue" },
+          }),
           -- formatting.gofumpt,
           formatting.terraform_fmt,
           formatting.buf,
           formatting.beautysh,
-          formatting.yamlfmt,
+          -- formatting.yamlfmt,
           formatting.black,
           formatting.rubocop,
 
