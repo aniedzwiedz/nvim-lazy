@@ -48,8 +48,8 @@ return {
           formatting.buf,
           formatting.beautysh,
           formatting.yamlfmt,
-          formatting.prettier,
           formatting.black,
+          formatting.rubocop,
 
           -- diagnostics.eslint_d,
           diagnostics.eslint_d.with({ -- js/ts linter
@@ -62,6 +62,7 @@ return {
           diagnostics.shellcheck,
           diagnostics.yamllint,
           diagnostics.luacheck,
+          diagnostics.puppet_lint,
 
           -- code_actions.gitsigns,
           -- code_actions.refactoring,

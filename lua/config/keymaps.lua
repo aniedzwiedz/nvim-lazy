@@ -22,6 +22,8 @@ end
 
 -- Copy whole file content to clipboard with C-c
 keymap.set("n", "<C-c>", ":%y+<CR>", opts)
+-- Select all
+--  keymap.set("n", "<c-a>", "ggvg", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -59,14 +61,14 @@ vim.api.nvim_set_keymap("n", "<leader>sH", "", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>|", "", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>,", "", { noremap = true, silent = true })
 
- vim.keymap.set('n', '<leader>?', function()
+vim.keymap.set("n", "<leader>?", function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   -- require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+  require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
     winblend = 50,
     previewer = false,
-  })
-end, { desc = '[?] Fuzzily search in current buffer]' })
+  }))
+end, { desc = "[?] Fuzzily search in current buffer]" })
 
 -- DO NOT USE THIS IN YOU OWN CONFIG!!
 -- use `vim.keymap.set` instead
@@ -95,40 +97,55 @@ if Util.has("gitsigns.nvim") then
 end
 
 -- Copy file paths
-vim.keymap.set("n", "<leader>fz", "<cmd>let @+ = expand(\"%\")<CR>", { desc = "Copy File Name" })
-vim.keymap.set("n", "<leader>fZ", "<cmd>let @+ = expand(\"%:p\")<CR>", { desc = "Copy File Path" })
+vim.keymap.set("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
+vim.keymap.set("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
 
 -- Replace word under cursor across entire buffer
-vim.keymap.set("n", "<leader>cw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "[c]hange word under cursor" })
+vim.keymap.set(
+  "n",
+  "<leader>cw",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "[c]hange word under cursor" }
+)
 
 -- Run Tests
 vim.keymap.set("n", "<leader>t", "<cmd>lua require('neotest').run.run()<CR>", { desc = "Run Test" })
-vim.keymap.set("n", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
-  { desc = "Run Test File" })
-vim.keymap.set("n", "<leader>td", "<cmd>lua require('neotest').run.run(vim.fn.getcwd())<CR>",
-  { desc = "Run Current Test Directory" })
-vim.keymap.set("n", "<leader>tp", "<cmd>lua require('neotest').output_panel.toggle()<CR>",
-  { desc = "Toggle Test Output Panel" })
+vim.keymap.set(
+  "n",
+  "<leader>tf",
+  "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+  { desc = "Run Test File" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>td",
+  "<cmd>lua require('neotest').run.run(vim.fn.getcwd())<CR>",
+  { desc = "Run Current Test Directory" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>tp",
+  "<cmd>lua require('neotest').output_panel.toggle()<CR>",
+  { desc = "Toggle Test Output Panel" }
+)
 vim.keymap.set("n", "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", { desc = "Run Last Test" })
 vim.keymap.set("n", "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", { desc = "Toggle Test Summary" })
 
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
-keymap.set("n", '<leader>go', function()
-  if vim.bo.filetype == 'python' then
-    vim.api.nvim_command('PyrightOrganizeImports')
+keymap.set("n", "<leader>go", function()
+  if vim.bo.filetype == "python" then
+    vim.api.nvim_command("PyrightOrganizeImports")
   end
 end)
 
-keymap.set("n", '<leader>tc', function()
-  if vim.bo.filetype == 'python' then
-    require('dap-python').test_class();
+keymap.set("n", "<leader>tc", function()
+  if vim.bo.filetype == "python" then
+    require("dap-python").test_class()
   end
 end)
 
-keymap.set("n", '<leader>tm', function()
-  if vim.bo.filetype == 'python' then
-    require('dap-python').test_method();
+keymap.set("n", "<leader>tm", function()
+  if vim.bo.filetype == "python" then
+    require("dap-python").test_method()
   end
 end)
-
