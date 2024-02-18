@@ -103,7 +103,8 @@ vim.keymap.set("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "C
 -- Replace word under cursor across entire buffer
 vim.keymap.set(
   "n",
-  "<leader>cw",
+  -- "<leader>cw",
+  "<F2>",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "[c]hange word under cursor" }
 )

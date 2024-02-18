@@ -82,33 +82,6 @@ return {
       { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
     },
   },
-  {
-    "akinsho/toggleterm.nvim",
-    cmd = { "ToggleTerm", "TermExec" },
-    opts = {
-      highlights = {
-        Normal = { link = "Normal" },
-        NormalNC = { link = "NormalNC" },
-        NormalFloat = { link = "NormalFloat" },
-        FloatBorder = { link = "FloatBorder" },
-        StatusLine = { link = "StatusLine" },
-        StatusLineNC = { link = "StatusLineNC" },
-        WinBar = { link = "WinBar" },
-        WinBarNC = { link = "WinBarNC" },
-      },
-      size = 10,
-      on_create = function()
-        vim.opt.foldcolumn = "0"
-        vim.opt.signcolumn = "no"
-      end,
-      open_mapping = [[<F7>]],
-      shading_factor = 2, -- the percentage by which to lighten terminal background, default: -30 (gets multiplied by -3 if background is light)
-      direction = "float",
-      auto_scroll = true, -- automatically scroll to the bottom on terminal output
-      close_on_exit = true, -- close the terminal window when the process exits
-      float_opts = { border = "rounded" },
-    },
-  }, -- file explorer
   -- {
   --   "nvim-neo-tree/neo-tree.nvim",
   --   keys = {
@@ -125,46 +98,46 @@ return {
 
       require("gitsigns").setup({
 
-        signs = {
-          add = { text = "▎" },
-          change = { text = "▎" },
-          delete = { text = "" },
-          topdelete = { text = "" },
-          changedelete = { text = "▎" },
-          untracked = { text = "▎" },
-        },
         -- signs = {
-        --   add = {
-        --     hl = "GitSignsAdd",
-        --     text = icons.ui.BoldLineLeft,
-        --     numhl = "GitSignsAddNr",
-        --     linehl = "GitSignsAddLn",
-        --   },
-        --   change = {
-        --     hl = "GitSignsChange",
-        --     text = icons.ui.BoldLineLeft,
-        --     numhl = "GitSignsChangeNr",
-        --     linehl = "GitSignsChangeLn",
-        --   },
-        --   delete = {
-        --     hl = "GitSignsDelete",
-        --     text = icons.ui.TriangleShortArrowRight,
-        --     numhl = "GitSignsDeleteNr",
-        --     linehl = "GitSignsDeleteLn",
-        --   },
-        --   topdelete = {
-        --     hl = "GitSignsDelete",
-        --     text = icons.ui.TriangleShortArrowRight,
-        --     numhl = "GitSignsDeleteNr",
-        --     linehl = "GitSignsDeleteLn",
-        --   },
-        --   changedelete = {
-        --     hl = "GitSignsChange",
-        --     text = icons.ui.BoldLineLeft,
-        --     numhl = "GitSignsChangeNr",
-        --     linehl = "GitSignsChangeLn",
-        --   },
+        --   add = { text = "▎" },
+        --   change = { text = "▎" },
+        --   delete = { text = "" },
+        --   topdelete = { text = "" },
+        --   changedelete = { text = "▎" },
+        --   untracked = { text = "▎" },
         -- },
+        signs = {
+          add = {
+            hl = "GitSignsAdd",
+            text = icons.ui.BoldLineMiddle,
+            numhl = "GitSignsAddNr",
+            linehl = "GitSignsAddLn",
+          },
+          change = {
+            hl = "GitSignsChange",
+            text = icons.ui.BoldLineDashedMiddle,
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
+          },
+          delete = {
+            hl = "GitSignsDelete",
+            text = icons.ui.TriangleShortArrowRight,
+            numhl = "GitSignsDeleteNr",
+            linehl = "GitSignsDeleteLn",
+          },
+          topdelete = {
+            hl = "GitSignsDelete",
+            text = icons.ui.TriangleShortArrowRight,
+            numhl = "GitSignsDeleteNr",
+            linehl = "GitSignsDeleteLn",
+          },
+          changedelete = {
+            hl = "GitSignsChange",
+            text = icons.ui.BoldLineMiddle,
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
+          },
+        },
 
         watch_gitdir = {
           interval = 1000,
