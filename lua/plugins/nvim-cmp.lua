@@ -21,6 +21,7 @@ return {
     "hrsh7th/cmp-nvim-lua",
     "onsails/lspkind.nvim", -- Adds vscode-like pictograms
     "rafamadriz/friendly-snippets",
+    "petertriho/cmp-git",
     {
       "Exafunction/codeium.nvim",
       cmd = "Codeium",
@@ -33,10 +34,26 @@ return {
     vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#CA42F0" })
     vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#F64D00" })
     vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#FDE030" })
+    require("cmp_git").setup()
 
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
+
+    local icons = require("config.icons")
+    local types = require("cmp.types")
+    local compare = require("cmp.config.compare")
+    local source_mapping = {
+      nvim_lsp = "[Lsp]",
+      luasnip = "[Snip]",
+      buffer = "[Buffer]",
+      nvim_lua = "[Lua]",
+      treesitter = "[Tree]",
+      path = "[Path]",
+      rg = "[Rg]",
+      nvim_lsp_signature_help = "[Sig]",
+      -- cmp_tabnine = "[TNine]",
+    }
     -- require("luasnip/loaders/from_vscode").lazy_load()
     require("luasnip.loaders.from_vscode").load({ paths = { "./snippets/" } }) -- Load snippets from my-snippets folder
     require("luasnip").filetype_extend("typescriptreact", { "html" })
@@ -46,8 +63,7 @@ return {
       return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
     end
 
-    local kind_icons = require("config.icons")
-
+    ---@diagnostic disable-next-line: redundant-parameter
     cmp.setup({
       snippet = {
         expand = function(args)
@@ -115,13 +131,14 @@ return {
       -- sources for autocompletion
       sources = cmp.config.sources({
         -- { name = "codeium", keyword_length = 3, max_item_count = 10 },
-        { name = "nvim_lsp", keyword_length = 3, max_item_count = 10 }, -- lsp
-        { name = "nvim_lua" },
-        { name = "luasnip", keyword_length = 3, max_item_count = 10 }, -- snippets
+        { name = "nvim_lsp", max_item_count = 10 }, -- lsp
+        { name = "nvim_lua", max_item_count = 10 },
+        { name = "nvim_lsp_signature_help", max_item_count = 5 },
+        { name = "luasnip", max_item_count = 5 }, -- snippets
         -- { name = "crates" },
         -- { name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
+        name = "buffer",
         {
-          name = "buffer",
           priority_weight = 2,
           option = {
             keyword_length = 2,
@@ -132,31 +149,32 @@ return {
         },
         { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
         { name = "crates" },
+        { name = "git" },
       }),
----@diagnostic disable-next-line: missing-fields
-      formatting = {
-        format = function(entry, vim_item)
-          local lspkind_ok, lspkind = pcall(require, "lspkind")
-          if not lspkind_ok then
-            -- From kind_icons array
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-            -- Source
-            vim_item.menu = ({
-              -- codeium = "[Codeium]",
-              -- copilot = "[Copilot]",
-              nvim_lsp = "[LSP]",
-              nvim_lua = "[Lua]",
-              luasnip = "[LuaSnip]",
-              buffer = "[Buffer]",
-              path = "[Path]",
-            })[entry.source.name]
-            return vim_item
-          else
-            -- From lspkind
-            return lspkind.cmp_format()(entry, vim_item)
-          end
-        end,
-      },
+      ---@diagnostic disable-next-line: missing-fields
+      -- formatting = {
+      --   format = function(entry, vim_item)
+      --     local lspkind_ok, lspkind = pcall(require, "lspkind")
+      --     if not lspkind_ok then
+      --       -- From kind_icons array
+      --       vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+      --       -- Source
+      --       vim_item.menu = ({
+      --         -- codeium = "[Codeium]",
+      --         -- copilot = "[Copilot]",
+      --         nvim_lsp = "[LSP]",
+      --         nvim_lua = "[Lua]",
+      --         luasnip = "[LuaSnip]",
+      --         buffer = "[Buffer]",
+      --         path = "[Path]",
+      --       })[entry.source.name]
+      --       return vim_item
+      --     else
+      --       -- From lspkind
+      --       return lspkind.cmp_format()(entry, vim_item)
+      --     end
+      --   end,
+      -- },
       -- configure lspkind for vs-code like icons
       -- formatting = {
       --   format = lspkind.cmp_format({
@@ -174,14 +192,16 @@ return {
       --     return item
       --   end,
       --  },
-      -- formatting = {
-      --   format = require("lspkind").cmp_format({
-      --     -- mode = "symbol",
-      --     maxwidth = 100,
-      --     ellipsis_char = ".....",
-      --     symbol_map = { Codeium = "" },
-      --   }),
-      -- },
+      ---@diagnostic disable-next-line: missing-fields
+      formatting = {
+        format = require("lspkind").cmp_format({
+          -- mode = "symbol",
+          maxwidth = 50,
+          show_labelDetails = true,
+          ellipsis_char = ".....",
+          symbol_map = { Codeium = "" },
+        }),
+      },
       -- formatting = {
       --   fields = { "kind", "abbr", "menu" },
       --   format = function(entry, vim_item)
@@ -228,7 +248,8 @@ return {
       },
       window = {
         completion = {
-          border = "rounded",
+          -- border = "none",
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
           winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
           col_offset = -3,
           side_padding = 1,
@@ -236,7 +257,7 @@ return {
           scrolloff = 8,
         },
         documentation = {
-          border = "rounded",
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
           winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
         },
       },
@@ -272,14 +293,16 @@ return {
       }),
     })
   end,
-  ---@param opts cmp.ConfigSchema
-  opts = function(_, opts)
-    table.insert(opts.sources, 1, {
-      name = "codeium",
-      group_index = 1,
-      priority = 100,
-    })
-  end,
+  -- ---@param opts cmp.ConfigSchema
+  -- opts = function(_, opts)
+  -- --   local cmp = require("cmp")
+  -- --   opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+  --   table.insert(opts.sources, 1, {
+  --     name = "codeium",
+  --     group_index = 1,
+  --     priority = 100,
+  --   })
+  -- end,
 
   -- dependencies = {
   --   "onsails/lspkind.nvim",
@@ -293,9 +316,9 @@ return {
   --   },
   -- },
 
-  -- opts = function(_, opts)
-  --   local cmp = require("cmp")
-  --   opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
-  -- end,
+  opts = function(_, opts)
+    local cmp = require("cmp")
+    opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+  end,
   --
 }
