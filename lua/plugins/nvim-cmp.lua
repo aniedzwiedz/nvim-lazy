@@ -133,7 +133,7 @@ return {
         { name = "path", keyword_length = 4, max_item_count = 10 }, -- file system paths
         { name = "crates" },
       }),
----@diagnostic disable-next-line: missing-fields
+      ---@diagnostic disable-next-line: missing-fields
       formatting = {
         format = function(entry, vim_item)
           local lspkind_ok, lspkind = pcall(require, "lspkind")
@@ -150,6 +150,19 @@ return {
               buffer = "[Buffer]",
               path = "[Path]",
             })[entry.source.name]
+
+            if vim.tbl_contains({ "nvim_lsp" }, entry.source.name) then
+              local duplicates = {
+                buffer = 1,
+                path = 1,
+                nvim_lsp = 0,
+                luasnip = 1,
+              }
+
+              local duplicates_default = 0
+
+              vim_item.dup = duplicates[entry.source.name] or duplicates_default
+            end
             return vim_item
           else
             -- From lspkind
@@ -241,7 +254,7 @@ return {
         },
       },
       experimental = {
-        ghost_text = false,
+        ghost_text = true,
       },
     })
     -- NOTE: https://github.com/bitterteasweetorange/nvim/blob/main/lua/plugins/cmp.lua
