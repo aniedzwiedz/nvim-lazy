@@ -33,6 +33,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
   command = "set filetype=groovy",
 })
 
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "docker-compose*.ym*l" },
+  -- enable wrap mode for json files only
+  command = "set filetype=yaml.docker-compose",
+})
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "sh",
 --   callback = function()
