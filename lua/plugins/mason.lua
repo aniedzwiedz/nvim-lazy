@@ -31,8 +31,6 @@ return {
         },
       },
       ensure_installed = {
-        "shellcheck",
-        "beautysh",
         "shfmt",
         -- "beautysh",
         "flake8",
@@ -43,7 +41,6 @@ return {
         "java-test",
         "java-debug-adapter",
         "solargraph",
-        "shellcheck",
         "clangd",
         "codelldb",
         "commitlint",
@@ -59,7 +56,7 @@ return {
         "isort", -- python formatter
         "black", -- python formatter
         "pylint", -- python linter
-        "eslint_d", -- js linter
+        -- "eslint_d", -- js linter
         "debugpy",
         "flake8",
         "isort",

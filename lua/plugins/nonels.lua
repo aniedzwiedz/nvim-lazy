@@ -4,25 +4,33 @@ return {
   dependencies = {
     "jay-babu/mason-null-ls.nvim",
     "nvim-lua/plenary.nvim",
+    "gbprod/none-ls-shellcheck.nvim",
+    "nvimtools/none-ls-extras.nvim",
+    "gbprod/none-ls-luacheck.nvim",
   },
   config = function()
     local mason_null_ls = require("mason-null-ls")
     local null_ls = require("null-ls")
 
     local null_ls_utils = require("null-ls.utils")
+    -- https://github.com/gbprod/none-ls-shellcheck.nvim
+    require("null-ls").register(require("none-ls-shellcheck.diagnostics"))
+    -- require("null-ls").register(require("none-ls-shellcheck.code_actions"))
+    require("null-ls").register(require("none-ls-luacheck.diagnostics.luacheck"))
 
     mason_null_ls.setup({
       ensure_installed = {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
-        "eslint_d", -- js linter
+        "eslint-lsp", -- js linter
         -- "golangci_lint", -- go linter
         "terraform_fmt", -- terraform formatter
         "terraform_validate", -- terraform linter
-        "shellcheck", -- shell linter
+        -- "shellcheck", -- shell linter
         "yamllint", -- yaml linter
         "buf", -- buf formatter
-        "beautysh", -- shell formatter
+        -- "beautysh", -- shell formatter  --NOTE: Deprecated
+        "shfmt",
         -- "gofumpt", -- go formatter
         "yamlfmt", -- yaml formatter
         "spell", -- spell checker
@@ -45,6 +53,7 @@ return {
       debug = false,
 
       sources = {
+        require("none-ls.code_actions.eslint"),
         formatting.stylua,
         formatting.prettier.with({
           filetypes = { "html", "json", "yaml", "markdown", "vue" },
@@ -52,22 +61,21 @@ return {
         -- formatting.gofumpt,
         formatting.terraform_fmt,
         formatting.buf,
-        formatting.beautysh,
+        -- formatting.beautysh,
+        formatting.shfmt,
         -- formatting.yamlfmt,
         formatting.black,
         formatting.rubocop,
 
         -- diagnostics.eslint_d,
-        diagnostics.eslint_d.with({ -- js/ts linter
-          condition = function(utils)
-            return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
-          end,
-        }),
+        -- diagnostics.eslint_d.with({ -- js/ts linter
+        --   condition = function(utils)
+        --     return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
+        --   end,
+        -- }),
         -- diagnostics.golangci_lint,
         diagnostics.terraform_validate,
-        diagnostics.shellcheck,
         diagnostics.yamllint,
-        diagnostics.luacheck,
         diagnostics.puppet_lint,
         -- Here we set a conditional to call the rubocop formatter. If we have a Gemfile in the project, we call "bundle exec rubocop", if not we only call "rubocop".
         conditional(function(utils)

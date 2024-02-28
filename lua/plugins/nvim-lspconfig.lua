@@ -163,7 +163,7 @@ return {
       cssls = {},
       marksman = {},
       -- azure_pipelines_ls = {},
-      eslint = {},
+      -- eslint_lsp = {},
       dockerls = {},
       docker_compose_language_service = {},
       solargraph = {},

@@ -1,9 +1,8 @@
-
-
-if true then return {
--- NOTE: added in nonels.lua
-
-} end
+if true then
+  return {
+    -- NOTE: added in nonels.lua
+  }
+end
 
 return {
   "stevearc/conform.nvim", -- https://github.com/stevearc/conform.nvim formatter plugin
@@ -27,7 +26,8 @@ return {
       markdown = { "prettier" },
       erb = { "htmlbeautifier" },
       html = { "htmlbeautifier" },
-      bash = { "beautysh" },
+      -- bash = { "beautysh" },  --NOTE: Deprecated
+      bash = { "shfmt" },
       proto = { "buf" },
       rust = { "rustfmt" },
       -- yaml = { "yamlfix" },
