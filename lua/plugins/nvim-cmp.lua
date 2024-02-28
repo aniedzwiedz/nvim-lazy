@@ -205,16 +205,15 @@ return {
       --     return item
       --   end,
       --  },
-      ---@diagnostic disable-next-line: missing-fields
-      formatting = {
-        format = require("lspkind").cmp_format({
-          -- mode = "symbol",
-          maxwidth = 50,
-          show_labelDetails = true,
-          ellipsis_char = ".....",
-          symbol_map = { Codeium = "" },
-        }),
-      },
+      -- formatting = {
+      --   format = require("lspkind").cmp_format({
+      --     -- mode = "symbol",
+      --     maxwidth = 50,
+      --     show_labelDetails = true,
+      --     ellipsis_char = ".....",
+      --     symbol_map = { Codeium = "" },
+      --   }),
+      -- },
       -- formatting = {
       --   fields = { "kind", "abbr", "menu" },
       --   format = function(entry, vim_item)
