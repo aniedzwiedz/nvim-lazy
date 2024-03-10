@@ -77,6 +77,7 @@ return {
         diagnostics.terraform_validate,
         diagnostics.yamllint,
         diagnostics.puppet_lint,
+        diagnostics.ansiblelint,
         -- Here we set a conditional to call the rubocop formatter. If we have a Gemfile in the project, we call "bundle exec rubocop", if not we only call "rubocop".
         conditional(function(utils)
           return utils.root_has_file("Gemfile")

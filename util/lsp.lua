@@ -23,6 +23,6 @@ local M = {}
 --   end
 -- end
 
-M.diagnostic_signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = "" }
+-- M.diagnostic_signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = "" }
 
 return M

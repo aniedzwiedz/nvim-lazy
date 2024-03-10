@@ -1,0 +1,12 @@
+{
+  "ut": {
+    "description": "inserts an unordered list todo item",
+    "body": ["- [ ] ${0}"],
+    "prefix": ["ut"]
+  },
+  "ot": {
+    "description": "inserts an ordered list todo item",
+    "body": ["1. [ ] ${0}"],
+    "prefix": ["ot"]
+  }
+}

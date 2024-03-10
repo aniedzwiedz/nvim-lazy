@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "Jenkinsfile", },
+  pattern = { "Jenkinsfile" },
   -- enable wrap mode for json files only
   command = "set filetype=groovy",
 })
@@ -56,6 +56,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
+-- close some filetypes with <q>
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = {
     "netrw",
@@ -69,6 +70,21 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     "lir",
     "DressingSelect",
     "tsplayground",
+    "PlenaryTestPopup",
+    "help",
+    "lspinfo",
+    "man",
+    "notify",
+    "qf",
+    "query",
+    "spectre_panel",
+    "startuptime",
+    "tsplayground",
+    "neotest-output",
+    "checkhealth",
+    "neotest-summary",
+    "neotest-output-panel",
+    "aerial",
     "",
   },
   callback = function()
@@ -93,41 +109,99 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 --   },
 -- })
 
--- Ansible support
+-- Set Jenkinsfile filetype before all other code execution.
+addtype({
+  pattern = {
+    [".*.groovy"] = function(_, bufnr)
+      local content = vim.api.nvim_buf_get_lines(bufnr, 1, 3, false)
+      local type = "groovy"
+      for _, c in ipairs(content) do
+        if string.match(c, [[.*filetype=Jenkinsfile.*]]) then
+          type = "Jenkinsfile"
+        end
+      end
+      return type
+    end,
+  },
+})
+
+-- -- Ansible support
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "*.yml" },
+  -- pattern = {"*ctl*.yml", "*.yml" },
+  pattern = { "*ctl*.yml", ".*/tasks/.*.y*ml", "*/playbooks/*.yml", "*.yml" },
   -- command = "setfiletype yaml.ansible",
   callback = function()
-    -- let treesitter use bash highlight for zsh files as well
     -- require("lvim.lsp.manager").setup("ansiblels", opts)
     require("lspconfig.configs")
   end,
 })
 --
-local function set_ansible(bufnr)
-  local content = vim.filetype.getlines(bufnr, 1, 10)
+local function set_yaml(bufnr)
+  local content = vim.api.nvim_buf_get_lines(bufnr, 1, 10, false)
+  local filename = vim.api.nvim_buf_get_name(bufnr)
   local matcher = { "^- hosts:", "^- name:" }
-  local doset = false
+  local type = "yaml"
+  if string.find(filename, "templates") then
+    type = "helm"
+  end
   for _, m in ipairs(matcher) do
     for _, c in ipairs(content) do
       if string.match(c, m) then
-        doset = true
+        type = "yaml.ansible"
       end
     end
   end
-  if doset then
-    return "yaml.ansible"
-  else
-    return "yaml"
-  end
+  return type
 end
 addtype({
   pattern = {
     [".*.yaml"] = function(_, bufnr)
-      return set_ansible(bufnr)
+      return set_yaml(bufnr)
     end,
     [".*.yml"] = function(_, bufnr)
-      return set_ansible(bufnr)
+      return set_yaml(bufnr)
     end,
   },
 })
+
+-- Advanced Gemfile
+addtype({
+  pattern = {
+    ["Gemfile.*"] = function(_, _)
+      return "ruby"
+    end,
+  },
+})
+
+-- return {
+--   polish = function()
+--     local function yaml_ft(path, bufnr)
+--       -- get content of buffer as string
+--       local content = vim.filetype.getlines(bufnr)
+--       if type(content) == "table" then
+--         content = table.concat(content, "\n")
+--       end
+--
+--       -- check if file is in roles, tasks, or handlers folder
+--       local path_regex = vim.regex("(tasks\\|roles\\|handlers)/")
+--       if path_regex and path_regex:match_str(path) then
+--         return "yaml.ansible"
+--       end
+--       -- check for known ansible playbook text and if found, return yaml.ansible
+--       local regex = vim.regex("hosts:\\|tasks:")
+--       if regex and regex:match_str(content) then
+--         return "yaml.ansible"
+--       end
+--
+--       -- return yaml if nothing else
+--       return "yaml"
+--     end
+--
+--     vim.filetype.add({
+--       extension = {
+--         yml = yaml_ft,
+--         yaml = yaml_ft,
+--       },
+--     })
+--   end,
+-- }

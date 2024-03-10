@@ -1,3 +1,6 @@
+
+if true then return {} end  -- TODO: nie dziala przechodzenie do pliku
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -5,6 +8,14 @@ return {
     "folke/neodev.nvim",
     { "williamboman/mason.nvim", config = true },
     "williamboman/mason-lspconfig.nvim",
+    "b0o/SchemaStore.nvim",
+    {
+      "someone-stole-my-name/yaml-companion.nvim",
+      -- NOTE:https://www.arthurkoziel.com/json-schemas-in-neovim/
+      config = function()
+        require("telescope").load_extension("yaml_schema")
+      end,
+    },
     {
       "j-hui/fidget.nvim",
       opts = {},
@@ -32,7 +43,7 @@ return {
       title = false,
       underline = true,
       virtual_text = true,
-      signs = true,
+      -- signs = true,
       update_in_insert = false,
       severity_sort = true,
       float = {
@@ -53,14 +64,14 @@ return {
       --   prefix = "icons",
       -- },
       -- severity_sort = true,
-      -- signs = {
-      --   text = {
-      --     [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
-      --     [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
-      --     [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
-      --     [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
-      --   },
-      -- },
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
+          [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
+          [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
+          [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
+        },
+      },
       -- handlers = {
       --   -- Add borders to LSP popups
       --   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
@@ -83,7 +94,7 @@ return {
       timeout_ms = nil,
     },
 
-
+    ---@type lspconfig.options
     servers = {
       lua_ls = {
         settings = {
@@ -170,7 +181,6 @@ return {
       jdtls = {},
       terraformls = {},
       puppet = {
-
         cmd = {
           "puppet-languageserver",
           "--stdio",
@@ -300,6 +310,8 @@ return {
         },
       },
       yamlls = {
+        hover = true, -- Enable/disable hover
+        keyOrdering = false, -- Enforces alphabetical ordering of keys in mappings when set to true. Default is false
         -- Have to add this for yamlls to understand that we support line folding
         capabilities = {
           textDocument = {
@@ -309,76 +321,55 @@ return {
             },
           },
         },
-        -- lazy-load schemastore when needed
-        -- NOTE:https://www.arthurkoziel.com/json-schemas-in-neovim/
-        dependencies = {
-          "b0o/SchemaStore.nvim",
-          "someone-stole-my-name/yaml-companion.nvim",
-        },
-        on_new_config = function(new_config)
-          -- new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
-          -- vim.list_extend(new_config.settings.yaml.schemas, require("schemastore").yaml.schemas())
-          new_config.settings.yaml.schemas =
-            vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
-        end,
+        -- on_new_config = function(new_config)
+        --   -- new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
+        --   -- vim.list_extend(new_config.settings.yaml.schemas, require("schemastore").yaml.schemas())
+        --   new_config.settings.yaml.schemas =
+        --     vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
+        -- end,
         settings = {
           redhat = { telemetry = { enabled = false } },
-          yaml = {
-            hover = true, -- Enable/disable hover
-            keyOrdering = false, -- Enforces alphabetical ordering of keys in mappings when set to true. Default is false
-            format = {
-              singleQuote = true,
-              -- enable = true,
+
+          schemas = {
+            -- kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+              "ci/*.yml",
+              ".gitlab-ci.yml",
             },
-            validate = true,
-            schemaStore = {
-              -- Must disable built-in schemaStore support to use
-              -- schemas from SchemaStore.nvim plugin
-              enable = false,
-              -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-              url = "",
-            },
-            schemas = {
-              -- kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
-              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-              -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.0/all.json"] = "k8s/**",
-              ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
-                "ci/*.yml",
-                ".gitlab-ci.yml",
-              },
-              ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
-              ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",
-              ["schemas/conf/ansible.json"] = "conf/ansible.yaml",
-              ["schemas/conf/jenkins/endpoints.json"] = "conf/jenkins/endpoints.yaml",
-              ["schemas/conf/jenkins/settings.json"] = "conf/jenkins/settings.yaml",
-              ["schemas/conf/jenkins/acgs/components.json"] = "conf/jenkins/acgs/components.yaml",
-              ["schemas/conf/jenkins/acgs/config.json"] = "conf/jenkins/acgs/config.yaml",
-              ["schemas/conf/jenkins/acgs/streams.json"] = "conf/jenkins/acgs/streams.yaml",
-              ["schemas/conf/jenkins/aops/components.json"] = "conf/jenkins/aops/components.yaml",
-              ["schemas/conf/jenkins/aops/config.json"] = "conf/jenkins/aops/config.yaml",
-              ["schemas/conf/jenkins/aops/streams.json"] = "conf/jenkins/aops/streams.yaml",
-              ["schemas/conf/jenkins/arbus/components.json"] = "conf/jenkins/arbus/components.yaml",
-              ["schemas/conf/jenkins/arbus/config.json"] = "conf/jenkins/arbus/config.yaml",
-              ["schemas/conf/jenkins/boa/components.json"] = "conf/jenkins/boa/components.yaml",
-              ["schemas/conf/jenkins/boa/config.json"] = "conf/jenkins/boa/config.yaml",
-              ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
-              ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
-              ["schemas/conf/jenkins/tpm/components.json"] = "conf/jenkins/tpm/components.yaml",
-              ["schemas/conf/jenkins/tpm/config.json"] = "conf/jenkins/tpm/config.yaml",
-              ["schemas/conf/jenkins/config.json"] = "conf/jenkins/apw/config.yaml",
-              ["schemas/conf/jenkins/components.json"] = "conf/jenkins/apw/components.yaml",
-              ["schemas/conf/pullrequests.json"] = "conf/jenkins/pullrequests.yaml",
-              ["schemas/data/env/env_file.json"] = "data/env/*.yaml",
-              ["schemas/profiles.json"] = "profiles/**/*.yaml",
-              ["schemas/products.json"] = "products/**/*.yaml",
-              -- ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}"
-              -- ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",
-            },
+            ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
+            ["https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json"] = "docker-compose*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"] = "argocd-application.yaml",
+            ["schemas/conf/ansible.json"] = "conf/ansible.yaml",
+            ["schemas/conf/jenkins/endpoints.json"] = "conf/jenkins/endpoints.yaml",
+            ["schemas/conf/jenkins/settings.json"] = "conf/jenkins/settings.yaml",
+            ["schemas/conf/jenkins/acgs/components.json"] = "conf/jenkins/acgs/components.yaml",
+            ["schemas/conf/jenkins/acgs/config.json"] = "conf/jenkins/acgs/config.yaml",
+            ["schemas/conf/jenkins/acgs/streams.json"] = "conf/jenkins/acgs/streams.yaml",
+            ["schemas/conf/jenkins/aops/components.json"] = "conf/jenkins/aops/components.yaml",
+            ["schemas/conf/jenkins/aops/config.json"] = "conf/jenkins/aops/config.yaml",
+            ["schemas/conf/jenkins/aops/streams.json"] = "conf/jenkins/aops/streams.yaml",
+            ["schemas/conf/jenkins/arbus/components.json"] = "conf/jenkins/arbus/components.yaml",
+            ["schemas/conf/jenkins/arbus/config.json"] = "conf/jenkins/arbus/config.yaml",
+            ["schemas/conf/jenkins/boa/components.json"] = "conf/jenkins/boa/components.yaml",
+            ["schemas/conf/jenkins/boa/config.json"] = "conf/jenkins/boa/config.yaml",
+            ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
+            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
+            ["schemas/conf/jenkins/tpm/components.json"] = "conf/jenkins/tpm/components.yaml",
+            ["schemas/conf/jenkins/tpm/config.json"] = "conf/jenkins/tpm/config.yaml",
+            ["schemas/conf/jenkins/config.json"] = "conf/jenkins/apw/config.yaml",
+            ["schemas/conf/jenkins/components.json"] = "conf/jenkins/apw/components.yaml",
+            ["schemas/conf/pullrequests.json"] = "conf/jenkins/pullrequests.yaml",
+            ["schemas/data/env/env_file.json"] = "data/env/*.yaml",
+            ["schemas/profiles.json"] = "profiles/**/*.yaml",
+            ["schemas/products.json"] = "products/**/*.yaml",
           },
         },
       },
     },
+
+    ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
     setup = {
       tsserver = function(_, opts)
         require("typescript").setup({ server = opts })
@@ -409,6 +400,12 @@ return {
       end,
 
       yamlls = function()
+        -- example to setup with typescript.nvim
+        -- tsserver = function(_, opts)
+        --   require("typescript").setup({ server = opts })
+        --   return true
+        -- end,
+
         -- Neovim < 0.10 does not have dynamic registration for formatting
         if vim.fn.has("nvim-0.10") == 0 then
           require("lazyvim.util").lsp.on_attach(function(client, _)
@@ -417,6 +414,7 @@ return {
             end
           end)
         end
+
         local cfg = require("yaml-companion").setup({
           -- detect k8s schemas based on file content
           builtin_matchers = {
@@ -427,8 +425,15 @@ return {
           schemas = {
             -- not loaded automatically, manually select with
             -- :Telescope yaml_schema
-            ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
-            ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
+            -- {
+            --   name = "Flux GitRepository",
+            --   uri = "https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/gitrepository-source-v1.json",
+            -- },
+            -- {
+            --   name = "ICHA",
+            --   ["schemas/conf/jenkins/arn/config.json"] = "conf/jenkins/arn/config.yaml",
+            --   ["schemas/conf/jenkins/arn/streams.json"] = "conf/jenkins/arn/streams.yaml",
+            -- },
             {
               name = "Argo CD Application",
               uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
@@ -452,6 +457,12 @@ return {
         require("lspconfig")["yamlls"].setup(cfg)
         require("telescope").load_extension("yaml_schema")
       end,
+
+      -- example to setup with typescript.nvim
+      -- tsserver = function(_, opts)
+      --   require("typescript").setup({ server = opts })
+      --   return true
+      -- end,
 
       -- eslint = function()
       --   require("lazyvim.util").lsp.on_attach(function(client)

@@ -10,6 +10,15 @@ return {
     -- local icons = require("config.icons")
     local lazy_status = require("lazy.status")
 
+    -- get schema for current buffer
+    local function get_schema()
+      local schema = require("yaml-companion").get_buf_schema(0)
+      if schema.result[1].name == "none" then
+        return ""
+      end
+      return schema.result[1].name
+    end
+
     require("lualine").setup({
       options = {
         theme = "auto",
@@ -43,6 +52,7 @@ return {
             },
           },
           "fancy_diff",
+          get_schema,
         },
         lualine_x = {
           { "fancy_searchcount" },

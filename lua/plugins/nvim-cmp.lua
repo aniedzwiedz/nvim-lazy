@@ -1,3 +1,9 @@
+if true then
+  return {
+    -- NOTE: added in nonels.lua
+  }
+end
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",

@@ -21,9 +21,20 @@ return {
     local icons = require("lazyvim.config").icons
     require("neo-tree").setup({
       close_if_last_window = true,
+      sources = {
+        "filesystem",
+        "buffers",
+        "git_status",
+        -- "diagnostics",
+        -- "document_symbols",
+      },
+
       source_selector = {
-        winbar = false,
+        winbar = true,
         statusline = false,
+        -- content_layout = "center",
+        -- tabs_layout = "equal",
+        -- show_separator_on_edge = true,
       },
       popup_border_style = "single",
       enable_git_status = true,
