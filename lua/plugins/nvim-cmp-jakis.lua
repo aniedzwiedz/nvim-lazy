@@ -45,12 +45,15 @@ local M = {
 function M.config()
   local cmp = require("cmp")
   local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+  require("cmp_git").setup()
+  local luasnip = require("luasnip")
 
   local icons = vim.deepcopy(require("config.icons").kind)
 
+  -- require("luasnip.loaders.from_vscode").load({ paths = { "./snippets/" } }) -- Load snippets from my-snippets folder
   require("luasnip/loaders/from_vscode").lazy_load({
-    paths = { "~/.local/share/nvim/lazy/friendly-snippets" },
-    include = { "python", "rust", },
+    paths = { "~/.local/share/nvim/lazy/friendly-snippets", "./snippets/" },
+    include = { "python", "rust" },
   })
 
   cmp.setup({
@@ -66,9 +69,11 @@ function M.config()
           nvim_lsp = "[LSP]",
           luasnip = "[LuaSnip]",
           nvim_lua = "[Lua]",
-          latex_symbols = "[LaTeX]",
+          -- latex_symbols = "[LaTeX]",
           neorg = "[Neorg]",
           path = "[Path]",
+          rg = "[Rg]",
+          nvim_lsp_signature_help = "[Sig]",
           --cmp_tabnine = "[TN]",
         })[entry.source.name]
         return vim_item
@@ -214,6 +219,7 @@ function M.config()
         keyword_length = 2,
         group_index = 5,
       },
+      { name = "git" },
       --{ name = "cmp_tabnine" },
     }, {
       { name = "buffer" },
