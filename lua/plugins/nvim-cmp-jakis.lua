@@ -19,12 +19,12 @@ local M = {
     },
     --{ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp", config = tabnine_config },
     "windwp/nvim-autopairs",
-    {
-      "Exafunction/codeium.nvim",
-      cmd = "Codeium",
-      build = ":Codeium Auth",
-      opts = {},
-    },
+    -- {
+    --   "Exafunction/codeium.nvim",
+    --   cmd = "Codeium",
+    --   build = ":Codeium Auth",
+    --   opts = {},
+    -- },
   },
 }
 
@@ -64,7 +64,7 @@ function M.config()
 
         -- Source
         vim_item.menu = ({
-          codeium = "[Codeium]",
+          -- codeium = "[Codeium]",
           buffer = "[Buffer]",
           nvim_lsp = "[LSP]",
           luasnip = "[LuaSnip]",
@@ -169,10 +169,10 @@ function M.config()
           return not context.in_treesitter_capture("string") and not context.in_syntax_group("String")
         end,
       },
-      {
-        name = "codeium",
-        group_index = 2,
-      },
+      -- {
+      --   name = "codeium",
+      --   group_index = 2,
+      -- },
       {
         name = "nvim_lsp",
         group_index = 2,
