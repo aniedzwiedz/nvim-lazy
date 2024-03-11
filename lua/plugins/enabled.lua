@@ -211,6 +211,19 @@ return {
         -- },
 
         -- remote = 'github', -- force the use of a specific remote
+        router = {
+          browse = {
+            ["^git.gtech.com"] = "https://git.gtech.com/projects/"
+              .. "{_A.ORG}/"
+              .. "repos/{_A.REPO}/"
+              -- .. "{_A.REV}/"
+              .. "browse/{_A.FILE}"
+              .. "?at=refs/heads/{_A.CURRENT_BRANCH}"
+              .. "#{_A.LSTART}"
+              -- .. "{_A.LEND > _A.LSTART and ('&lines-count=' .. _A.LEND - _A.LSTART + 1) or ''}",
+              .. "{(_A.LEND > _A.LSTART and (':' .. _A.LEND) or '')}",
+          },
+        },
       })
     end,
   },
