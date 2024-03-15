@@ -184,6 +184,10 @@ return {
     opts = {
       kind = "split",
     },
+    keys = {
+      { "<leader>gg", "<cmd>Neogit kind=split <cr>", desc = "Open Meogit" },
+      -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
+    },
   },
   { "b0o/SchemaStore.nvim" },
   { "folke/neodev.nvim" },
