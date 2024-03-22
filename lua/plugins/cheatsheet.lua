@@ -3,7 +3,7 @@ local M = {
   cmd = "Cheatsheet",
   event = "VeryLazy",
   dependencies = {
-    { "ianbattersby/telescope.nvim" },
+    -- { "ianbattersby/telescope.nvim" },
     { "nvim-lua/popup.nvim" },
     { "nvim-lua/plenary.nvim" },
   },

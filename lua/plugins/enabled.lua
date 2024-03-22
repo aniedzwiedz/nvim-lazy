@@ -69,19 +69,6 @@ return {
     },
     main = "ibl",
   },
-  {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-    keys = {
-      { "<leader>gD", "<cmd>DiffviewOpen <cr>", desc = "Open DiffviewOpen" },
-      -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
-      { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
-    },
-  },
   -- {
   --   "nvim-neo-tree/neo-tree.nvim",
   --   keys = {

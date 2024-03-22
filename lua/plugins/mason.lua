@@ -49,7 +49,7 @@ return {
         "tailwindcss-language-server",
         "marksman",
         -- "quick_lint_js",
-        "pyright",
+        -- "pyright",
         "rust-analyzer",
         "prettier", -- prettier formatter
         "stylua", -- lua formatter

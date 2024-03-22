@@ -9,14 +9,16 @@ return {
     "gbprod/none-ls-luacheck.nvim",
   },
   config = function()
+    -- https://github.com/gbprod/none-ls-shellcheck.nvim
+    require("null-ls").register(require("none-ls-shellcheck.diagnostics"))
+    require("null-ls").register(require("none-ls-shellcheck.code_actions"))
+    -- require("null-ls").register(require("none-ls-shellcheck.code_actions"))
+    require("null-ls").register(require("none-ls-luacheck.diagnostics.luacheck"))
+
     local mason_null_ls = require("mason-null-ls")
     local null_ls = require("null-ls")
 
     local null_ls_utils = require("null-ls.utils")
-    -- https://github.com/gbprod/none-ls-shellcheck.nvim
-    require("null-ls").register(require("none-ls-shellcheck.diagnostics"))
-    -- require("null-ls").register(require("none-ls-shellcheck.code_actions"))
-    require("null-ls").register(require("none-ls-luacheck.diagnostics.luacheck"))
 
     mason_null_ls.setup({
       ensure_installed = {
@@ -26,7 +28,7 @@ return {
         -- "golangci_lint", -- go linter
         "terraform_fmt", -- terraform formatter
         "terraform_validate", -- terraform linter
-        -- "shellcheck", -- shell linter
+        "shellcheck", -- shell linter
         "yamllint", -- yaml linter
         "buf", -- buf formatter
         -- "beautysh", -- shell formatter  --NOTE: Deprecated
@@ -41,19 +43,21 @@ return {
     local formatting = null_ls.builtins.formatting
     local diagnostics = null_ls.builtins.diagnostics
     -- local code_actions = null_ls.builtins.code_actions
+
+    -- local code_actions = null_ls.builtins.code_actions
     -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     --
-    local conditional = function(fn)
-      local utils = require("null-ls.utils").make_conditional_utils()
-      return fn(utils)
-    end
+    -- local conditional = function(fn)
+    --   local utils = require("null-ls.utils").make_conditional_utils()
+    --   return fn(utils)
+    -- end
 
     null_ls.setup({
       root_dir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
       debug = false,
 
       sources = {
-        require("none-ls.code_actions.eslint"),
+        -- require("none-ls.code_actions.eslint"),
         formatting.stylua,
         formatting.prettier.with({
           filetypes = { "html", "json", "yaml", "markdown", "vue" },
@@ -78,25 +82,26 @@ return {
         diagnostics.yamllint,
         diagnostics.puppet_lint,
         diagnostics.ansiblelint,
+        diagnostics.mypy,
         -- Here we set a conditional to call the rubocop formatter. If we have a Gemfile in the project, we call "bundle exec rubocop", if not we only call "rubocop".
-        conditional(function(utils)
-          return utils.root_has_file("Gemfile")
-              and null_ls.builtins.formatting.rubocop.with({
-                command = "bundle",
-                args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.formatting.rubocop._opts.args),
-              })
-            or null_ls.builtins.formatting.rubocop
-        end),
+        -- conditional(function(utils)
+        --   return utils.root_has_file("Gemfile")
+        --       and null_ls.builtins.formatting.rubocop.with({
+        --         command = "bundle",
+        --         args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.formatting.rubocop._opts.args),
+        --       })
+        --     or null_ls.builtins.formatting.rubocop
+        -- end),
 
         -- Same as above, but with diagnostics.rubocop to make sure we use the proper rubocop version for the project
-        conditional(function(utils)
-          return utils.root_has_file("Gemfile")
-              and null_ls.builtins.diagnostics.rubocop.with({
-                command = "bundle",
-                args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
-              })
-            or null_ls.builtins.diagnostics.rubocop
-        end),
+        -- conditional(function(utils)
+        --   return utils.root_has_file("Gemfile")
+        --       and null_ls.builtins.diagnostics.rubocop.with({
+        --         command = "bundle",
+        --         args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
+        --       })
+        --     or null_ls.builtins.diagnostics.rubocop
+        -- end),
 
         -- code_actions.gitsigns,
         -- code_actions.refactoring,
