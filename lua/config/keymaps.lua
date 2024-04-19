@@ -22,14 +22,12 @@ end
 
 -- Copy whole file content to clipboard with C-c
 map("n", "<C-c>", ":%y+<CR>", opts)
--- Select all
---  keymap.set("n", "<c-a>", "ggvg", opts)
 
 -- Fast saving
 -- map("n", "<Leader>w", ":write!<CR>", opts)
 
 -- Select all
--- map("n", "<C-a>", "ggVG", opts)
+map("n", "<C-a>", "ggVG", opts)
 
 map("n", "<Esc>", ":nohlsearch<CR>", opts)
 
