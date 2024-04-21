@@ -174,6 +174,10 @@ function M.config()
       --   group_index = 2,
       -- },
       {
+        name = "llm-ls",
+        group_index = 2,
+      },
+      {
         name = "nvim_lsp",
         group_index = 2,
       },
