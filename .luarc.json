@@ -1,0 +1,11 @@
+{
+  "diagnostics.globals": ["Util", "vim",
+        "require",
+        "icons",
+        "cmp"],
+    "workspace.checkThirdParty": false,
+    "completion.autoRequire": false,
+    "diagnostics.disable": [
+        "missing-fields"
+    ]
+}
