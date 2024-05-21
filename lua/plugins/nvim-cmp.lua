@@ -90,6 +90,7 @@ return {
       -- NOTE: https://github.com/bitterteasweetorange/nvim/blob/main/lua/plugins/cmp.lua
       -- Set configuration for specific filetype.
       require("cmp_git").setup()
+
       cmp.setup.filetype("gitcommit", {
         sources = cmp.config.sources({
           { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
@@ -98,6 +99,13 @@ return {
         }),
       })
 
+      cmp.setup.filetype("NeogitCommitMessage", {
+        sources = cmp.config.sources({
+          { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+        }, {
+          { name = "buffer" },
+        }),
+      })
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
