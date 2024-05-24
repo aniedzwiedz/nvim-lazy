@@ -97,7 +97,7 @@ return {
       kind = "split",
     },
     keys = {
-      { "<leader>gg", "<cmd>Neogit kind=split <cr>", desc = "Open Meogit" },
+      { "<leader>gg", "<cmd>Neogit kind=vsplit <cr>", desc = "Open Meogit" },
       -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
     },
   },
