@@ -133,15 +133,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = goimport_sync_grp,
 })
 -- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   callback = function()
+--     local mark = vim.api.nvim_buf_get_mark(0, '"')
+--     local lcount = vim.api.nvim_buf_line_count(0)
+--     if mark[1] > 0 and mark[1] <= lcount then
+--       pcall(vim.api.nvim_win_set_cursor, 0, mark)
+--     end
+--   end,
+-- })
+--
 -- Set Jenkinsfile filetype before all other code execution.
 -- addtype({
 --   pattern = {
@@ -158,43 +159,43 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- -- Ansible support NOTE: moved to ftdetect/ansible.vim
 --
-vim.api.nvim_create_autocmd("BufEnter", {
-  -- pattern = {"*ctl*.yml", "*.yml" },
-  pattern = { "*ctl*.yml", ".*/tasks/.*.y*ml", "*/playbooks/*.yml", "*.yml" },
-  -- command = "setfiletype yaml.ansible",
-  callback = function()
-    -- require("lvim.lsp.manager").setup("ansiblels", opts)
-    require("lspconfig.configs")
-  end,
-})
---
-local function set_yaml(bufnr)
-  local content = vim.api.nvim_buf_get_lines(bufnr, 1, 10, false)
-  local filename = vim.api.nvim_buf_get_name(bufnr)
-  local matcher = { "^- hosts:", "^- name:" }
-  local type = "yaml"
-  if string.find(filename, "templates") then
-    type = "helm"
-  end
-  for _, m in ipairs(matcher) do
-    for _, c in ipairs(content) do
-      if string.match(c, m) then
-        type = "yaml.ansible"
-      end
-    end
-  end
-  return type
-end
-addtype({
-  pattern = {
-    [".*.yaml"] = function(_, bufnr)
-      return set_yaml(bufnr)
-    end,
-    [".*.yml"] = function(_, bufnr)
-      return set_yaml(bufnr)
-    end,
-  },
-})
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   -- pattern = {"*ctl*.yml", "*.yml" },
+--   pattern = { "*ctl*.yml", ".*/tasks/.*.y*ml", "*/playbooks/*.yml", "*.yml" },
+--   -- command = "setfiletype yaml.ansible",
+--   callback = function()
+--     -- require("lvim.lsp.manager").setup("ansiblels", opts)
+--     require("lspconfig.configs")
+--   end,
+-- })
+-- --
+-- local function set_yaml(bufnr)
+--   local content = vim.api.nvim_buf_get_lines(bufnr, 1, 10, false)
+--   local filename = vim.api.nvim_buf_get_name(bufnr)
+--   local matcher = { "^- hosts:", "^- name:" }
+--   local type = "yaml"
+--   if string.find(filename, "templates") then
+--     type = "helm"
+--   end
+--   for _, m in ipairs(matcher) do
+--     for _, c in ipairs(content) do
+--       if string.match(c, m) then
+--         type = "yaml.ansible"
+--       end
+--     end
+--   end
+--   return type
+-- end
+-- addtype({
+--   pattern = {
+--     [".*.yaml"] = function(_, bufnr)
+--       return set_yaml(bufnr)
+--     end,
+--     [".*.yml"] = function(_, bufnr)
+--       return set_yaml(bufnr)
+--     end,
+--   },
+-- })
 
 -- Advanced Gemfile
 addtype({

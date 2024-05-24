@@ -20,7 +20,7 @@ return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.confi
       dockerfile = { "hadolint" },
       terraform = { "tflint" },
       -- ruby = { "standardrb" },
-      ansible = { "ansible_lint" },
+      ansible = { "ansible-lint" },
       -- groovy = { "checkstyle" },
       groovy = { "npm-groovy-lint" },
       zsh = { "shfmt" },

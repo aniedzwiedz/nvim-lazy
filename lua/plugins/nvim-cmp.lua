@@ -17,11 +17,12 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lua",
       "onsails/lspkind.nvim", -- Adds vscode-like pictograms
       -- "rafamadriz/friendly-snippets",
       "petertriho/cmp-git",
+      { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+      "saadparwaiz1/cmp_luasnip",
       -- {
       --   "Exafunction/codeium.nvim",
       --   cmd = "Codeium",
@@ -74,7 +75,10 @@ return {
     -- },
 
     opts = function(_, opts)
-      local cmp = require("cmp")
+      local cmp = require "cmp"
+      local lspkind = require "lspkind"
+      lspkind.init {}
+
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -113,6 +117,26 @@ return {
           { name = "buffer" },
         },
       })
+
+      cmp.setup {
+        sources = {
+          { name = "nvim_lsp" },
+          -- { name = "cody" },
+          { name = "path" },
+          { name = "buffer" },
+        },
+        mapping = {
+          ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+          ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+          ["<C-y>"] = cmp.mapping(
+            cmp.mapping.confirm {
+              behavior = cmp.ConfirmBehavior.Insert,
+              select = true,
+            },
+            { "i", "c" }
+          ),
+        },
+      }
     end,
     --
   },
@@ -121,7 +145,7 @@ return {
   -- use ":Telescope yaml_schema" to change current schema.
   {
     "someone-stole-my-name/yaml-companion.nvim",
-    ft = { "yaml" },
+    ft = { "yaml", "yaml.ansible" },
     dependencies = {
       { "neovim/nvim-lspconfig" },
       { "nvim-lua/plenary.nvim" },
@@ -130,7 +154,7 @@ return {
     config = function(_, opts)
       local cfg = require("yaml-companion").setup(opts)
       require("lspconfig")["yamlls"].setup(cfg)
-      require("telescope").load_extension("yaml_schema")
+      require("telescope").load_extension "yaml_schema"
     end,
   },
 }
