@@ -3,10 +3,9 @@
 -- Add any additional keymaps here
 vim.g.mapleader = " "
 
-local Util = require("lazyvim.util")
+local Util = require "lazyvim.util"
 -- Silent keymap option
--- local opts = { silent = true }
-local opts = { noremap = true, silent = true }
+-- local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 -- yank to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
@@ -14,16 +13,16 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 map("n", "<leader>?", function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   -- require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-  require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+  require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
     --               initial_mode = "normal",
     --               sorting_strategy = "ascending",
     winblend = 10,
     previewer = false,
-  }))
+  })
 end, { desc = "[?] Fuzzily search in current buffer]" })
 
 -- Add toggle gitsigns blame line
-if Util.has("gitsigns.nvim") then
+if Util.has "gitsigns.nvim" then
   map(
     "n",
     "<leader>ub",
@@ -31,10 +30,10 @@ if Util.has("gitsigns.nvim") then
     { desc = "Toggle current line blame" }
   )
   map("n", "<leader>gl", function()
-    require("gitsigns").blame_line({ full = false })
+    require("gitsigns").blame_line { full = false }
   end, { desc = "View full Blame" })
   map("n", "<leader>gL", function()
-    require("gitsigns").blame_line({ full = true })
+    require("gitsigns").blame_line { full = true }
   end, { desc = "View full Git Blame" })
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
@@ -52,11 +51,10 @@ map(
   { desc = "[c]hange word under cursor" }
 )
 
-
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
 map("n", "<leader>go", function()
   if vim.bo.filetype == "python" then
-    vim.api.nvim_command("PyrightOrganizeImports")
+    vim.api.nvim_command "PyrightOrganizeImports"
   end
 end)
 
