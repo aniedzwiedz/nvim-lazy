@@ -38,6 +38,11 @@ if Util.has "gitsigns.nvim" then
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
 
+-- Change Commit Log to use Lazygit
+map("n", "<leader>gd", function()
+  LazyVim.lazygit { args = { "log" } }
+end, { desc = "Lazygit Commit Log" })
+
 -- Copy file paths
 map("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
 map("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })

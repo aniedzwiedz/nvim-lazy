@@ -294,18 +294,39 @@ return {
       -- vim.cmd("colorscheme kanagawa") -- Replace this with your favorite colorscheme
 
       -- Custom diff colors
-      vim.cmd([[
+      vim.cmd [[
       autocmd VimEnter * hi DiffAdd guifg=#00FF00 guibg=#005500
       autocmd VimEnter * hi DiffDelete guifg=#FF0000 guibg=#550000
       autocmd VimEnter * hi DiffChange guifg=#CCCCCC guibg=#555555
       autocmd VimEnter * hi DiffText guifg=#00FF00 guibg=#005500
-    ]])
+    ]]
 
       -- Custom border colors
-      vim.cmd([[
+      vim.cmd [[
       autocmd ColorScheme * hi NormalFloat guifg=#F9E7C0 guibg=#1F1F1F
       autocmd ColorScheme * hi FloatBorder guifg=#F9E7C0 guibg=#1F1F1F
-    ]])
+    ]]
+    end,
+  },
+  {
+    "projekt0n/github-nvim-theme",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require("github-theme").setup {
+        options = {
+          hide_end_of_buffer = true, -- Hide the '~' character at the end of the buffer for a cleaner look
+          hide_nc_statusline = true, -- Override the underline style for non-active statuslines
+          transparent = true,
+          dim_inactive = false, -- Non focused panes set to alternative background
+          module_default = true, -- Default enable value for modules
+          styles = {
+            comments = "italic",
+            keywords = "bold",
+            types = "italic,bold",
+          },
+        },
+      }
     end,
   },
   {

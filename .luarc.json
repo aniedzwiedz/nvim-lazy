@@ -2,7 +2,8 @@
   "diagnostics.globals": ["Util", "vim",
         "require",
         "icons",
-        "cmp"],
+        "cmp",
+        "config"],
     "workspace.checkThirdParty": false,
     "completion.autoRequire": false,
     "diagnostics.disable": [
