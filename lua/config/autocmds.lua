@@ -20,6 +20,14 @@ local addtype = vim.filetype.add
 --   end,
 -- })
 
+-- https://github.com/alesbrelih/gitlab-ci-ls
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".gitlab*",
+  callback = function()
+    vim.bo.filetype = "yaml.gitlab"
+  end,
+})
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = { "*.json", "*.jsonc" },
