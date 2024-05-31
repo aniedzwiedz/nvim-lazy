@@ -3,8 +3,8 @@ return {
     "lewis6991/gitsigns.nvim",
     lazy = false,
     config = function()
-      local icons = require("config.icons")
-      require("gitsigns").setup({
+      local icons = require "config.icons"
+      require("gitsigns").setup {
         signs = {
           add = {
             hl = "GitSignsAdd",
@@ -79,7 +79,7 @@ return {
 
           vim.keymap.set("n", "[[", require("gitsigns").prev_hunk, { buffer = bufnr, desc = "Previous git hunk" })
         end,
-      })
+      }
     end,
   },
   {
@@ -95,6 +95,20 @@ return {
     config = true,
     opts = {
       kind = "split",
+      commit_editor = {
+        kind = "auto",
+        show_staged_diff = true,
+        -- Accepted values:
+        -- "split" to show the staged diff below the commit editor
+        -- "vsplit" to show it to the right
+        -- "split_above" Like :top split
+        -- "vsplit_left" like :vsplit, but open to the left
+        -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
+        staged_diff_split_kind = "split",
+      },
+      commit_select_view = {
+        kind = "tab",
+      },
     },
     keys = {
       { "<leader>gg", "<cmd>Neogit kind=vsplit <cr>", desc = "Open Meogit" },
@@ -119,13 +133,13 @@ return {
     event = "BufRead",
     dependencies = { { "nvim-lua/plenary.nvim" } },
     config = function()
-      local wk = require("which-key")
-      wk.register({
+      local wk = require "which-key"
+      wk.register {
         ["<leader>gy"] = { "<cmd>GitLink<cr>", "Git link" },
         ["<leader>gY"] = { "<cmd>GitLink blame<cr>", "Git link blame" },
-      })
+      }
 
-      require("gitlinker").setup({
+      require("gitlinker").setup {
         message = true,
         -- mapping = {
         --   ["<leader>gY"] = {
@@ -154,7 +168,7 @@ return {
               .. "{(_A.LEND > _A.LSTART and (':' .. _A.LEND) or '')}",
           },
         },
-      })
+      }
     end,
   },
   {
@@ -174,10 +188,10 @@ return {
   "petertriho/cmp-git",
 
   config = function()
-    local format = require("cmp_git.format")
-    local sort = require("cmp_git.sort")
+    local format = require "cmp_git.format"
+    local sort = require "cmp_git.sort"
 
-    require("cmp_git").setup({
+    require("cmp_git").setup {
       -- defaults
       filetypes = { "gitcommit", "octo", "NeogitCommitMessage" },
       remotes = { "upstream", "origin" }, -- in order of most to least prioritized
@@ -276,6 +290,6 @@ return {
           end,
         },
       },
-    })
+    }
   end,
 }
