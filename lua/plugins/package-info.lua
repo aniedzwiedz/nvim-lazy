@@ -3,7 +3,7 @@ local M = {
 }
 
 function M.config()
-  require("package-info").setup({
+  require("package-info").setup {
     icons = {
       enable = true, -- Whether to display icons
       style = {
@@ -19,7 +19,7 @@ function M.config()
     -- `yarn.lock` or `package-lock.json`. If none are found it will use the
     -- provided one, if nothing is provided it will use `yarn`
     package_manager = "npm",
-  })
+  }
 end
 
 return M

@@ -15,12 +15,15 @@ vim.g.autoformat = false
 -- * a function with signature `function(buf) -> string|string[]`
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
+LazyVim.terminal.setup "zsh"
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
-opt.clipboard = "unnamedplus" -- Sync with system clipboard
+-- opt.clipboard = "unnamedplus" -- Sync with system clipboard
+opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 opt.conceallevel = 0 -- Hide/show * markup for bold and italic
-opt.completeopt = "menuone,noselect" -- Set completeopt to have a better completion experience
+-- opt.completeopt = "menuone,noselect" -- Set completeopt to have a better completion experience
+opt.completeopt = "menu,menuone,noselect"
 opt.backup = false -- create a backup file
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
@@ -87,18 +90,15 @@ end
 vim.opt.foldlevel = 99
 vim.opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 
-if vim.fn.has "nvim-0.9.0" == 1 then
-  vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
-end
-
--- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
 if vim.fn.has "nvim-0.10" == 1 then
-  vim.opt.foldmethod = "expr"
-  vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+  opt.smoothscroll = true
+  opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
+  opt.foldmethod = "expr"
+  opt.foldtext = ""
 else
-  vim.opt.foldmethod = "indent"
+  opt.foldmethod = "indent"
+  opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 end
-
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
 

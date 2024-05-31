@@ -308,27 +308,27 @@ return {
     ]]
     end,
   },
-  {
-    "projekt0n/github-nvim-theme",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require("github-theme").setup {
-        options = {
-          hide_end_of_buffer = true, -- Hide the '~' character at the end of the buffer for a cleaner look
-          hide_nc_statusline = true, -- Override the underline style for non-active statuslines
-          transparent = true,
-          dim_inactive = false, -- Non focused panes set to alternative background
-          module_default = true, -- Default enable value for modules
-          styles = {
-            comments = "italic",
-            keywords = "bold",
-            types = "italic,bold",
-          },
-        },
-      }
-    end,
-  },
+  -- {
+  --   "projekt0n/github-nvim-theme",
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     require("github-theme").setup {
+  --       options = {
+  --         hide_end_of_buffer = true, -- Hide the '~' character at the end of the buffer for a cleaner look
+  --         hide_nc_statusline = true, -- Override the underline style for non-active statuslines
+  --         transparent = true,
+  --         dim_inactive = false, -- Non focused panes set to alternative background
+  --         module_default = true, -- Default enable value for modules
+  --         styles = {
+  --           comments = "italic",
+  --           keywords = "bold",
+  --           types = "italic,bold",
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
   {
     "LazyVim/LazyVim",
     opts = {

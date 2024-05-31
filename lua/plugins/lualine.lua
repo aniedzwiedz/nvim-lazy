@@ -9,7 +9,7 @@ return {
   event = { "BufReadPost", "BufNewFile", "VeryLazy" },
   config = function()
     -- local icons = require("config.icons")
-    local lazy_status = require("lazy.status")
+    local lazy_status = require "lazy.status"
 
     -- get schema for current buffer
     local function get_schema()
@@ -20,12 +20,18 @@ return {
       return schema.result[1].name
     end
 
-    require("lualine").setup({
+    require("lualine").setup {
       options = {
         theme = "auto",
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
+        refresh = {
+          statusline = 100,
+        },
+
         -- theme = "catppuccin",
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        -- component_separators = { left = "", right = "" },
+        -- section_separators = { left = "", right = "" },
         disabled_filetypes = { -- Filetypes to disable lualine for.
           disabled_filetypes = {
             statusline = { "dashboard", "alpha", "starter", "toggleterm", "spectre_panel", "neo-tree" },
@@ -41,8 +47,10 @@ return {
         lualine_b = {
           -- "fancy_branch",
           { "branch", icon = { "", align = "right" } },
+          { "fancy_macro" },
         },
         lualine_c = {
+          -- { "fancy_cwd", substitute_home = true },
           {
             "filename",
             path = 1, -- 2 for full path
@@ -58,7 +66,7 @@ return {
           { "fancy_searchcount" },
           { "fancy_diagnostics", sources = { "nvim_lsp" }, symbols = { error = " ", warn = " ", info = " " } },
           { "fancy_lsp_servers" },
-          get_schema(),
+          get_schema()
         },
         lualine_y = {
           { "progress" },
@@ -71,6 +79,7 @@ return {
             -- color = { fg = "#ff9e64" },
           },
           { "encoding" },
+          -- { "fancy_filetype" },
           { "fileformat" },
         },
       },
@@ -84,6 +93,6 @@ return {
       },
       tabline = {},
       extensions = { "neo-tree", "lazy" },
-    })
+    }
   end,
 }
