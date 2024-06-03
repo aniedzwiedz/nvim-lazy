@@ -66,7 +66,7 @@ return {
           { "fancy_searchcount" },
           { "fancy_diagnostics", sources = { "nvim_lsp" }, symbols = { error = " ", warn = " ", info = " " } },
           { "fancy_lsp_servers" },
-          get_schema()
+          get_schema(),
         },
         lualine_y = {
           { "progress" },
@@ -76,7 +76,7 @@ return {
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,
-            -- color = { fg = "#ff9e64" },
+            color = { fg = "#ff9e64" },
           },
           { "encoding" },
           -- { "fancy_filetype" },

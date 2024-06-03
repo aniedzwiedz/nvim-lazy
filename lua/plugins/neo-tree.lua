@@ -1,7 +1,6 @@
 -- references:
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 -- https://github.com/nvim-neo-tree/neo-tree.nvim/wiki/Recipes
--- if true then return {} end  -- TODO: nie dziala przechodzenie do pliku
 
 return {
   "nvim-neo-tree/neo-tree.nvim",
