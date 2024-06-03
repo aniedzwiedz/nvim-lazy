@@ -6,36 +6,17 @@ return {
       local icons = require "config.icons"
       require("gitsigns").setup {
         signs = {
-          add = {
-            hl = "GitSignsAdd",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsAddNr",
-            linehl = "GitSignsAddLn",
-          },
-          change = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
-          delete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.TriangleShortArrowRight,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          topdelete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.TriangleShortArrowRight,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          changedelete = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
+          add = { text = "+" },
+          -- add = {
+          --   hl = "GitSignsAdd",
+          --   text = icons.git.LineAdded ,
+          --   numhl = "GitSignsAddNr",
+          --   linehl = "GitSignsAddLn",
+          -- },
+          change = { text = "~" },
+          delete = { text = "_" },
+          topdelete = { text = "‾" },
+          changedelete = { text = "~" },
         },
         signcolumn = true,
         numhl = false,
@@ -75,8 +56,13 @@ return {
             { buffer = bufnr, desc = "Preview git hunk" }
           )
 
+          vim.keymap.set(
+            "n",
+            "<leader>gR",
+            require("gitsigns").reset_hunk,
+            { buffer = bufnr, desc = "Reset git hunk (line)" }
+          )
           vim.keymap.set("n", "]]", require("gitsigns").next_hunk, { buffer = bufnr, desc = "Next git hunk" })
-
           vim.keymap.set("n", "[[", require("gitsigns").prev_hunk, { buffer = bufnr, desc = "Previous git hunk" })
         end,
       }
