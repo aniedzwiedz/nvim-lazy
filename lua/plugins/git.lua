@@ -3,6 +3,7 @@ return {
     "lewis6991/gitsigns.nvim",
     lazy = false,
     config = function()
+---@diagnostic disable-next-line: unused-local
       local icons = require "config.icons"
       require("gitsigns").setup {
         signs = {
