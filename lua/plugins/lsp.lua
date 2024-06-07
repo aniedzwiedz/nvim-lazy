@@ -14,10 +14,10 @@ return {
   --     },
   --   },
   -- },
-  "neovim/nvim-lspconfig",
+  'neovim/nvim-lspconfig',
   dependencies = {
-    "mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
+    'mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
   },
   opts = {
     -- inlay_hints = {
@@ -34,42 +34,76 @@ return {
       groovyls = {},
       yamlls = {
         -- cmd = { "yaml-language-server", "--stdio" },
-        filetypes = { "yaml" },
+        filetypes = { 'yaml' },
 
         settings = {
+          redhat = { telemetry = { enabled = false } },
           yaml = {
             validate = true,
             -- disable the schema store
-            schemaStore = {
-              -- enable = false,
-              -- url = "",
+            format = {
+              enable = true,
             },
-            schemas = require("schemastore").yaml.schemas {
-              kubernetes = { "k8s**.yaml", "kube*/*.yaml" },
+            schemaStore = {
+              enable = true,
+              url = 'https://www.schemastore.org/api/json/catalog.json',
+            },
+            hover = true,
+            schemaDownload = {
+              enable = true,
+            },
+            trace = { server = 'debug' },
+            schemas = require('schemastore').yaml.schemas {
+              kubernetes = { 'k8s**.yaml', 'kube*/*.yaml' },
               -- select subset from the JSON schema catalog
-              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
               -- ["../path/relative/to/file.yml"] = "/.github/workflows/*",
-              ["/conf/jenkins/arn/"] = "/schemas/conf/jenkins/arn/*",
+              ['/conf/jenkins/arn/'] = '/schemas/conf/jenkins/arn/*',
               select = {
-                "kustomization.yaml",
-                "docker-compose.yml",
+                'kustomization.yaml',
+                'docker-compose.yml',
               },
 
               -- additional schemas (not in the catalog)
               extra = {
-                url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json",
-                name = "Argo CD Application",
-                fileMatch = "argocd-application.yaml",
+                url = 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json',
+                name = 'Argo CD Application',
+                fileMatch = 'argocd-application.yaml',
               },
             },
           },
         },
       },
       bashls = {
-        filetypes = { "sh", "zsh" },
+        filetypes = { 'sh', 'zsh' },
       },
       vimls = {
-        filetypes = { "vim" },
+        filetypes = { 'vim' },
+      },
+      lua_ls = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim', 'awesome' },
+            },
+            telemetry = {
+              enable = false,
+            },
+            format = {
+              enable = false,
+              defaultConfig = {
+                indent_style = 'space',
+                indent_size = '2',
+              },
+            },
+            hint = {
+              enable = true,
+            },
+            completion = {
+              callSnippet = 'Replace',
+            },
+          },
+        },
       },
       -- lua_ls = {
       --   settings = {
@@ -101,7 +135,7 @@ return {
         -- lazy-load schemastore when needed
         on_new_config = function(new_config)
           new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-          vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+          vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
         end,
         settings = {
           json = {
