@@ -3,7 +3,7 @@ return {
     "lewis6991/gitsigns.nvim",
     lazy = false,
     config = function()
----@diagnostic disable-next-line: unused-local
+      ---@diagnostic disable-next-line: unused-local
       local icons = require "config.icons"
       require("gitsigns").setup {
         signs = {
@@ -81,7 +81,7 @@ return {
     },
     config = true,
     opts = {
-      kind = "split",
+      kind = "tab",
       commit_editor = {
         kind = "auto",
         show_staged_diff = true,
@@ -96,13 +96,17 @@ return {
       commit_select_view = {
         kind = "tab",
       },
+      commit_view = {
+        kind = "vsplit",
+        verify_commit = vim.fn.executable "gpg" == 1, -- Can be set to true or false, otherwise we try to find the binary
+      },
     },
     keys = {
       { "<leader>gg", "<cmd>Neogit kind=vsplit <cr>", desc = "Open Meogit" },
       -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
     },
   },
-  -- { "folke/neodev.nvim" },
+  -- { "folke/neodev.nvim" },  -- NOTE: I highly suggest you to use lazydev.nvim It's a much faster and better replacement for neodev
   -- {
   --   "someone-stole-my-name/yaml-companion.nvim",
   --   dependencies = {

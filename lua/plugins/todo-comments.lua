@@ -5,6 +5,7 @@ return {
   cmd = { "TodoTrouble", "TodoTelescope" },
   event = { "BufReadPost", "BufNewFile" },
   config = function()
+  
     require("todo-comments").setup {
       keywords = {
         FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },

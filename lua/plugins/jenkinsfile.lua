@@ -17,14 +17,6 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        groovyls = {},
-      },
-    },
-  },
-  {
     "mfussenegger/nvim-lint",
     optional = true,
     opts = {

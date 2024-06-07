@@ -1,5 +1,5 @@
 return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/linting.lua
-  "mfussenegger/nvim-lint",
+  "mfussenegger/nvim-lint", -- NOTE: disabled in ./disabled.lua 
   events = { "BufWritePost", "BufReadPost", "InsertLeave" },
   config = function()
     -- Define a table of linters for each filetype (not extension).
@@ -23,12 +23,12 @@ return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.confi
       ansible = { "ansible-lint" },
       -- groovy = { "checkstyle" },
       groovy = { "npm-groovy-lint" },
-      zsh = { "shfmt" },
-      lua = { "seleme" },
-      yaml = { "yamllint" },
+      -- zsh = { "shfmt" },
+      -- lua = { "seleme" },
+      -- yaml = { "yamllint" },
       asnible = { "ansible_lint" },
-      json = { "jsonlint" },
-      markdown = { "markdownlint" },
+      -- json = { "jsonlint" },
+      -- markdown = { "markdownlint" },
     }
 
     -- Automatically run linters after saving.  Use "InsertLeave" for more aggressive linting.

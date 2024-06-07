@@ -1,8 +1,8 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
-local addtype = vim.filetype.add
-
+-- local addtype = vim.filetype.add
+local api = vim.api
 -- Disable autoformat for lua files
 -- vim.api.nvim_create_autocmd({ "FileType" }, {
 --   pattern = { "bash", "zsh", "yml" },
@@ -20,26 +20,68 @@ local addtype = vim.filetype.add
 --   end,
 -- })
 
+-- don't auto comment new line
+api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+
 -- https://github.com/alesbrelih/gitlab-ci-ls
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = ".gitlab*",
   callback = function()
     vim.bo.filetype = "yaml.gitlab"
   end,
 })
 
+-- Enable spell checking for certain file types
+api.nvim_create_autocmd(
+  { "BufRead", "BufNewFile" },
+  -- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
+  {
+    pattern = { "*.txt", "*.md", "*.tex" },
+    callback = function()
+      vim.opt.spell = true
+      vim.opt.spelllang = "en,pl"
+    end,
+  }
+)
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
-vim.api.nvim_create_autocmd("BufEnter", {
+api.nvim_create_autocmd("BufEnter", {
   pattern = { "*.json", "*.jsonc" },
   -- enable wrap mode for json files only
   command = "setlocal wrap",
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
+-- if a file is a .env or .envrc file, set the filetype to sh
+vim.filetype.add {
+  filename = {
+    [".env"] = "sh",
+    [".envrc"] = "sh",
+    ["*.env"] = "sh",
+    ["*.envrc"] = "sh",
+  },
+}
+
+api.nvim_create_autocmd("BufEnter", {
   pattern = { "Jenkinsfile" },
   -- enable wrap mode for json files only
   command = "set filetype=groovy",
 })
+
+-- Advanced Gemfile
+
+api.nvim_create_autocmd("BufEnter", {
+  pattern = { "Gemfile.*" },
+  -- enable wrap mode for json files only
+  command = "set filetype=ruby",
+})
+
+-- addtype {
+--   pattern = {
+--     ["Gemfile.*"] = function(_, _)
+--       return "ruby"
+--     end,
+--   },
+-- }
 
 -- -- Set Jenkinsfile filetype before all other code execution.
 -- addtype({
@@ -57,7 +99,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 --   },
 -- })
 --
-vim.api.nvim_create_autocmd("BufEnter", {
+api.nvim_create_autocmd("BufEnter", {
   pattern = { "docker-compose*.ym*l" },
   -- enable wrap mode for json files only
   command = "set filetype=yaml.docker-compose",
@@ -72,7 +114,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 --   end,
 -- })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
@@ -81,7 +123,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd({ "FileType" }, {
+api.nvim_create_autocmd({ "FileType" }, {
   pattern = {
     "netrw",
     "Jaq",
@@ -112,19 +154,19 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     "",
   },
   callback = function()
-    vim.cmd([[
+    vim.cmd [[
       nnoremap <silent> <buffer> q :close<CR>
       set nobuflisted
-    ]])
+    ]]
   end,
 })
 
 -- resize neovim split when terminal is resized
-vim.api.nvim_command("autocmd VimResized * wincmd =")
+api.nvim_command "autocmd VimResized * wincmd ="
 
 -- fix terraform and hcl comment string
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
+api.nvim_create_autocmd("FileType", {
+  group = api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
   callback = function(ev)
     vim.bo[ev.buf].commentstring = "# %s"
   end,
@@ -132,8 +174,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Run gofmt + goimport on save
-local goimport_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
+local goimport_sync_grp = api.nvim_create_augroup("GoImport", {})
+api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
     require("go.format").goimport()
@@ -204,15 +246,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --     end,
 --   },
 -- })
-
--- Advanced Gemfile
-addtype({
-  pattern = {
-    ["Gemfile.*"] = function(_, _)
-      return "ruby"
-    end,
-  },
-})
 
 -- return {
 --   polish = function()

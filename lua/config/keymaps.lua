@@ -16,7 +16,7 @@ map("n", "<leader>?", function()
   require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
     --               initial_mode = "normal",
     --               sorting_strategy = "ascending",
-    winblend = 10,
+    winblend = 20,
     previewer = false,
   })
 end, { desc = "[?] Fuzzily search in current buffer]" })
@@ -37,6 +37,9 @@ if Util.has "gitsigns.nvim" then
   end, { desc = "View full Git Blame" })
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
+
+-- Select all
+map("n", "<leader>a", "ggVG", { desc = "Select all" })
 
 -- Change Commit Log to use Lazygit
 map("n", "<leader>gd", function()
