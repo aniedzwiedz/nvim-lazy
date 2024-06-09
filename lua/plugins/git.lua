@@ -83,7 +83,7 @@ return {
     opts = {
       kind = 'auto',
       commit_editor = {
-        kind = 'replace',
+        kind = 'auto',
         show_staged_diff = true,
         -- Accepted values:
         -- "split" to show the staged diff below the commit editor
