@@ -66,7 +66,7 @@ return {
           { "fancy_searchcount" },
           { "fancy_diagnostics", sources = { "nvim_lsp" }, symbols = { error = " ", warn = " ", info = " " } },
           { "fancy_lsp_servers" },
-          get_schema(),
+          -- get_schema(),
         },
         lualine_y = {
           { "progress" },

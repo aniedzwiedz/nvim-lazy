@@ -1,3 +1,7 @@
+
+-- stylua: ignore
+if true then return {} end
+
 return {
   {
     'hrsh7th/nvim-cmp',
@@ -98,6 +102,14 @@ return {
       local luasnip = require 'luasnip'
       lspkind.init {}
 
+      require('luasnip/loaders/from_vscode').lazy_load()
+      -- require('luasnip.loaders.from_vscode').load { paths = { './snippets/' } } -- Load snippets from my-snippets folder
+
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+      end
+
       local cmp_default_sources = {
         -- { name = 'codeium', group_index = 1, priority = 100 },
         { name = 'nvim_lsp', group_index = 2 },
@@ -121,16 +133,16 @@ return {
         { name = 'async_path', group_index = 6 },
         { name = 'dynamic', group_index = 8 },
         { name = 'fuzzy_path', group_index = 9, option = { fd_timeout_msec = 200 } },
-        st
       }
 
       vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
-      opts.snippet = {
-        expand = function(args)
-          require('luasnip').lsp_expand(args.body)
-        end,
-      }
-      table.insert(opts.sources, { name = 'luasnip' })
+
+      -- opts.snippet = {
+      --   expand = function(args)
+      --     require('luasnip').lsp_expand(args.body)
+      --   end,
+      -- }
+      -- table.insert(opts.sources, { name = 'luasnip' })
 
       -- local has_words_before = function()
       --   unpack = unpack or table.unpack
@@ -324,7 +336,8 @@ return {
             end
 
             local present, lspkind = pcall(require, 'lspkind')
-            local icons = require('core.defaults').icons.kinds
+            -- local icons = require('lazyvim.config').icons
+            local icons = require 'config.icons'
 
             if not present then
               return vim_item
@@ -343,10 +356,10 @@ return {
                   -- dap = '「DAP」',
                   dynamic = '「CUS」',
                   browser = '「WWW」',
-                  codeium = '「AI」',
+                  -- codeium = '「AI」',
 
-                  fish = '「FISH」',
-                  ['vim-dadbod-completion'] = '「DB」',
+                  -- fish = '「FISH」',
+                  -- ['vim-dadbod-completion'] = '「DB」',
                 },
                 symbol_map = {
                   File = icons.File,

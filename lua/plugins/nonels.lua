@@ -35,10 +35,10 @@ return {
     }
 
     opts.sources = vim.list_extend(opts.sources or {}, {
-      null_ls.builtins.formatting.terraform_fmt,
+      -- null_ls.builtins.formatting.terraform_fmt, --  INFO: set via LazyExtra
       -- null_ls.builtins.formatting.prettier,
       -- null_ls.builtins.formatting.yamlfmt,
-      null_ls.builtins.diagnostics.terraform_validate,
+      -- null_ls.builtins.diagnostics.terraform_validate, --  INFO: set via LazyExtra
       null_ls.builtins.diagnostics.selene,
       null_ls.builtins.diagnostics.npm_groovy_lint,
       -- null_ls.builtins.diagnostics.markdownlint_cli2,

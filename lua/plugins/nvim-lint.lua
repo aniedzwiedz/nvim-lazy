@@ -18,7 +18,7 @@ return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.confi
       -- typescriptreact = { "eslint_d" },
       -- svelte = { "eslint_d" },
       dockerfile = { "hadolint" },
-      terraform = { "tflint" },
+      -- terraform = { "tflint" },
       -- ruby = { "standardrb" },
       ansible = { "ansible-lint" },
       -- groovy = { "checkstyle" },
