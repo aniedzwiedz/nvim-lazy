@@ -101,6 +101,10 @@ end
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
 
+-- Enable the option to require a Prettier config file
+-- If no prettier config file is found, the formatter will not be used
+vim.g.lazyvim_prettier_needs_config = true
+
 -- set the global variable NOTE: https://www.lazyvim.org/extras/lang/python
 vim.g.python_host_prog = '/usr/sbin/python3'
 vim.g.lazyvim_python_lsp = 'pyright'

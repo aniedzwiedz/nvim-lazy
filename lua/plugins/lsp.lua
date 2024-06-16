@@ -17,6 +17,11 @@ return {
   'neovim/nvim-lspconfig',
   dependencies = {
     {
+      'b0o/SchemaStore.nvim',
+      lazy = true,
+      version = false, -- last release is way too old
+    },
+    {
       'williamboman/mason.nvim',
       opts = {
         ensure_installed = {
@@ -40,7 +45,23 @@ return {
       solargraph = {},
       terraformls = {},
       groovyls = {},
+      marksman = {},
       yamlls = {
+        -- Have to add this for yamlls to understand that we support line folding
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        },
+
+        -- lazy-load schemastore when needed
+        on_new_config = function(new_config)
+          new_config.settings.yaml.schemas =
+            vim.tbl_deep_extend('force', new_config.settings.yaml.schemas or {}, require('schemastore').yaml.schemas())
+        end,
         -- cmd = { "yaml-language-server", "--stdio" },
         filetypes = { 'yaml' },
 
@@ -48,13 +69,20 @@ return {
           redhat = { telemetry = { enabled = false } },
           yaml = {
             validate = true,
+            keyOrdering = false,
             -- disable the schema store
             format = {
               enable = true,
             },
             schemaStore = {
-              enable = true,
-              url = 'https://www.schemastore.org/api/json/catalog.json',
+              -- Must disable built-in schemaStore support to use
+              -- schemas from SchemaStore.nvim plugin
+              enable = false,
+              -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+              url = '',
+
+              -- enable = true,  -- https://www.lazyvim.org/extras/lang/yaml
+              -- url = 'https://www.schemastore.org/api/json/catalog.json',
             },
             hover = true,
             schemaDownload = {
@@ -155,5 +183,16 @@ return {
         },
       },
     },
+  },
+  setup = {
+        yamlls = function()
+      -- Neovim < 0.10 does not have dynamic registration for formatting
+      if vim.fn.has("nvim-0.10") == 0 then
+        LazyVim.lsp.on_attach(function(client, _)
+          client.server_capabilities.documentFormattingProvider = true
+        end, "yamlls")
+      end
+    end,
+
   },
 }
