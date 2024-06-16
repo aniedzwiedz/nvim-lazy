@@ -88,7 +88,6 @@ end
 
 -- Folding
 vim.opt.foldlevel = 99
-vim.opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 
 if vim.fn.has 'nvim-0.10' == 1 then
   opt.smoothscroll = true
