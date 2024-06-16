@@ -59,6 +59,8 @@ return { -- Autocompletion
     },
   },
   config = function(_, opts)
+    table.insert(opts.sources, { name = 'git' })
+
     if opts then
       require('luasnip').config.setup(opts)
     end
@@ -242,6 +244,7 @@ return { -- Autocompletion
       sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'buffer' },
         { name = 'path' },
       },
     }

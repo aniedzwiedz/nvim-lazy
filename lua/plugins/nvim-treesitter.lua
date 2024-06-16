@@ -1,9 +1,9 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  event = "VeryLazy",
+  'nvim-treesitter/nvim-treesitter',
+  event = 'VeryLazy',
   dependencies = {
     -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    'nvim-treesitter/nvim-treesitter-textobjects',
   },
 
   -- build = ":TSUpdate",
@@ -19,12 +19,12 @@ return {
       additional_vim_regex_highlighting = true,
     },
     ensure_installed = {
-      "lua",
+      { 'git_config', 'gitcommit', 'git_rebase', 'gitignore', 'gitattributes', 'lua' },
     },
   },
 
   config = function(_, opts)
-    local configs = require("nvim-treesitter.configs")
+    local configs = require 'nvim-treesitter.configs'
     configs.setup(opts)
   end,
 
