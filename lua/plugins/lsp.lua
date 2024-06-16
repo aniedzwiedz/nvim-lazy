@@ -16,7 +16,15 @@ return {
   -- },
   'neovim/nvim-lspconfig',
   dependencies = {
-    'mason.nvim',
+    {
+      'williamboman/mason.nvim',
+      opts = {
+        ensure_installed = {
+          'ansible-lint',
+        },
+      },
+    },
+
     'williamboman/mason-lspconfig.nvim',
   },
   opts = {
