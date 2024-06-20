@@ -61,16 +61,16 @@ function M.get_short_cwd()
   return parts[#parts]
 end
 
-function M.diff_source()
-  local gitsigns = vim.b.gitsigns_status_dict
-  if gitsigns then
-    return {
-      added = gitsigns.added,
-      modified = gitsigns.changed,
-      removed = gitsigns.removed,
-    }
-  end
-end
+-- function M.diff_source()
+--   local gitsigns = vim.b.gitsigns_status_dict
+--   if gitsigns then
+--     return {
+--       added = gitsigns.added,
+--       modified = gitsigns.changed,
+--       removed = gitsigns.removed,
+--     }
+--   end
+-- end
 
 function M.show_macro_recording()
   local recording_register = vim.fn.reg_recording()

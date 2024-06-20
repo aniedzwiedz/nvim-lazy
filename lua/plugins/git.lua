@@ -7,17 +7,25 @@ return {
       local icons = require 'config.icons'
       require('gitsigns').setup {
         signs = {
-          add = { text = '+' },
-          -- add = {
-          --   hl = "GitSignsAdd",
-          --   text = icons.git.LineAdded ,
-          --   numhl = "GitSignsAddNr",
-          --   linehl = "GitSignsAddLn",
-          -- },
-          change = { text = '~' },
-          delete = { text = '_' },
-          topdelete = { text = '‾' },
-          changedelete = { text = '~' },
+          -- add = { text = '+' },
+          add = {
+            hl = 'GitSignsAdd',
+            text = icons.git.LineAdded,
+            -- numhl = "GitSignsAddNr",
+            -- linehl = "GitSignsAddLn",
+          },
+          change = {
+            hl = 'GitSignsChange',
+            text = icons.git.LineModified,
+          },
+          delete = {
+            hl = 'GitSignsDelete',
+            text = icons.git.LineRemoved,
+          },
+          -- change = { text = '~' },
+          -- delete = { text = '_' },
+          -- topdelete = { text = '‾' },
+          -- changedelete = { text = '~' },
         },
         signcolumn = true,
         numhl = false,
@@ -47,7 +55,6 @@ return {
           row = 0,
           col = 1,
         },
-        yadm = { enable = false },
 
         on_attach = function(bufnr)
           vim.keymap.set(

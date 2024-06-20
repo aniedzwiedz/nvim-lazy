@@ -41,9 +41,19 @@ return {
       enabled = true,
     },
     servers = {
+      --     ['helm_ls'] = {
+      -- yamlls = {
+      --   path = "yaml-language-server",
+      -- }},
+
+      helm_ls = {},
       ansiblels = {},
       solargraph = {},
-      terraformls = {},
+      terraformls = {
+        cmd = { 'terraform-ls' },
+        arg = { 'server' },
+        filetypes = { 'terraform', 'tf', 'terraform-vars' },
+      },
       groovyls = {},
       marksman = {},
       yamlls = {
@@ -91,6 +101,7 @@ return {
             trace = { server = 'debug' },
             schemas = require('schemastore').yaml.schemas {
               kubernetes = { 'k8s**.yaml', 'kube*/*.yaml' },
+              -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
               -- select subset from the JSON schema catalog
               ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
               -- ["../path/relative/to/file.yml"] = "/.github/workflows/*",
@@ -126,7 +137,7 @@ return {
               enable = false,
             },
             format = {
-              enable = false,
+              enable = true,
               defaultConfig = {
                 indent_style = 'space',
                 indent_size = '2',
@@ -141,6 +152,31 @@ return {
           },
         },
       },
+      -- lua_ls = {
+      --   settings = {
+      --     Lua = {
+      --       diagnostics = {
+      --         globals = { 'vim', 'awesome' },
+      --       },
+      --       telemetry = {
+      --         enable = false,
+      --       },
+      --       format = {
+      --         enable = true,
+      --         defaultConfig = {
+      --           indent_style = 'space',
+      --           indent_size = '2',
+      --         },
+      --       },
+      --       hint = {
+      --         enable = true,
+      --       },
+      --       completion = {
+      --         callSnippet = 'Replace',
+      --       },
+      --     },
+      --   },
+      -- },
       -- lua_ls = {
       --   settings = {
       --     Lua = {
@@ -178,20 +214,53 @@ return {
             format = {
               enable = true,
             },
+            select = {
+              '.eslintrc',
+              'package.json',
+              'Renovate',
+              'GitHub Workflow Template Properties',
+            },
             validate = { enable = true },
           },
         },
       },
+      --       taplo = {
+      --   keys = {
+      --     {
+      --       "K",
+      --       function()
+      --         if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+      --           require("crates").show_popup()
+      --         else
+      --           vim.lsp.buf.hover()
+      --         end
+      --       end,
+      --       desc = "Show Crate Documentation",
+      --     },
+      --   },
+      -- },
+    },
+    setup = {
+      yamlls = function()
+        LazyVim.lsp.on_attach(function(client, buffer)
+          if vim.bo[buffer].filetype == 'helm' then
+            vim.schedule(function()
+              vim.cmd 'LspStop ++force yamlls'
+            end)
+          end
+        end, 'yamlls')
+      end,
     },
   },
-  setup = {
-    yamlls = function()
-      -- Neovim < 0.10 does not have dynamic registration for formatting
-      if vim.fn.has 'nvim-0.10' == 0 then
-        LazyVim.lsp.on_attach(function(client, _)
-          client.server_capabilities.documentFormattingProvider = true
-        end, 'yamlls')
-      end
-    end,
-  },
+
+  -- setup = {
+  --   yamlls = function()
+  --     -- Neovim < 0.10 does not have dynamic registration for formatting
+  --     if vim.fn.has 'nvim-0.10' == 0 then
+  --       LazyVim.lsp.on_attach(function(client, _)
+  --         client.server_capabilities.documentFormattingProvider = true
+  --       end, 'yamlls')
+  --     end
+  --   end,
+  -- },
 }

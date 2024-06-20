@@ -20,6 +20,19 @@ local api = vim.api
 --   end,
 -- })
 
+vim.filetype.add({
+  extension = {
+    env = "dotenv",
+  },
+  filename = {
+    [".env"] = "dotenv",
+    ["env"] = "dotenv",
+  },
+  pattern = {
+    ["[jt]sconfig.*.json"] = "jsonc",
+    ["%.env%.[%w_.-]+"] = "dotenv",
+  },
+})
 -- don't auto comment new line
 api.nvim_create_autocmd('BufEnter', { command = [[set formatoptions-=cro]] })
 
@@ -115,8 +128,14 @@ api.nvim_create_autocmd('BufEnter', {
 -- })
 
 api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'gitcommit', 'markdown' },
+  pattern = { 'gitcommit', 'markdown', 'NeogitCommitMessage' },
   callback = function()
+    vim.opt.textwidth = 0
+    vim.opt.wrapmargin = 0
+    vim.opt.wrap = true
+    vim.opt.linebreak = true
+    vim.opt.columns = 80
+    vim.opt.colorcolumn = "80"
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
   end,

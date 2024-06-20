@@ -18,7 +18,7 @@ return {
     mason_null_ls.setup {
       ensure_installed = {
         "prettier", -- prettier formatter
-        "stylua", -- lua formatter
+        -- "stylua", -- lua formatter
         "eslint_d", -- js linter
         -- "golangci_lint", -- go linter
         "terraform_fmt", -- terraform formatter
@@ -32,7 +32,7 @@ return {
         -- "spell", -- spell checker
         -- "black", -- python formatter
       },
-    }
+    }    
 
     opts.sources = vim.list_extend(opts.sources or {}, {
       -- null_ls.builtins.formatting.terraform_fmt, --  INFO: set via LazyExtra
@@ -42,7 +42,7 @@ return {
       null_ls.builtins.diagnostics.selene,
       null_ls.builtins.diagnostics.npm_groovy_lint,
       -- null_ls.builtins.diagnostics.markdownlint_cli2,
-      -- null_ls.builtins.diagnostics.yamllint,
+      null_ls.builtins.diagnostics.yamllint,
       null_ls.builtins.code_actions.refactoring,
       null_ls.builtins.code_actions.gitsigns,
     })

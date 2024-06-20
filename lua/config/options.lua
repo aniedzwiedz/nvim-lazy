@@ -14,6 +14,11 @@ vim.g.autoformat = false
 -- * a pattern or array of patterns like `.git` or `lua`.
 -- * a function with signature `function(buf) -> string|string[]`
 vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
+-- Hide deprecation warnings
+vim.g.deprecation_warnings = false
+
+-- Show the current document symbols location from Trouble in lualine
+vim.g.trouble_lualine = true
 
 LazyVim.terminal.setup 'zsh'
 local opt = vim.opt
@@ -28,8 +33,8 @@ opt.backup = false -- create a backup file
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
-opt.formatoptions = 'jcroqlnt' -- tcqj
-opt.grepformat = '%f:%l:%c:%m'
+-- opt.formatoptions = 'jcroqlnt' -- tcqj
+-- opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
 opt.ignorecase = true -- Ignore case
 opt.inccommand = 'nosplit' -- preview incremental substitute
@@ -103,7 +108,7 @@ vim.g.markdown_recommended_style = 0
 
 -- Enable the option to require a Prettier config file
 -- If no prettier config file is found, the formatter will not be used
-vim.g.lazyvim_prettier_needs_config = true
+-- vim.g.lazyvim_prettier_needs_config = false
 
 -- set the global variable NOTE: https://www.lazyvim.org/extras/lang/python
 vim.g.python_host_prog = '/usr/sbin/python3'
