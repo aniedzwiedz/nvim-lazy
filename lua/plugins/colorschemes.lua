@@ -1,7 +1,7 @@
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     opts = {
       transparent_background = true,
@@ -9,7 +9,7 @@ return {
       term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
       dim_inactive = {
         enabled = false, -- dims the background color of inactive window
-        shade = "dark",
+        shade = 'dark',
         percentage = 0.15, -- percentage of the shade to apply to the inactive window
       },
       integrations = {
@@ -24,16 +24,16 @@ return {
         native_lsp = {
           enabled = true,
           virtual_text = {
-            errors = { "italic" },
-            hints = { "italic" },
-            warnings = { "italic" },
-            information = { "italic" },
+            errors = { 'italic' },
+            hints = { 'italic' },
+            warnings = { 'italic' },
+            information = { 'italic' },
           },
           underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
+            errors = { 'underline' },
+            hints = { 'underline' },
+            warnings = { 'underline' },
+            information = { 'underline' },
           },
           inlay_hints = {
             background = true,
@@ -42,13 +42,13 @@ return {
         neogit = true,
         mini = {
           enabled = true,
-          indentscope_color = "",
+          indentscope_color = '',
         },
       },
     },
   },
   {
-    "EdenEast/nightfox.nvim",
+    'EdenEast/nightfox.nvim',
     options = {
       -- Compiled file's destination location
       -- compile_path = vim.fn.stdpath("cache") .. "/nightfox",
@@ -67,16 +67,16 @@ return {
         },
       },
       styles = { -- Style to be applied to different syntax groups
-        comments = "undercurl", -- Value is any valid attr-list value `:help attr-list`
-        conditionals = "NONE",
-        constants = "NONE",
-        functions = "bold",
-        keywords = "NONE",
-        numbers = "NONE",
-        operators = "NONE",
-        strings = "NONE",
-        types = "NONE",
-        variables = "NONE",
+        comments = 'undercurl', -- Value is any valid attr-list value `:help attr-list`
+        conditionals = 'NONE',
+        constants = 'NONE',
+        functions = 'bold',
+        keywords = 'NONE',
+        numbers = 'NONE',
+        operators = 'NONE',
+        strings = 'NONE',
+        types = 'NONE',
+        variables = 'NONE',
       },
       inverse = { -- Inverse highlight for different types
         match_paren = false,
@@ -89,35 +89,35 @@ return {
     },
     palettes = {
       duskfox = {
-        bg1 = "#000000", -- Black background
-        bg0 = "#1d1d2b", -- Alt backgrounds (floats, statusline, ...)
-        bg3 = "#121820", -- 55% darkened from stock
-        sel0 = "#131b24", -- 55% darkened from stock
+        bg1 = '#000000', -- Black background
+        bg0 = '#1d1d2b', -- Alt backgrounds (floats, statusline, ...)
+        bg3 = '#121820', -- 55% darkened from stock
+        sel0 = '#131b24', -- 55% darkened from stock
       },
     },
-    specs = {
-      all = {
-        inactive = "bg0", -- Default value for other styles
-      },
-      duskfox = {
-        inactive = "#090909", -- Slightly lighter then black background
-      },
-    },
+    -- specs = {
+    --   all = {
+    --     inactive = "bg0", -- Default value for other styles
+    --   },
+    --   duskfox = {
+    --     inactive = "#090909", -- Slightly lighter then black background
+    --   },
+    -- },
     groups = {
       all = {
-        NormalNC = { fg = "fg1", bg = "inactive" }, -- Non-current windows
+        NormalNC = { fg = 'fg1', bg = 'inactive' }, -- Non-current windows
       },
     },
   }, -- lazy
 
   {
-    "gbprod/nord.nvim",
+    'gbprod/nord.nvim',
     opts = {
       transparent = true,
       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = "bg" }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+      diff = { mode = 'bg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
       borders = false, -- Enable the border between verticaly split windows visible
-      errors = { mode = "bg" }, -- Display mode for errors and diagnostics
+      errors = { mode = 'bg' }, -- Display mode for errors and diagnostics
       styles = {
         -- Style to be applied to different syntax groups
         -- Value is any valid attr-list value for `:help nvim_set_hl`
@@ -136,7 +136,7 @@ return {
   },
 
   {
-    "ellisonleao/gruvbox.nvim",
+    'ellisonleao/gruvbox.nvim',
     opts = {
       undercurl = true,
       underline = true,
@@ -153,7 +153,7 @@ return {
       invert_tabline = false,
       invert_intend_guides = false,
       inverse = true, -- invert background for search, diffs, statuslines and errors
-      contrast = "soft", -- can be "hard", "soft" or empty string
+      contrast = 'soft', -- can be "hard", "soft" or empty string
       palette_overrides = {},
       overrides = {
         -- SignColumn = { bg = "#ff9900" },
@@ -185,18 +185,18 @@ return {
   --   end,
   -- },
   {
-    "folke/tokyonight.nvim",
+    'folke/tokyonight.nvim',
     opts = {
       transparent = true,
       styles = {
-        sidebars = "transparent",
-        floats = "transparent",
+        sidebars = 'transparent',
+        floats = 'transparent',
       },
     },
   },
   {
-    "hardhackerlabs/theme-vim",
-    name = "hardhacker",
+    'hardhackerlabs/theme-vim',
+    name = 'hardhacker',
     lazy = false,
     -- priority = 1000,
     config = function()
@@ -207,24 +207,24 @@ return {
     end,
   },
   {
-    "LunarVim/primer.nvim",
+    'LunarVim/primer.nvim',
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
   },
   {
-    "sainnhe/everforest",
+    'sainnhe/everforest',
     lazy = false,
     priority = 1000,
     config = function()
       vim.g.everforest_diagnostic_line_highlight = 1
       vim.g.everforest_transparent_background = 1
-      vim.g.everforest_current_word = "bold"
+      vim.g.everforest_current_word = 'bold'
     end,
   },
 
   {
     -- https://github.com/rebelot/kanagawa.nvim
-    "rebelot/kanagawa.nvim", -- You can replace this with your favorite colorscheme
+    'rebelot/kanagawa.nvim', -- You can replace this with your favorite colorscheme
     lazy = false, -- We want the colorscheme to load immediately when starting Neovim
     priority = 1000, -- Load the colorscheme before other non-lazy-loaded plugins
     opts = {
@@ -232,65 +232,65 @@ return {
       transparent = true,
       background = {
         -- light = "lotus",
-        dark = "wave", -- "wave, dragon"
+        dark = 'wave', -- "wave, dragon"
       },
       colors = {
         palette = {
           -- Background colors
-          sumiInk0 = "#161616", -- modified
-          sumiInk1 = "#181818", -- modified
-          sumiInk2 = "#1a1a1a", -- modified
-          sumiInk3 = "#1F1F1F", -- modified
-          sumiInk4 = "#2A2A2A", -- modified
-          sumiInk5 = "#363636", -- modified
-          sumiInk6 = "#545454", -- modified
+          sumiInk0 = '#161616', -- modified
+          sumiInk1 = '#181818', -- modified
+          sumiInk2 = '#1a1a1a', -- modified
+          sumiInk3 = '#1F1F1F', -- modified
+          sumiInk4 = '#2A2A2A', -- modified
+          sumiInk5 = '#363636', -- modified
+          sumiInk6 = '#545454', -- modified
 
           -- Popup and Floats
-          waveBlue1 = "#322C47", -- modified
-          waveBlue2 = "#4c4464", -- modified
+          waveBlue1 = '#322C47', -- modified
+          waveBlue2 = '#4c4464', -- modified
 
           -- Diff and Git
-          winterGreen = "#2B3328",
-          winterYellow = "#49443C",
-          winterRed = "#43242B",
-          winterBlue = "#252535",
-          autumnGreen = "#76A56A", -- modified
-          autumnRed = "#C34043",
-          autumnYellow = "#DCA561",
+          winterGreen = '#2B3328',
+          winterYellow = '#49443C',
+          winterRed = '#43242B',
+          winterBlue = '#252535',
+          autumnGreen = '#76A56A', -- modified
+          autumnRed = '#C34043',
+          autumnYellow = '#DCA561',
 
           -- Diag
-          samuraiRed = "#E82424",
-          roninYellow = "#FF9E3B",
-          waveAqua1 = "#7E9CD8", -- modified
-          dragonBlue = "#7FB4CA", -- modified
+          samuraiRed = '#E82424',
+          roninYellow = '#FF9E3B',
+          waveAqua1 = '#7E9CD8', -- modified
+          dragonBlue = '#7FB4CA', -- modified
 
           -- Foreground and Comments
-          oldWhite = "#C8C093",
-          fujiWhite = "#F9E7C0", -- modified
-          fujiGray = "#727169",
-          oniViolet = "#BFA3E6", -- modified
-          oniViolet2 = "#BCACDB", -- modified
-          crystalBlue = "#8CABFF", -- modified
-          springViolet1 = "#938AA9",
-          springViolet2 = "#9CABCA",
-          springBlue = "#7FC4EF", -- modified
-          waveAqua2 = "#77BBDD", -- modified
+          oldWhite = '#C8C093',
+          fujiWhite = '#F9E7C0', -- modified
+          fujiGray = '#727169',
+          oniViolet = '#BFA3E6', -- modified
+          oniViolet2 = '#BCACDB', -- modified
+          crystalBlue = '#8CABFF', -- modified
+          springViolet1 = '#938AA9',
+          springViolet2 = '#9CABCA',
+          springBlue = '#7FC4EF', -- modified
+          waveAqua2 = '#77BBDD', -- modified
 
-          springGreen = "#98BB6C",
-          boatYellow1 = "#938056",
-          boatYellow2 = "#C0A36E",
-          carpYellow = "#FFEE99", -- modified
+          springGreen = '#98BB6C',
+          boatYellow1 = '#938056',
+          boatYellow2 = '#C0A36E',
+          carpYellow = '#FFEE99', -- modified
 
-          sakuraPink = "#D27E99",
-          waveRed = "#E46876",
-          peachRed = "#FF5D62",
-          surimiOrange = "#FFAA44", -- modified
-          katanaGray = "#717C7C",
+          sakuraPink = '#D27E99',
+          waveRed = '#E46876',
+          peachRed = '#FF5D62',
+          surimiOrange = '#FFAA44', -- modified
+          katanaGray = '#717C7C',
         },
       },
     },
     config = function(_, opts)
-      require("kanagawa").setup(opts) -- Replace this with your favorite colorscheme
+      require('kanagawa').setup(opts) -- Replace this with your favorite colorscheme
       -- vim.cmd("colorscheme kanagawa") -- Replace this with your favorite colorscheme
 
       -- Custom diff colors
@@ -330,9 +330,9 @@ return {
   --   end,
   -- },
   {
-    "LazyVim/LazyVim",
+    'LazyVim/LazyVim',
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = 'catppuccin',
       -- colorscheme = "kanagawa",
       -- colorscheme = "kanagawa",
       -- colorscheme = "gruvbox",
