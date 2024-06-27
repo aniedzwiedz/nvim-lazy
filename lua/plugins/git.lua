@@ -9,17 +9,17 @@ return {
         signs = {
           -- add = { text = '+' },
           add = {
-            hl = 'GitSignsAdd',
+            -- hl = 'GitSignsAdd',
             text = icons.git.LineAdded,
             -- numhl = "GitSignsAddNr",
             -- linehl = "GitSignsAddLn",
           },
           change = {
-            hl = 'GitSignsChange',
+            -- hl = 'GitSignsChange',
             text = icons.git.LineModified,
           },
           delete = {
-            hl = 'GitSignsDelete',
+            -- hl = 'GitSignsDelete',
             text = icons.git.LineRemoved,
           },
           -- change = { text = '~' },
