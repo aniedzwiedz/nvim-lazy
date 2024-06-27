@@ -10,16 +10,16 @@ local map = vim.keymap.set
 -- yank to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 
-map("n", "<leader>?", function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  -- require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-  require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
-    --               initial_mode = "normal",
-    --               sorting_strategy = "ascending",
-    winblend = 20,
-    previewer = false,
-  })
-end, { desc = "[?] Fuzzily search in current buffer]" })
+-- map("n", "<leader>?", function()
+--   -- You can pass additional configuration to telescope to change theme, layout, etc.
+--   -- require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--   require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
+--     --               initial_mode = "normal",
+--     --               sorting_strategy = "ascending",
+--     winblend = 20,
+--     previewer = false,
+--   })
+-- end, { desc = "[?] Fuzzily search in current buffer]" })
 
 -- Add toggle gitsigns blame line
 if Util.has "gitsigns.nvim" then

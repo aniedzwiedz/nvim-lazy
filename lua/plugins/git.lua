@@ -98,7 +98,7 @@ return {
         -- "split_above" Like :top split
         -- "vsplit_left" like :vsplit, but open to the left
         -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
-        staged_diff_split_kind = 'split',
+        -- staged_diff_split_kind = 'split',
       },
       -- commit_select_view = {
       -- kind = 'tab',

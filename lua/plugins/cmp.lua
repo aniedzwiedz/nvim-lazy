@@ -2,13 +2,13 @@ return { -- Autocompletion
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-          "Saecki/crates.nvim",
-      event = { "BufRead Cargo.toml" },
-      opts = {
-        completion = {
-          cmp = { enabled = true },
-        },
+    'Saecki/crates.nvim',
+    event = { 'BufRead Cargo.toml' },
+    opts = {
+      completion = {
+        cmp = { enabled = true },
       },
+    },
 
     -- Snippet Engine & its associated nvim-cmp source
     {
@@ -93,31 +93,31 @@ return { -- Autocompletion
     require('luasnip.loaders.from_vscode').lazy_load { paths = { './snippets/' } }
 
     local kind_icons = {
-      Text = "",
-      Method = "󰆧",
-      Function = "󰊕",
-      Constructor = "",
-      Field = "󰇽",
-      Variable = "󰂡",
-      Class = "󰠱",
-      Interface = "",
-      Module = "",
-      Property = "󰜢",
-      Unit = "",
-      Value = "󰎠",
-      Enum = "",
-      Keyword = "󰌋",
-      Snippet = "",
-      Color = "󰏘",
-      File = "󰈙",
-      Reference = "",
-      Folder = "󰉋",
-      EnumMember = "",
-      Constant = "󰏿",
-      Struct = "",
-      Event = "",
-      Operator = "󰆕",
-      TypeParameter = "󰅲",
+      Text = '',
+      Method = '󰆧',
+      Function = '󰊕',
+      Constructor = '',
+      Field = '󰇽',
+      Variable = '󰂡',
+      Class = '󰠱',
+      Interface = '',
+      Module = '',
+      Property = '󰜢',
+      Unit = '',
+      Value = '󰎠',
+      Enum = '',
+      Keyword = '󰌋',
+      Snippet = '',
+      Color = '󰏘',
+      File = '󰈙',
+      Reference = '',
+      Folder = '󰉋',
+      EnumMember = '',
+      Constant = '󰏿',
+      Struct = '',
+      Event = '',
+      Operator = '󰆕',
+      TypeParameter = '󰅲',
     }
     -- See `:help cmp`
     local cmp = require 'cmp'
@@ -232,18 +232,18 @@ return { -- Autocompletion
       --        end, { 'i', 's' }),
       --     },
 
-        mapping = cmp.mapping.preset.insert({
+      mapping = cmp.mapping.preset.insert {
         -- ["<C-n>"] = cmp.mapping.select_next_item(),
         -- ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
-        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-        ["<CR>"] = cmp.mapping.confirm({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
-        }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        },
+        ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           elseif luasnip.expand_or_locally_jumpable() then
@@ -251,8 +251,8 @@ return { -- Autocompletion
           else
             fallback()
           end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.locally_jumpable(-1) then
@@ -260,33 +260,33 @@ return { -- Autocompletion
           else
             fallback()
           end
-        end, { "i", "s" }),
-      }),
-      sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "luasnip" },
-        { name = "buffer" },
-        { name = "path" },
-        { name = "calc" },
-        { name = "emoji" },
-        { name = "treesitter" },
-        { name = "crates" },
+        end, { 'i', 's' }),
       },
----@diagnostic disable-next-line: missing-fields
+      sources = {
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+        { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'path' },
+        { name = 'calc' },
+        { name = 'emoji' },
+        { name = 'treesitter' },
+        { name = 'crates' },
+      },
+      ---@diagnostic disable-next-line: missing-fields
       formatting = {
         format = function(entry, vim_item)
-          local lspkind_ok, lspkind = pcall(require, "lspkind")
+          local lspkind_ok, lspkind = pcall(require, 'lspkind')
           if not lspkind_ok then
             -- From kind_icons array
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
             -- Source
-            vim_item.menu = ({  
-              nvim_lsp = "[LSP]",
-              nvim_lua = "[Lua]",
-              luasnip = "[LuaSnip]",
-              buffer = "[Buffer]",
-              latex_symbols = "[LaTeX]",
+            vim_item.menu = ({
+              nvim_lsp = '[LSP]',
+              nvim_lua = '[Lua]',
+              luasnip = '[LuaSnip]',
+              buffer = '[Buffer]',
+              latex_symbols = '[LaTeX]',
             })[entry.source.name]
             return vim_item
           else
