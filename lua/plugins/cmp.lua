@@ -127,28 +127,29 @@ return { -- Autocompletion
     luasnip.config.setup {}
 
     -- NOTE: git@github.com:dynamotn/neovim-config.git
-    cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        { name = 'cmdline', group_index = 1 },
-        { name = 'fuzzy_path', group_index = 2 },
-      },
-      sorting = {
-        comparators = {
-          compare.offset,
-          compare.exact,
-          compare.scopes,
-          compare.score,
-          compare.recently_used,
-          compare.locality,
-          compare.kind,
-          compare.sort_text,
-          compare.length,
-          compare.order,
-          require 'cmp_fuzzy_path.compare',
-        },
-      },
-    })
+
+    -- cmp.setup.cmdline(':', {
+    --   mapping = cmp.mapping.preset.cmdline(),
+    --   sources = {
+    --     { name = 'cmdline', group_index = 1 },
+    --     { name = 'fuzzy_path', group_index = 2 },
+    --   },
+    --   sorting = {
+    --     comparators = {
+    --       compare.offset,
+    --       compare.exact,
+    --       compare.scopes,
+    --       compare.score,
+    --       compare.recently_used,
+    --       compare.locality,
+    --       compare.kind,
+    --       compare.sort_text,
+    --       compare.length,
+    --       compare.order,
+    --       require 'cmp_fuzzy_path.compare',
+    --     },
+    --   },
+    -- })
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline({ '/', '?' }, {
       mapping = cmp.mapping.preset.cmdline(),

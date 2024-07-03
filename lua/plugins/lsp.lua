@@ -50,9 +50,28 @@ return {
       ansiblels = {},
       solargraph = {},
       terraformls = {
-        cmd = { 'terraform-ls' },
-        arg = { 'server' },
-        filetypes = { 'terraform', 'tf', 'terraform-vars' },
+        keys = {
+          { '<leader>sTt', '<cmd>Telescope terraform_doc<CR>', desc = 'Telescope terraform_doc' },
+          { '<leader>sTm', '<cmd>Telescope terraform_doc modules<CR>', desc = 'Telescope terraform_doc modules' },
+          {
+            '<leader>sTa',
+            '<cmd>Telescope terraform_doc full_name=hashicorp/aws<CR>',
+            desc = 'Telescope terraform_doc hashicorp/aws',
+          },
+          {
+            '<leader>sTg',
+            '<cmd>Telescope terraform_doc full_name=hashicorp/google<CR>',
+            desc = 'Telescope terraform_doc hashicorp/google',
+          },
+          {
+            '<leader>sTk',
+            '<cmd>Telescope terraform_doc full_name=hashicorp/kubernetes<CR>',
+            desc = 'Telescope terraform_doc hashicorp/kubernetes',
+          },
+        },
+        -- cmd = { 'terraform-ls' },
+        -- arg = { 'server' },
+        -- filetypes = { 'terraform', 'tf', 'terraform-vars' },
       },
       groovyls = {},
       marksman = {},

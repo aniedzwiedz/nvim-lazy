@@ -1,60 +1,62 @@
 return {
-  "nvim-telescope/telescope.nvim",
+  'nvim-telescope/telescope.nvim',
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
+    'nvim-lua/plenary.nvim',
+    'nvim-tree/nvim-web-devicons',
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
     config = function()
-      require("telescope").load_extension("fzf")
+      require('telescope').load_extension 'fzf'
     end,
   },
   keys = {
       -- add a keymap to browse plugin files
       -- stylua: ignore
-      {
-        "<leader>fp",
-        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
-        desc = "Find Plugin File",
-      },
+    {
+      '<leader>fp',
+      function()
+        require('telescope.builtin').find_files { cwd = require('lazy.core.config').options.root }
+      end,
+      desc = 'Find Plugin File',
+    },
 
     {
-      "<leader>gC",
+      '<leader>gC',
       function()
         -- require("telescope.builtin").git_bcommits(require("telescope.themes").get_ivy({}))
-        require("telescope.builtin").git_bcommits()
+        require('telescope.builtin').git_bcommits()
       end,
-      desc = "commits for current file ",
+      desc = 'commits for current file ',
     },
   },
 
   config = function()
-    local telescope = require("telescope")
-    local actions = require("telescope.actions")
+    local telescope = require 'telescope'
+    local actions = require 'telescope.actions'
     --       local trouble = require("trouble.providers.telescope")
     --       local icons = require("config.icons")
     --
     local function formattedName(_, path)
       local tail = vim.fs.basename(path)
       local parent = vim.fs.dirname(path)
-      if parent == "." then
+      if parent == '.' then
         return tail
       end
-      return string.format("%s\t\t%s", tail, parent)
+      return string.format('%s\t\t%s', tail, parent)
     end
 
-    telescope.setup({
+    telescope.setup {
 
       defaults = {
         -- layout_strategy = "horizontal",
-        layout_strategy = "vertical",
-        layout_config = { prompt_position = "top", vertical = { width = 0.85 } },
+        layout_strategy = 'vertical',
+        layout_config = { prompt_position = 'top', vertical = { width = 0.85 } },
         -- layout_config = {
         --   vertical = {
         --     width = 0.75,
         --   },
       },
-      sorting_strategy = "ascending",
+      sorting_strategy = 'ascending',
       winblend = 0,
 
       pickers = {
@@ -62,19 +64,19 @@ return {
           path_display = formattedName,
           mappings = {
             i = {
-              ["<c-d>"] = actions.delete_buffer,
+              ['<c-d>'] = actions.delete_buffer,
             },
             n = {
-              ["<c-d>"] = actions.delete_buffer,
+              ['<c-d>'] = actions.delete_buffer,
             },
           },
           previewer = false,
-          initial_mode = "normal",
+          initial_mode = 'normal',
           -- theme = "dropdown",
           layout_config = {
             height = 0.4,
             width = 0.6,
-            prompt_position = "top",
+            prompt_position = 'top',
             preview_cutoff = 120,
           },
           lsp_references = {
@@ -90,7 +92,7 @@ return {
           },
         },
       },
-    })
+    }
   end,
 }
 -- lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({ winblend = 10 }))

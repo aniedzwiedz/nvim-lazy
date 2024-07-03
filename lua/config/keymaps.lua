@@ -38,11 +38,15 @@ if Util.has 'gitsigns.nvim' then
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
 
+map('n', '<leader>uD', function()
+  vim.diagnostic.config { virtual_text = false }
+end, { desc = 'Toggle Diagnosticstic virtual_text' })
+
 -- Select all
 map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
 
 -- Change Commit Log to use Lazygit
-map('n', '<leader>gd', function()
+map('n', '<leader>gD', function()
   LazyVim.lazygit { args = { 'log' } }
 end, { desc = 'Lazygit Commit Log' })
 

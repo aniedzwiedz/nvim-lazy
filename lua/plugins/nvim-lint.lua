@@ -1,32 +1,32 @@
 return { -- https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/linting.lua
-  "mfussenegger/nvim-lint", -- NOTE: disabled in ./disabled.lua 
-  events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+  'mfussenegger/nvim-lint',
+  events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
   config = function()
     -- Define a table of linters for each filetype (not extension).
     -- Additional linters can be found here: https://github.com/mfussenegger/nvim-lint#available-linters
-    require("lint").linters_by_ft = {
+    require('lint').linters_by_ft = {
       python = {
         -- Uncomment whichever linters you prefer
         -- 'flake8',
         -- 'mypy',
-        "pylint",
+        'pylint',
       },
       -- javascript = { "eslint_d" },
       -- typescript = { "eslint_d" },
-      puppet = { "puppet-lint" },
+      puppet = { 'puppet-lint' },
       -- javascriptreact = { "eslint_d" },
       -- typescriptreact = { "eslint_d" },
       -- svelte = { "eslint_d" },
-      dockerfile = { "hadolint" },
+      dockerfile = { 'hadolint' },
       -- terraform = { "tflint" },
       -- ruby = { "standardrb" },
-      ansible = { "ansible-lint" },
+      ansible = { 'ansible-lint' },
       -- groovy = { "checkstyle" },
-      groovy = { "npm-groovy-lint" },
+      groovy = { 'npm-groovy-lint' },
       -- zsh = { "shfmt" },
       -- lua = { "seleme" },
       -- yaml = { "yamllint" },
-      asnible = { "ansible_lint" },
+      asnible = { 'ansible_lint' },
       -- json = { "jsonlint" },
       -- markdown = { "markdownlint" },
     }

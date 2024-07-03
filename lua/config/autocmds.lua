@@ -20,19 +20,29 @@ local api = vim.api
 --   end,
 -- })
 
-vim.filetype.add({
+-- Hide virtual text in LSP
+-- local isLspDiagnosticsVisible = false
+-- vim.keymap.set('n', '<leader>uD', function()
+--   isLspDiagnosticsVisible = not isLspDiagnosticsVisible
+--   vim.diagnostic.config {
+--     virtual_text = isLspDiagnosticsVisible,
+--     underline = isLspDiagnosticsVisible,
+--   }
+-- end)
+
+vim.filetype.add {
   extension = {
-    env = "dotenv",
+    env = 'dotenv',
   },
   filename = {
-    [".env"] = "dotenv",
-    ["env"] = "dotenv",
+    ['.env'] = 'dotenv',
+    ['env'] = 'dotenv',
   },
   pattern = {
-    ["[jt]sconfig.*.json"] = "jsonc",
-    ["%.env%.[%w_.-]+"] = "dotenv",
+    ['[jt]sconfig.*.json'] = 'jsonc',
+    ['%.env%.[%w_.-]+'] = 'dotenv',
   },
-})
+}
 -- don't auto comment new line
 api.nvim_create_autocmd('BufEnter', { command = [[set formatoptions-=cro]] })
 
@@ -128,14 +138,14 @@ api.nvim_create_autocmd('BufEnter', {
 -- })
 
 api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'gitcommit', 'markdown', 'NeogitCommitMessage' },
+  pattern = { 'gitcommit', 'NeogitCommitMessage' },
   callback = function()
     vim.opt.textwidth = 0
     vim.opt.wrapmargin = 0
     vim.opt.wrap = true
     vim.opt.linebreak = true
     vim.opt.columns = 80
-    vim.opt.colorcolumn = "80"
+    vim.opt.colorcolumn = '80'
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
   end,
@@ -248,30 +258,30 @@ vim.api.nvim_create_autocmd('BufEnter', {
 local function set_yaml(bufnr)
   local content = vim.api.nvim_buf_get_lines(bufnr, 1, 10, false)
   local filename = vim.api.nvim_buf_get_name(bufnr)
-  local matcher = { "^- hosts:", "^- name:" }
-  local type = "yaml"
-  if string.find(filename, "templates") then
-    type = "helm"
+  local matcher = { '^- hosts:', '^- name:' }
+  local type = 'yaml'
+  if string.find(filename, 'templates') then
+    type = 'helm'
   end
   for _, m in ipairs(matcher) do
     for _, c in ipairs(content) do
       if string.match(c, m) then
-        type = "yaml.ansible"
+        type = 'yaml.ansible'
       end
     end
   end
   return type
 end
-addtype({
+addtype {
   pattern = {
-    [".*.yaml"] = function(_, bufnr)
+    ['.*.yaml'] = function(_, bufnr)
       return set_yaml(bufnr)
     end,
-    [".*.yml"] = function(_, bufnr)
+    ['.*.yml'] = function(_, bufnr)
       return set_yaml(bufnr)
     end,
   },
-})
+}
 
 -- return {
 --   polish = function()

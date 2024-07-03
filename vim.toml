@@ -1,2 +1,4 @@
 [vim]
 any = true
+[LazyVim]
+any = true
