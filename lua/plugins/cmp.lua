@@ -287,7 +287,7 @@ return { -- Autocompletion
               nvim_lua = '[Lua]',
               luasnip = '[LuaSnip]',
               buffer = '[Buffer]',
-              latex_symbols = '[LaTeX]',
+              -- latex_symbols = '[LaTeX]',
             })[entry.source.name]
             return vim_item
           else

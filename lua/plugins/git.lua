@@ -36,11 +36,11 @@ return {
           follow_files = true,
         },
         attach_to_untracked = true,
-        current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_opts = {
           virt_text = true,
-          virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-          delay = 1000,
+          virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
+          delay = 2000,
           ignore_whitespace = false,
         },
         current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
@@ -84,30 +84,32 @@ return {
 
       -- Only one of these is needed, not both.
       'nvim-telescope/telescope.nvim', -- optional
-      'ibhagwan/fzf-lua', -- optional
+      -- 'ibhagwan/fzf-lua', -- optional
     },
-    config = true,
-    opts = {
-      kind = 'auto',
-      commit_editor = {
-        kind = 'auto',
-        show_staged_diff = true,
-        -- Accepted values:
-        -- "split" to show the staged diff below the commit editor
-        -- "vsplit" to show it to the right
-        -- "split_above" Like :top split
-        -- "vsplit_left" like :vsplit, but open to the left
-        -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
-        -- staged_diff_split_kind = 'split',
-      },
-      -- commit_select_view = {
-      -- kind = 'tab',
-      -- },
-      commit_view = {
-        kind = 'auto',
-        verify_commit = vim.fn.executable 'gpg' == 1, -- Can be set to true or false, otherwise we try to find the binary
-      },
-    },
+    config = function()
+      local neogit = require 'neogit'
+      neogit.setup {
+        sort_branches = '-committerdate',
+        kind = 'split',
+        commit_editor = {
+          -- kind = 'split_above',
+          kind = 'replace',
+          show_staged_diff = false,
+          -- Accepted values:
+          -- "split" to show the staged diff below the commit editor
+          -- "vsplit" to show it to the right
+          -- "split_above" Like :top split
+          -- "vsplit_left" like :vsplit, but open to the left
+          -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
+          staged_diff_split_kind = 'split',
+        },
+        ---@diagnostic disable-next-line: missing-fields
+        commit_view = {
+          kind = 'tab',
+        },
+      }
+    end,
+
     keys = {
       { '<leader>gg', '<cmd>Neogit kind=vsplit <cr>', desc = 'Open Meogit' },
       -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
