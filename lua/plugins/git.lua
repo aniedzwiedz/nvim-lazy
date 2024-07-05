@@ -22,8 +22,8 @@ return {
           --   -- hl = 'GitSignsDelete',
           --   text = icons.git.LineRemoved,
           -- },
-          change = { text = '~ ' },
-          delete = { text = '_ ' },
+          -- change = { text = '~ ' },
+          -- delete = { text = '_ ' },
           topdelete = { text = '‾ ' },
           changedelete = { text = '~ ' },
         },
@@ -103,9 +103,10 @@ return {
           -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
           staged_diff_split_kind = 'split',
         },
-        ---@diagnostic disable-next-line: missing-fields
+        --@diagnostic disable-next-line: missing-fields
         commit_view = {
           kind = 'tab',
+          verify_commit = vim.fn.executable 'gpg' == 1, -- Can be set to true or false, otherwise we try to find the binary
         },
       }
     end,

@@ -29,8 +29,8 @@ return {
         },
       },
     },
-
     'williamboman/mason-lspconfig.nvim',
+    { 'towolf/vim-helm', ft = 'helm' },
   },
   opts = {
     -- inlay_hints = {
@@ -45,14 +45,21 @@ return {
       -- yamlls = {
       --   path = "yaml-language-server",
       -- }},
-
-      helm_ls = {},
+      helm_ls = { -- https://github.com/mrjosh/helm-ls/blob/master/examples/nvim/init.lua
+        -- settings = {
+        --   ['helm-ls'] = {
+        --     yamlls = {
+        --       path = 'yaml-language-server',
+        --     },
+        --   },
+        -- },
+      },
       ansiblels = {},
       solargraph = {},
       terraformls = {
         keys = {
-          { '<leader>sTt', '<cmd>Telescope terraform_doc<CR>', desc = 'Telescope terraform_doc' },
-          { '<leader>sTm', '<cmd>Telescope terraform_doc modules<CR>', desc = 'Telescope terraform_doc modules' },
+          { '<leader>sXt', '<cmd>Telescope terraform_doc<CR>', desc = 'Telescope terraform_doc' },
+          { '<leader>sXm', '<cmd>Telescope terraform_doc modules<CR>', desc = 'Telescope terraform_doc modules' },
           {
             '<leader>sTa',
             '<cmd>Telescope terraform_doc full_name=hashicorp/aws<CR>',
@@ -92,7 +99,7 @@ return {
             vim.tbl_deep_extend('force', new_config.settings.yaml.schemas or {}, require('schemastore').yaml.schemas())
         end,
         -- cmd = { "yaml-language-server", "--stdio" },
-        filetypes = { 'yaml' },
+        -- filetypes = { 'yaml' },
 
         settings = {
           redhat = { telemetry = { enabled = false } },
@@ -117,12 +124,15 @@ return {
             schemaDownload = {
               enable = true,
             },
-            trace = { server = 'debug' },
+            trace = { server = 'info' },
             schemas = require('schemastore').yaml.schemas {
               kubernetes = { 'k8s**.yaml', 'kube*/*.yaml' },
               -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
               -- select subset from the JSON schema catalog
+              ['https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json'] = '/*.k8s.yaml',
               ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+              -- ['../path/relative/to/file.yml'] = '/.github/workflows/*',
+              -- ['/path/from/root/of/project'] = '/.github/workflows/*',
               -- ["../path/relative/to/file.yml"] = "/.github/workflows/*",
               ['/conf/jenkins/arn/'] = '/schemas/conf/jenkins/arn/*',
               select = {
@@ -260,6 +270,21 @@ return {
       -- },
     },
     setup = {
+      -- azure_pipelines_ls = function()
+      --   settings = {
+      --     yaml = {
+      --       schemas = {
+      --         ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = {
+      --           '/azure-pipeline*.y*l',
+      --           '/*.azure*',
+      --           'Azure-Pipelines/**/*.y*l',
+      --           'Pipelines/*.y*l',
+      --         },
+      --       },
+      --     },
+      --   }
+      -- end,
+
       yamlls = function()
         LazyVim.lsp.on_attach(function(client, buffer)
           if vim.bo[buffer].filetype == 'helm' then
