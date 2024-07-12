@@ -84,12 +84,11 @@ vim.filetype.add {
   },
 }
 
-api.nvim_create_autocmd('BufEnter', {
-  pattern = { 'Jenkinsfile' },
-  -- enable wrap mode for json files only
-  command = 'set filetype=groovy',
+vim.api.nvim_create_autocmd("BufRead", {
+  -- Force `Jenkinsfile` to groovy filetype.
+  pattern = { "Jenkinsfile" },
+  command = "set ft=groovy",
 })
-
 -- Advanced Gemfile
 
 api.nvim_create_autocmd('BufEnter', {

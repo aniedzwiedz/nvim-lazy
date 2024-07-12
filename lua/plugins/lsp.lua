@@ -32,6 +32,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     { 'towolf/vim-helm', ft = 'helm' },
   },
+  ---@class PluginLspOpts
   opts = {
     -- inlay_hints = {
     --   enabled = true,
@@ -55,7 +56,26 @@ return {
         -- },
       },
       ansiblels = {},
-      solargraph = {},
+      -- NOTE:
+      -- ruby_lsp will be automatically installed with mason and loaded with lspconfig
+      -- https://github.com/LazyVim/LazyVim/pull/3652/
+      -- disable solargraph from auto running when you open ruby files
+      solargraph = {
+        autostart = false,
+      },
+      -- ruby_lsp will be automatically installed with mason and loaded with lspconfig
+      ruby_lsp = {},
+      azure_pipelines_ls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = {
+                '*/.azuredevops/**/*.y*ml',
+              },
+            },
+          },
+        },
+      },
       terraformls = {
         keys = {
           { '<leader>sXt', '<cmd>Telescope terraform_doc<CR>', desc = 'Telescope terraform_doc' },
@@ -157,6 +177,7 @@ return {
         filetypes = { 'vim' },
       },
       lua_ls = {
+        single_file_support = true,
         settings = {
           Lua = {
             diagnostics = {
@@ -170,12 +191,25 @@ return {
               defaultConfig = {
                 indent_style = 'space',
                 indent_size = '2',
+                continuation_indent_size = '2',
               },
+            },
+            doc = {
+              privateName = { '^_' },
+            },
+            type = {
+              castNumberToInteger = true,
             },
             hint = {
               enable = true,
+              setType = false,
+              paramType = true,
+              paramName = 'Disable',
+              semicolon = 'Disable',
+              arrayIndex = 'Disable',
             },
             completion = {
+              workspaceWord = true,
               callSnippet = 'Replace',
             },
           },
