@@ -29,6 +29,9 @@ return {
         -- lua = { "seleme" },
         yaml = { "yamllint" },
         asnible = { "ansible_lint" },
+        terraform = { "terraform_validate" },
+        tf = { "terraform_validate" },
+
         -- json = { "jsonlint" },
         -- markdown = { "markdownlint" },
         -- Use the "*" filetype to run linters on all filetypes.
