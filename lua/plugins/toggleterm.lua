@@ -191,7 +191,13 @@ function M.config()
     bun_outdated:toggle()
   end
 
-  vim.api.nvim_set_keymap("n", "<leader>gz", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+  vim.api.nvim_set_keymap(
+    "n",
+    "<leader>go",
+    "<cmd>lua _lazygit_toggle()<CR>",
+    { desc = "LazyGit" }
+    -- { noremap = true, silent = true }
+  )
   -- vim.api.nvim_set_keymap("n", "<leader>co", "<cmd>lua _bun_outdated()<CR>", { noremap = true, silent = true })
 end
 

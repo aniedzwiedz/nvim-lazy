@@ -29,6 +29,28 @@ local api = vim.api
 --     underline = isLspDiagnosticsVisible,
 --   }
 -- end)
+-- vim.api.nvim_create_autocmd("BufRead", {
+--   pattern = "*/.azuredevops/*.y*ml",
+--   callback = function()
+--     require("lspconfig").azure_pipelines_ls.setup({
+--       opts = {
+--         config = {
+--           azure_pipelines_ls = {
+--             settings = {
+--               yaml = {
+--                 schemas = {
+--                   ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+--                     "*/.azuredevops/**/*.y*ml",
+--                   },
+--                 },
+--               },
+--             },
+--           },
+--         },
+--       },
+--     })
+--   end,
+-- })
 
 vim.filetype.add({
   extension = {

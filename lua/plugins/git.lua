@@ -7,7 +7,8 @@ return {
       -- local icons = require 'config.icons'
       require("gitsigns").setup({
         signs = {
-          add = { text = "+ " },
+          add = { text = "+ " }, -- ./git.lua
+          -- add = { text = "  " },
           -- add = {
           --   -- hl = 'GitSignsAdd',
           --   text = icons.git.LineAdded,
@@ -22,6 +23,8 @@ return {
           --   -- hl = 'GitSignsDelete',
           --   text = icons.git.LineRemoved,
           -- },
+          -- change   = { text = "  " },
+          -- delete = { text = "  " },
           -- change = { text = '~ ' },
           -- delete = { text = '_ ' },
           topdelete = { text = "‾ " },
@@ -116,7 +119,7 @@ return {
       -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
     },
   },
-  -- { "folke/neodev.nvim" },  -- NOTE: I highly suggest you to use lazydev.nvim It's a much faster and better replacement for neodev
+  -- { "folke/neodev.nvim" }, -- NOTE: I highly suggest you to use lazydev.nvim It's a much faster and better replacement for neodev
   -- {
   --   "someone-stole-my-name/yaml-companion.nvim",
   --   dependencies = {
