@@ -1,5 +1,38 @@
 return {
   {
+    "ahmedkhalf/project.nvim",
+    keys = { 
+      { "<leader>fp", "<cmd>Telescope projects<CR>", desc = "Find [p]rojects" },
+    },
+    config = function()
+      require("project_nvim").setup({
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+        sync_root_with_cwd = true,
+        patterns = {
+          ".git",
+          "_darcs",
+          ".hg",
+          ".bzr",
+          ".svn",
+          "Makefile",
+          "package.json",
+          "!.git/worktrees",
+          "!=extras",
+          "!^fixtures",
+          "!build/env.sh",
+        },
+        datapath = vim.fn.stdpath("data"),
+        respect_buf_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_root = true,
+        },
+      })
+    end,
+  },
+  {
     "folke/edgy.nvim", -- NOTE: do I need it?
     optional = true,
     opts = function(_, opts)
@@ -103,7 +136,7 @@ return {
       -- add a keymap to browse plugin files
       -- stylua: ignore
       {
-        "<leader>fp",
+        "<leader>fP",
         function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
         desc = "Find Plugin File",
       },
