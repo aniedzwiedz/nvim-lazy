@@ -31,6 +31,7 @@ return {
         asnible = { "ansible_lint" },
         terraform = { "terraform_validate" },
         tf = { "terraform_validate" },
+        ["yaml.gha"] = { "actionlint" },
 
         -- json = { "jsonlint" },
         -- markdown = { "markdownlint" },

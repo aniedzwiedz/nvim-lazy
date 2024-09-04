@@ -1,10 +1,11 @@
+local icons = require("config.icons")
 return {
   {
     "lewis6991/gitsigns.nvim",
     lazy = false,
     config = function()
       ---@diagnostic disable-next-line: unused-local
-      -- local icons = require 'config.icons'
+      local icons = require("config.icons")
       require("gitsigns").setup({
         signs = {
           add = { text = "+ " }, -- ./git.lua
@@ -111,6 +112,12 @@ return {
           kind = "tab",
           verify_commit = vim.fn.executable("gpg") == 1, -- Can be set to true or false, otherwise we try to find the binary
         },
+        signs = {
+          -- { CLOSED, OPENED }
+          section = { icons.ui.ChevronRight, icons.ui.ChevronShortDown },
+          item = { icons.ui.ChevronRight, icons.ui.ChevronShortDown },
+          hunk = { "", "" },
+        },
       })
     end,
 
@@ -171,6 +178,7 @@ return {
     keys = {
       { "<leader>gY", "<cmd>GitLink blame<cr>", desc = "Git link blame" },
       { "<leader>gy", "<cmd>GitLink<cr>", desc = "Git link" },
+      { "<leader>gB", false }, -- NOTE: /home/aniedzwiedz/.local/share/LazyVim/lazy/LazyVim/lua/lazyvim/config/keymaps.lua
     },
   },
   {
@@ -185,6 +193,18 @@ return {
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
       { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
     },
+  },
+
+  {
+    "aaronhallaert/advanced-git-search.nvim",
+    dependencies = {
+      "tpope/vim-rhubarb",
+      "nvim-telescope/telescope.nvim",
+    },
+    cmd = { "AdvancedGitSearch" },
+    config = function()
+      require("telescope").load_extension("advanced_git_search")
+    end,
   },
 
   {

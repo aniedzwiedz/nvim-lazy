@@ -1,12 +1,29 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local Util = require 'lazyvim.util'
+local Util = require("lazyvim.util")
 -- Silent keymap option
 -- local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 -- yank to clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank all' })
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank all" })
+
+-- Borderless terminal
+-- vim.keymap.set("n", "<C-/>", function()
+--   Util.terminal(nil, { border = "none" })
+-- end, { desc = "Term with border" })
+
+-- Borderless lazygit
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>go",
+--   "<cmd>lua _lazygit_toggle()<CR>",
+--   { desc = "LazyGit" }
+--   -- { noremap = true, silent = true }
+-- )
+vim.keymap.set("n", "<leader>go", function()
+  Util.terminal({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false, border = "none" })
+end, { desc = "Lazygit (root dir)" })
 
 -- map("n", "<leader>?", function()
 --   -- You can pass additional configuration to telescope to change theme, layout, etc.
@@ -20,16 +37,16 @@ vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank all' })
 -- end, { desc = "[?] Fuzzily search in current buffer]" })
 
 -- Add toggle gitsigns blame line
-if Util.has 'gitsigns.nvim' then
+if Util.has("gitsigns.nvim") then
   map(
-    'n',
-    '<leader>ub',
+    "n",
+    "<leader>ub",
     "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
-    { desc = 'Toggle current line blame' }
+    { desc = "Toggle current line blame" }
   )
-  map('n', '<leader>gl', function()
-    require('gitsigns').blame_line { full = false }
-  end, { desc = 'View full Blame' })
+  map("n", "<leader>gl", function()
+    require("gitsigns").blame_line({ full = false })
+  end, { desc = "View full Blame" })
   --NOTE: <leader>gB
   -- map('n', '<leader>gL', function()
   --   require('gitsigns').blame_line { full = true }
@@ -37,31 +54,61 @@ if Util.has 'gitsigns.nvim' then
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
 
-map('n', '<leader>uD', function()
-  vim.diagnostic.config { virtual_text = false }
-end, { desc = 'Toggle Diagnosticstic virtual_text' })
+map("n", "<leader>uD", function()
+  vim.diagnostic.config({ virtual_text = false })
+end, { desc = "Toggle Diagnosticstic virtual_text" })
 
 -- Select all
-map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+map("n", "<leader>a", "ggVG", { desc = "Select all" })
 
 -- Change Commit Log to use Lazygit
-map('n', '<leader>gD', function()
-  LazyVim.lazygit { args = { 'log' } }
-end, { desc = 'Lazygit Commit Log' })
+map("n", "<leader>gD", function()
+  LazyVim.lazygit({ args = { "log" } })
+end, { desc = "Lazygit Commit Log" })
 
 -- Copy file paths
-map('n', '<leader>fz', '<cmd>let @+ = expand("%")<CR>', { desc = 'Copy File Name' })
-map('n', '<leader>fZ', '<cmd>let @+ = expand("%:p")<CR>', { desc = 'Copy File Path' })
+map("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
+map("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
 
 -- Replace word under cursor across entire buffer
 map(
-  'n',
+  "n",
   -- "<leader>cw",
-  '<F2>',
+  "<F2>",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = '[c]hange word under cursor' }
+  { desc = "[c]hange word under cursor" }
 )
-
+-- package-info keymaps
+map(
+  "n",
+  "<leader>cpt",
+  "<cmd>lua require('package-info').toggle()<cr>",
+  { silent = true, noremap = true, desc = "Toggle" }
+)
+map(
+  "n",
+  "<leader>cpd",
+  "<cmd>lua require('package-info').delete()<cr>",
+  { silent = true, noremap = true, desc = "Delete package" }
+)
+map(
+  "n",
+  "<leader>cpu",
+  "<cmd>lua require('package-info').update()<cr>",
+  { silent = true, noremap = true, desc = "Update package" }
+)
+map(
+  "n",
+  "<leader>cpi",
+  "<cmd>lua require('package-info').install()<cr>",
+  { silent = true, noremap = true, desc = "Install package" }
+)
+map(
+  "n",
+  "<leader>cpc",
+  "<cmd>lua require('package-info').change_version()<cr>",
+  { silent = true, noremap = true, desc = "Change package version" }
+)
 -- local default_opts = {noremap = true}
 -- map('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>", default_opts)
 
