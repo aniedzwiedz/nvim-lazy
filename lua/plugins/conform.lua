@@ -23,7 +23,8 @@ return {
     },
 
     formatters_by_ft = {
-      ["lua"] = { "stylua", "lua_ls" },
+      -- ["lua"] = { "stylua", "lua_ls" },
+      ["lua"] = { "lua_ls" },
       ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
 

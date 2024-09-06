@@ -1,7 +1,8 @@
 return {
   -- { "echasnovski/mini.indentscope", enabled = false },
-  { 'lukas-reineke/indent-blankline.nvim', enabled = false },
-  { 'linux-cultist/venv-selector.nvim', enabled = false },
+  { "lukas-reineke/indent-blankline.nvim", enabled = false },
+  { "linux-cultist/venv-selector.nvim", enabled = false },
+  { "smjonas/inc-rename.nvim", enabled = false },
   -- { 'stevearc/conform.nvim', enabled = false          },
   -- { "mfussenegger/nvim-lint", enabled = false },
   -- { "folke/noice.nvim", enabled = false },

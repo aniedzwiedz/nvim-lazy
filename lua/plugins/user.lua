@@ -3,6 +3,8 @@
 
 return {
 
+  { "mfussenegger/nvim-ansible" },
+
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
@@ -25,7 +27,9 @@ return {
     "MagicDuck/grug-far.nvim",
     keys =
     {
-      { "<leader>sr", "<cmd>lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })<CR>", desc = "[r]eplace current word" },
+      { "<leader>sr", "<cmd>lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })<CR>",             desc = "[r]eplace current word" },
+      { "<leader>sR", "<cmd>lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand(' % ') } })<CR>", desc = "[R]eplace selected word" },
+      -- { "<leader>sr", "<cmd>:lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand('%') } })<CR>", desc = "[r]eplace current word" },
     }
   },
 
