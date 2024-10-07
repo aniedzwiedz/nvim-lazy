@@ -25,6 +25,7 @@ return {
     formatters_by_ft = {
       -- ["lua"] = { "stylua", "lua_ls" },
       ["lua"] = { "lua_ls" },
+      -- ["sh"] = { "bashls" }, --NOTE: format with a LSP
       ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
 

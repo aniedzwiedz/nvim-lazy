@@ -22,7 +22,7 @@ return {
         dockerfile = { "hadolint" },
         -- terraform = { "tflint" },
         -- ruby = { "standardrb" },
-        ansible = { "ansible-lint" },
+        -- ansible = { "ansible-lint" },
         -- groovy = { "checkstyle" },
         groovy = { "npm-groovy-lint" },
         -- zsh = { "shfmt" },

@@ -2,10 +2,11 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
-      tsserver = {
+      puppet = {},
+      ts_ls = {
         keys = {
           { "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", desc = "Organize Imports" },
-          { "<leader>cR", "<cmd>TypescriptRenameFile<CR>", desc = "Rename File" },
+          { "<leader>cR", "<cmd>TypescriptRenameFile<CR>",      desc = "Rename File" },
         },
       },
       --   azure_pipelines_ls = {
@@ -39,6 +40,7 @@ return {
       --     },
       --   },
       -- },
+      -- gitlab_ci_ls = {},
       yamlls = {
         settings = {
           yaml = {

@@ -52,6 +52,14 @@ local api = vim.api
 --   end,
 -- })
 
+-- https://github.com/alesbrelih/gitlab-ci-ls
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.gitlab-ci*.{yml,yaml}",
+  callback = function()
+    vim.bo.filetype = "yaml.gitlab"
+  end,
+})
+
 vim.filetype.add({
   extension = {
     env = "dotenv",
@@ -266,15 +274,17 @@ api.nvim_create_autocmd("BufWritePre", {
 
 -- -- Ansible support NOTE: moved to ftdetect/ansible.vim
 --
-  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = {
-      "*-ctl/*.yml",
-      "*-ctl/*.yaml",
-    },
-    callback = function()
-      vim.bo.filetype = "yaml.ansible"
-    end,
-  })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = {
+    "*-ctl/*.yml",
+    "*-ctl/*.yaml",
+    ".*/tasks/.*.yaml",
+    ".*/tasks/.*.yml",
+  },
+  callback = function()
+    vim.bo.filetype = "yaml.ansible"
+  end,
+})
 -- vim.api.nvim_create_autocmd('BufEnter', {
 --   -- pattern = {"*ctl*.yml", "*.yml" },
 --   pattern = { '*ctl*.yml', '.*/tasks/.*.y*ml', '*/playbooks/*.yml', '*.yml' },

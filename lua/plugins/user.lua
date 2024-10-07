@@ -152,6 +152,7 @@ return {
         "sql-formatter",
         "gopls",
         "tflint",
+        -- "gitlab_ci_ls",  -- requires rustc 1.74
       },
     },
   },

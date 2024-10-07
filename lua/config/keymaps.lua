@@ -21,6 +21,9 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank all" })
 --   { desc = "LazyGit" }
 --   -- { noremap = true, silent = true }
 -- )
+
+vim.keymap.del("n", "<leader>E") -- diable keymap
+
 vim.keymap.set("n", "<leader>go", function()
   Util.terminal({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false, border = "none" })
 end, { desc = "Lazygit (root dir)" })
@@ -48,9 +51,9 @@ if Util.has("gitsigns.nvim") then
     require("gitsigns").blame_line({ full = false })
   end, { desc = "View full Blame" })
   --NOTE: <leader>gB
-  -- map('n', '<leader>gL', function()
-  --   require('gitsigns').blame_line { full = true }
-  -- end, { desc = 'View full Git Blame' })
+  map('n', '<leader>gL', function()
+    require('gitsigns').blame_line { full = true }
+  end, { desc = 'View full Git Blame' })
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
 
