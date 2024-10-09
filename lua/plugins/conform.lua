@@ -28,6 +28,7 @@ return {
       -- ["sh"] = { "bashls" }, --NOTE: format with a LSP
       ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
+      ["zsh"] = { "beautysh" },
 
       terraform = { "terraform_fmt" },
       tf = { "terraform_fmt" },

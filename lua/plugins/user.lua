@@ -4,7 +4,26 @@
 return {
 
   { "mfussenegger/nvim-ansible" },
-
+  {
+    "mistricky/codesnap.nvim",
+    build = "make build_generator",
+    keys = {
+      { "<leader>cz", "<cmd>CodeSnap<cr>",     mode = "x", desc = "Save selected code snapshot into clipboard" },
+      { "<leader>cZ", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in /mnt/c/Users/aniedzwiedz/Pictures/codesnap" },
+    },
+    opts = {
+      save_path = "/mnt/c/Users/aniedzwiedz/Pictures/codesnap",
+      has_breadcrumbs = true,
+      show_workspace = true,
+      has_line_number = true,
+      bg_color = "#535c68",
+      bg_theme = "bamboo",
+      bg_padding = 10,
+      bg_x_padding = 122,
+      bg_y_padding = 82,
+      watermark = "",
+    },
+  },
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
@@ -144,6 +163,9 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
+        "yamllint",
+        "pylint",
+        "beautysh",
         "actionlint",
         "hadolint",
         "shfmt",

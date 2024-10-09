@@ -5,6 +5,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "nvim-telescope/telescope-fzf-native.nvim",
+      "nvim-telescope/telescope-github.nvim",
       build = "make",
       config = function()
         require("telescope").load_extension("fzf")
@@ -88,6 +89,7 @@ return {
           -- },
 
           extensions = {
+            gh = {},
             advanced_git_search = {
               diff_plugin = "diffview",
             },

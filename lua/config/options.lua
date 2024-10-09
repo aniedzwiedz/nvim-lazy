@@ -30,7 +30,7 @@ local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
 -- opt.clipboard = "unnamedplus" -- Sync with system clipboard
-opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
+-- opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 opt.conceallevel = 0 -- Hide/show * markup for bold and italic
 -- opt.completeopt = "menuone,noselect" -- Set completeopt to have a better completion experience
 opt.completeopt = "menu,menuone,noselect"
@@ -78,8 +78,8 @@ opt.timeoutlen = 300
 opt.undofile = true
 opt.undolevels = 10000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
-opt.swapfile = true -- No swapfile
-opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
+opt.swapfile = false -- No swapfile
+-- opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = true -- Enable line wrap
@@ -93,18 +93,13 @@ opt.fillchars = {
   eob = " ",
 }
 
+opt.smoothscroll = true
+opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
+opt.foldmethod = "expr"
+opt.foldtext = ""
 -- Folding
 vim.opt.foldlevel = 99
 
-if vim.fn.has("nvim-0.10") == 1 then
-  opt.smoothscroll = true
-  opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
-  opt.foldmethod = "expr"
-  opt.foldtext = ""
-else
-  opt.foldmethod = "indent"
-  opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
-end
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
 
