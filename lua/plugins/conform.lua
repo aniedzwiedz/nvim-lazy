@@ -29,7 +29,6 @@ return {
       ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["zsh"] = { "beautysh" },
-
       terraform = { "terraform_fmt" },
       tf = { "terraform_fmt" },
       ["terraform-vars"] = { "terraform_fmt" },

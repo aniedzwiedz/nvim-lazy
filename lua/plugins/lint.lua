@@ -43,6 +43,7 @@ return {
       javascriptreact = { "eslint_d" },
       typescriptreact = { "eslint_d" },
       svelte = { "eslint_d" },
+      markdown = { "markdownlint-cli2" },
 
       -- json = { "jsonlint" },
       -- markdown = { "markdownlint" },

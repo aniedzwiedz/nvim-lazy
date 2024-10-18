@@ -2,14 +2,12 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
+      "nvim-telescope/telescope-frecency.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-github.nvim",
       build = "make",
-      config = function()
-        require("telescope").load_extension("fzf")
-      end,
     },
     keys = {
       -- add a keymap to browse plugin files
@@ -19,11 +17,17 @@ return {
         function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
         desc = "Find Plugin File",
       },
-
+      {
+        "<leader>ff",
+        "<cmd>Telescope frecency workspace=CWD theme=ivy<cr>",
+        desc = "Find Files (frecency)",
+      },
       { "<leader>gC", "<cmd>AdvancedGitSearch diff_commit_file<cr>", desc = "Commits for [C]urrent file" },
     },
 
-    config = function()
+    config = function(_, opts)
+      require("telescope").load_extension("frecency")
+      -- require("telescope").load_extension("fzf")
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       --       local trouble = require("trouble.providers.telescope")
@@ -93,6 +97,30 @@ return {
             advanced_git_search = {
               diff_plugin = "diffview",
             },
+            frecency = {
+              show_scores = true, -- Default: false
+              -- If `true`, it shows confirmation dialog before any entries are removed from the DB
+              -- If you want not to be bothered with such things and to remove stale results silently
+              -- set db_safe_mode=false and auto_validate=true
+              --
+              -- This fixes an issue I had in which I couldn't close the floating
+              -- window because I couldn't focus it
+              db_safe_mode = false,       -- Default: true
+              -- If `true`, it removes stale entries count over than db_validate_threshold
+              auto_validate = true,       -- Default: true
+              -- It will remove entries when stale ones exist more than this count
+              db_validate_threshold = 10, -- Default: 10
+              -- Show the path of the active filter before file paths.
+              -- So if I'm in the `dotfiles-latest` directory it will show me that
+              -- before the name of the file
+              show_filter_column = false, -- Default: true
+              -- I declare a workspace which I will use when calling frecency if I
+              -- want to search for files in a specific path
+              -- workspaces = {
+              --   ["neobean_plugins"] = "$HOME/.config/LazyVim/",
+              -- },
+            },
+
           },
           buffers = {
             path_display = formattedName,
@@ -106,7 +134,7 @@ return {
             },
             previewer = false,
             initial_mode = "normal",
-            -- theme = "dropdown",
+            -- theme = "ivy",
             layout_config = {
               height = 0.4,
               width = 0.6,
