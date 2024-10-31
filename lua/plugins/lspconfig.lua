@@ -9,6 +9,48 @@ return {
           { "<leader>cR", "<cmd>TypescriptRenameFile<CR>",      desc = "Rename File" },
         },
       },
+      -- sonarlint = {
+      --   server = {
+      --     cmd = {
+      --       'sonarlint-language-server',
+      --       -- Ensure that sonarlint-language-server uses stdio channel
+      --       '-stdio',
+      --       '-analyzers',
+      --       -- paths to the analyzers you need, using those for python and java in this example
+      --       vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+      --       vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+      --       vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
+      --     },
+      --   },
+      --   filetypes = {
+      --     -- Tested and working
+      --     'python',
+      --     'cpp',
+      --     'java',
+      --   },
+      --   -- settings = {
+      --   --   sonarlint = {
+      --   --     rules = {
+      --   --       ['typescript:S101'] = { level = 'on', parameters = { format = '^[A-Z][a-zA-Z0-9]*$' } },
+      --   --       ['typescript:S103'] = { level = 'on', parameters = { maximumLineLength = 180 } },
+      --   --       ['typescript:S106'] = { level = 'on' },
+      --   --       ['typescript:S107'] = { level = 'on', parameters = { maximumFunctionParameters = 7 } }
+      --   --     }
+      --   --   },
+      --   -- },
+      -- },
+      -- ruby_lsp = {
+      --   enabled = lsp == "ruby_lsp",
+      -- },
+      -- solargraph = {
+      --   enabled = lsp == "solargraph",
+      -- },
+      -- rubocop = {
+      --   enabled = formatter == "rubocop",
+      -- },
+      -- standardrb = {
+      --   enabled = formatter == "standardrb",
+      -- },
       --   azure_pipelines_ls = {
       --     settings = {
       --       yaml = {
@@ -41,6 +83,21 @@ return {
       --   },
       -- },
       -- gitlab_ci_ls = {},
+      -- jsonls = {
+      --   -- lazy-load schemastore when needed
+      --   on_new_config = function(new_config)
+      --     new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+      --     vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+      --   end,
+      --   settings = {
+      --     json = {
+      --       format = {
+      --         enable = true,
+      --       },
+      --       validate = { enable = true },
+      --     },
+      --   },
+      -- },
       yamlls = {
         settings = {
           yaml = {

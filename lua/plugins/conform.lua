@@ -32,6 +32,9 @@ return {
       terraform = { "terraform_fmt" },
       tf = { "terraform_fmt" },
       ["terraform-vars"] = { "terraform_fmt" },
+      hcl = { "packer_fmt" },
+      -- ruby = { formatter },
+      eruby = { "erb-format" },
     },
   },
 }

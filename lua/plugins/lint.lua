@@ -38,7 +38,7 @@ return {
       tf = { "terraform_validate" },
       ["yaml.gha"] = { "actionlint" },
       zsh = { 'zsh' },
-      javascript = { "eslint_d" },
+      -- javascript = { "eslint_d" },
       typescript = { "eslint_d" },
       javascriptreact = { "eslint_d" },
       typescriptreact = { "eslint_d" },
