@@ -8,7 +8,8 @@
   "neoconf": {
     "plugins": {
       "lua_ls": {
-        "enabled": true
+        "enabled": true,
+        "hint.enable": true
       }
     }
   }
