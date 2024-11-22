@@ -1,5 +1,8 @@
 {
-    "diagnostics.globals": [
-        "lint_augroup"
-    ]
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "hint.enable": true,
+  "codeLens.enable": true,
+  "diagnostics.globals": [
+    "lint_augroup"
+  ]
 }

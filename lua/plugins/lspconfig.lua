@@ -2,6 +2,18 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT"
+            },
+            -- ["completion.enable"] = true,
+            -- ["hint.enable"] = true,
+            -- ["codeLens.enable"] = true,
+          },
+        }
+      },
       puppet = {},
       ts_ls = {
         keys = {
@@ -104,7 +116,13 @@ return {
             schemas = {
               ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
                 "*/.azuredevops/**/*.y*ml",
+                "*/.azuredevops/**/**/*.y*ml",
               },
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] =
+              "/*.k8s.yaml",
+              -- ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+              -- ["/path/from/root/of/project"] = "/.github/workflows/*",
             },
           },
         },
