@@ -3,10 +3,13 @@
 -- load the colors once when the module is required and then expose the colors
 -- directly. This avoids the need to call load_colors() in every file
 
+if true then return {} end
+
 -- Function to load colors from the external file
 local function load_colors()
   local colors = {}
-  local active_file = os.getenv("HOME") .. "/github/dotfiles-latest/neovim/neobean/lua/config/active-colorscheme.sh"
+  -- local active_file = os.getenv("HOME") .. "/github/dotfiles-latest/neovim/neobean/lua/config/active-colorscheme.sh"
+  local active_file = os.getenv("HOME") .. "~/.config/linkarzu/neovim/neobean/lua/config/active-colorscheme.sh"
 
   local file = io.open(active_file, "r")
   if not file then

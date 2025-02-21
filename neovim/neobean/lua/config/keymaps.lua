@@ -47,18 +47,6 @@ vim.keymap.set("n", "<M-2>", function()
   end
 end, { desc = "[P]Select Current Hunk in Visual Mode" })
 
--- Restart Neovim
-vim.keymap.set({ "n", "v", "i" }, "<M-R>", function()
-  -- Save all modified buffers, autosave may not have kicked in sometimes
-  vim.cmd("wall")
-  -- Check if a right pane exists, if it does close it
-  local has_panes = vim.fn.system("tmux list-panes | wc -l"):gsub("%s+", "") ~= "1"
-  if has_panes then
-    vim.fn.system("tmux kill-pane -t :.+")
-  end
-  os.execute('open "btt://execute_assigned_actions_for_trigger/?uuid=481BDF1F-D0C3-4B5A-94D2-BD3C881FAA6F"')
-end, { desc = "[P]Restart Neovim via BTT" })
-
 -- Disable this keymap overriding it with a no-operation function (noop)
 -- Otherwise when by mistake press <M-r> to restart neovim, it does "r" to
 -- replace
@@ -245,7 +233,7 @@ end, { desc = "[P]Inspect plugin merge config" })
 --   toggle()
 -- end, { desc = "[P]Snipe" })
 
-vim.keymap.set("n", "<leader>uk", '<cmd>lua require("kubectl").toggle()<cr>', { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>uk", '<cmd>lua require("kubectl").toggle()<cr>', { noremap = true, silent = true })
 
 -- -- use kj to exit insert mode
 -- -- I auto save with

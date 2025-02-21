@@ -17,7 +17,7 @@ require("config.lazy")
 -- so this is the only way I was able to make it work
 -- Require the colors.lua module and access the colors directly without
 -- additional file reads
-require("config.highlights")
+-- require("config.highlights")
 
 -- Delay for `skitty` configuration
 -- If I don't add this delay, I get the message

@@ -84,19 +84,19 @@ return {
     }
 
     -- Path to the text file containing video snippets
-    local snippets_file = vim.fn.expand("~/github/obsidian_main/300-youtube/youtube-video-list.txt")
+    -- local snippets_file = vim.fn.expand("~/github/obsidian_main/300-youtube/youtube-video-list.txt")
 
     -- Generate all types of snippets using the base function
-    local video_snippets = process_youtube_snippets(snippets_file, format_functions.plain)
-    local video_md_snippets = process_youtube_snippets(snippets_file, format_functions.markdown)
-    local video_md_snippets_ext = process_youtube_snippets(snippets_file, format_functions.markdown_external)
-    local video_snippets_embed = process_youtube_snippets(snippets_file, format_functions.embed)
+    -- local video_snippets = process_youtube_snippets(snippets_file, format_functions.plain)
+    -- local video_md_snippets = process_youtube_snippets(snippets_file, format_functions.markdown)
+    -- local video_md_snippets_ext = process_youtube_snippets(snippets_file, format_functions.markdown_external)
+    -- local video_snippets_embed = process_youtube_snippets(snippets_file, format_functions.embed)
 
     -- Add all types of snippets to the "all" filetype
-    ls.add_snippets("all", video_snippets)
-    ls.add_snippets("all", video_md_snippets)
-    ls.add_snippets("all", video_md_snippets_ext)
-    ls.add_snippets("all", video_snippets_embed)
+    -- ls.add_snippets("all", video_snippets)
+    -- ls.add_snippets("all", video_md_snippets)
+    -- ls.add_snippets("all", video_md_snippets_ext)
+    -- ls.add_snippets("all", video_snippets_embed)
 
     -- Custom snippets
     -- the "all" after ls.add_snippets("all" is the filetype, you can know a
