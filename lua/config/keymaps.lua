@@ -62,16 +62,20 @@ map("n", "<leader>uD", function()
 end, { desc = "Toggle Diagnosticstic virtual_text" })
 
 -- Select all
-map("n", "<leader>a", "ggVG", { desc = "Select all" })
+-- map("n", "<leader>a", "ggVG", { desc = "Select all" })
 
 -- Change Commit Log to use Lazygit
 map("n", "<leader>gD", function()
-  LazyVim.lazygit({ args = { "log" } })
+  require("lazyvim").lazygit({ args = { "log" } })
 end, { desc = "Lazygit Commit Log" })
 
+-- -- Copy file paths
+-- map("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
+-- map("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
+
 -- Copy file paths
-map("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
-map("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
+map("n", "<leader>fz", function() vim.fn.setreg("+", vim.fn.expand("%")) end, { desc = "Copy File Name" })
+map("n", "<leader>fZ", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end, { desc = "Copy File Path" })
 
 -- Replace word under cursor across entire buffer
 map(

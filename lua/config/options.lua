@@ -17,7 +17,7 @@ vim.g.mkdp_theme = 'dark'
 -- * the name of a detector function like `lsp` or `cwd`
 -- * a pattern or array of patterns like `.git` or `lua`.
 -- * a function with signature `function(buf) -> string|string[]`
-vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+-- vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
 
@@ -32,7 +32,7 @@ LazyVim.terminal.setup("zsh")
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
--- opt.clipboard = "unnamedplus" -- Sync with system clipboard
+opt.clipboard = "unnamedplus" -- Sync with system clipboard
 -- opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 opt.conceallevel = 0 -- Hide/show * markup for bold and italic
 -- opt.completeopt = "menuone,noselect" -- Set completeopt to have a better completion experience

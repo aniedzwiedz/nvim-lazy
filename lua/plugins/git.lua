@@ -8,6 +8,7 @@ return {
       local icons = require("config.icons")
       require("gitsigns").setup({
         signs = {
+          staged_diff_split_kind = false,
           add = { text = "+ " }, -- ./git.lua
           -- add = { text = "  " },
           -- add = {

@@ -10,7 +10,7 @@ return {
       return {
         notifier = {
           enabled = true,
-          timeout = 3000, -- default timeout in ms
+          timeout = 3000, -- default timeout in milliseconds
           width = { min = 40, max = 0.4 },
           height = { min = 1, max = 0.6 },
           -- editor margin to keep free. tabline and statusline are taken into account automatically
@@ -99,8 +99,8 @@ return {
               section = "terminal",
               enabled = Snacks.git.get_root() ~= nil,
               -- cmd = "git log --pretty=oneline -n 5 --graph --abbrev-commit ",
-              cmd = "git log --decorate -n 5 --pretty=oneline --abbrev-commit",
-              height = 5,
+              cmd = "git log --decorate -n 6 --pretty=oneline --abbrev-commit",
+              height = 6,
               padding = 1,
               ttl = 5 * 60,
               indent = 3,

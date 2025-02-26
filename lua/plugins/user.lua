@@ -19,28 +19,6 @@ return {
   --   ft = { "markdown" },
   -- },
 
-
-  { "mfussenegger/nvim-ansible" },
-  {
-    "mistricky/codesnap.nvim",
-    build = "make build_generator",
-    keys = {
-      { "<leader>cz", "<cmd>CodeSnap<cr>",     mode = "x", desc = "Save selected code snapshot into clipboard" },
-      { "<leader>cZ", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in /mnt/c/Users/aniedzwiedz/Pictures/codesnap" },
-    },
-    opts = {
-      save_path = "/mnt/c/Users/aniedzwiedz/Pictures/codesnap",
-      has_breadcrumbs = true,
-      show_workspace = true,
-      has_line_number = true,
-      bg_color = "#535c68",
-      bg_theme = "bamboo",
-      bg_padding = 10,
-      bg_x_padding = 122,
-      bg_y_padding = 82,
-      watermark = "",
-    },
-  },
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
@@ -64,54 +42,54 @@ return {
     keys =
     {
       { "<leader>sr", "<cmd>lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })<CR>",             desc = "[r]eplace current word" },
-      { "<leader>sR", "<cmd>lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand(' % ') } })<CR>", desc = "[R]eplace selected word" },
+      -- { "<leader>sR", "<cmd>lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand(' % ') } })<CR>", desc = "[R]eplace selected word" }, --NOTE: dosen't work
       -- { "<leader>sr", "<cmd>:lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand('%') } })<CR>", desc = "[r]eplace current word" },
     }
   },
 
-  {
-    "ahmedkhalf/project.nvim",
-    keys = {
-      { "<leader>fp", "<cmd>Telescope projects<CR>", desc = "Find [p]rojects" },
-    },
-    config = function()
-      require("project_nvim").setup({
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-        sync_root_with_cwd = true,
-        active = true,
-        on_config_done = nil,
-        manual_mode = false,
-        detection_methods = { "pattern" },
-        ignore_lsp = {},
-        exclude_dirs = {},
-        show_hidden = false,
-        silent_chdir = true,
-        scope_chdir = "global",
-        patterns = {
-          ".git",
-          -- "_darcs",
-          -- ".hg",
-          -- ".bzr",
-          -- ".svn",
-          -- "Makefile",
-          "package.json",
-          "!.git/worktrees",
-          "!=extras",
-          "!^fixtures",
-          "_darcs", ".hg", ".bzr", ".svn",
-          "!build/env.sh",
-        },
-        datapath = vim.fn.stdpath("data"),
-        respect_buf_cwd = true,
-        update_focused_file = {
-          enable = true,
-          update_root = true,
-        },
-      })
-    end,
-  },
+  -- {
+  --   "ahmedkhalf/project.nvim",
+  --   keys = {
+  --     { "<leader>fp", "<cmd>Telescope projects<CR>", desc = "Find [p]rojects" },
+  --   },
+  --   config = function()
+  --     require("project_nvim").setup({
+  --       -- your configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       sync_root_with_cwd = true,
+  --       active = true,
+  --       on_config_done = nil,
+  --       manual_mode = false,
+  --       detection_methods = { "pattern" },
+  --       ignore_lsp = {},
+  --       exclude_dirs = {},
+  --       show_hidden = false,
+  --       silent_chdir = true,
+  --       scope_chdir = "global",
+  --       patterns = {
+  --         ".git",
+  --         -- "_darcs",
+  --         -- ".hg",
+  --         -- ".bzr",
+  --         -- ".svn",
+  --         -- "Makefile",
+  --         "package.json",
+  --         "!.git/worktrees",
+  --         "!=extras",
+  --         "!^fixtures",
+  --         "_darcs", ".hg", ".bzr", ".svn",
+  --         "!build/env.sh",
+  --       },
+  --       datapath = vim.fn.stdpath("data"),
+  --       respect_buf_cwd = true,
+  --       update_focused_file = {
+  --         enable = true,
+  --         update_root = true,
+  --       },
+  --     })
+  --   end,
+  -- },
   -- {
   --   "folke/edgy.nvim", -- NOTE: do I need it?
   --   optional = true,
@@ -135,52 +113,52 @@ return {
   --     })
   --   end,
   -- },
-  { "SonarSource/sonarlint-vscode" },
+  -- { "SonarSource/sonarlint-vscode" },
   { "kevinhwang91/nvim-bqf",       ft = 'qf' },
-  {
-    "echasnovski/mini.surround",
-    version = false,
-    lazy = true,
-    opts = {
-      -- information with examples, see `:h MiniSurround.config`.
-      custom_surroundings = nil,
-
-      -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
-      highlight_duration = 500,
-
-      -- Module mappings. Use `''` (empty string) to disable one.
-      mappings = {
-        add = 'sa',            -- Add surrounding in Normal and Visual modes
-        delete = 'sd',         -- Delete surrounding
-        find = 'sf',           -- Find surrounding (to the right)
-        find_left = 'sF',      -- Find surrounding (to the left)
-        highlight = 'sh',      -- Highlight surrounding
-        replace = 'sr',        -- Replace surrounding
-        update_n_lines = 'sn', -- Update `n_lines`
-
-        suffix_last = 'l',     -- Suffix to search with "prev" method
-        suffix_next = 'n',     -- Suffix to search with "next" method
-      },
-
-      -- Number of lines within which surrounding is searched
-      n_lines = 20,
-
-      -- Whether to respect selection type:
-      -- - Place surroundings on separate lines in linewise mode.
-      -- - Place surroundings on each line in blockwise mode.
-      respect_selection_type = false,
-
-      -- How to search for surrounding (first inside current line, then inside
-      -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-      -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
-      -- see `:h MiniSurround.config`.
-      search_method = 'cover',
-
-      -- Whether to disable showing non-error feedback
-      silent = false,
-
-    }
-  },
+  -- {
+  --   "echasnovski/mini.surround",
+  --   version = false,
+  --   lazy = true,
+  --   opts = {
+  --     -- information with examples, see `:h MiniSurround.config`.
+  --     custom_surroundings = nil,
+  --
+  --     -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
+  --     highlight_duration = 500,
+  --
+  --     -- Module mappings. Use `''` (empty string) to disable one.
+  --     mappings = {
+  --       add = 'sa',            -- Add surrounding in Normal and Visual modes
+  --       delete = 'sd',         -- Delete surrounding
+  --       find = 'sf',           -- Find surrounding (to the right)
+  --       find_left = 'sF',      -- Find surrounding (to the left)
+  --       highlight = 'sh',      -- Highlight surrounding
+  --       replace = 'sr',        -- Replace surrounding
+  --       update_n_lines = 'sn', -- Update `n_lines`
+  --
+  --       suffix_last = 'l',     -- Suffix to search with "prev" method
+  --       suffix_next = 'n',     -- Suffix to search with "next" method
+  --     },
+  --
+  --     -- Number of lines within which surrounding is searched
+  --     n_lines = 20,
+  --
+  --     -- Whether to respect selection type:
+  --     -- - Place surroundings on separate lines in linewise mode.
+  --     -- - Place surroundings on each line in blockwise mode.
+  --     respect_selection_type = false,
+  --
+  --     -- How to search for surrounding (first inside current line, then inside
+  --     -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+  --     -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
+  --     -- see `:h MiniSurround.config`.
+  --     search_method = 'cover',
+  --
+  --     -- Whether to disable showing non-error feedback
+  --     silent = false,
+  --
+  --   }
+  -- },
   {
     "hedyhli/outline.nvim",
     lazy = true,
@@ -265,24 +243,24 @@ return {
     end,
   },
   -- UI
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      timeout = 1600,
-      render = "wrapped-compact",
-      stages = "slide",
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.25)
-      end,
-      on_open = function(win)
-        vim.api.nvim_win_set_config(win, { zindex = 100 })
-      end,
-    },
-  },
-
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   opts = {
+  --     timeout = 1600,
+  --     render = "wrapped-compact",
+  --     stages = "slide",
+  --     max_height = function()
+  --       return math.floor(vim.o.lines * 0.75)
+  --     end,
+  --     max_width = function()
+  --       return math.floor(vim.o.columns * 0.25)
+  --     end,
+  --     on_open = function(win)
+  --       vim.api.nvim_win_set_config(win, { zindex = 100 })
+  --     end,
+  --   },
+  -- },
+  --
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
