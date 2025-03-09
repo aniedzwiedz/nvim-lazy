@@ -92,6 +92,7 @@ return {
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
+      ---@diagnostic disable-next-line: missing-fields
       servers = {
         -- tsserver will be automatically installed with mason and loaded with lspconfig
         tsserver = {},
