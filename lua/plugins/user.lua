@@ -60,4 +60,119 @@ return {
       },
     },
   },
+
+  -- Blink integration
+  {
+    "saghen/blink.cmp",
+    optional = true,
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      sources = {
+        providers = {
+          path = {
+            -- Path sources triggered by "/" interfere with CopilotChat commands
+            enabled = function()
+              return vim.bo.filetype ~= "copilot-chat"
+            end,
+          },
+        },
+      },
+    },
+  },
+
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   event = "LazyFile",
+  --   opts = function()
+  --     Snacks.toggle({
+  --       name = "Indention Guides",
+  --       get = function()
+  --         return require("ibl.config").get_config(0).enabled
+  --       end,
+  --       set = function(state)
+  --         require("ibl").setup_buffer(0, { enabled = state })
+  --       end,
+  --     }):map("<leader>ug")
+  --
+  --     return {
+  --       indent = {
+  --         char = "┆", -- Custom character for indentation
+  --         tab_char = "┆", -- Custom character for tab indentation
+  --       },
+  --       scope = { show_start = true, show_end = true }, -- Show start and end of scope
+  --       exclude = {
+  --         filetypes = {
+  --           "Trouble",
+  --           "alpha",
+  --           "dashboard",
+  --           "help",
+  --           "lazy",
+  --           "mason",
+  --           "neo-tree",
+  --           "notify",
+  --           "snacks_dashboard",
+  --           "snacks_notif",
+  --           "snacks_terminal",
+  --           "snacks_win",
+  --           "toggleterm",
+  --           "trouble",
+  --           "markdown", -- Added markdown to excluded filetypes
+  --         },
+  --       },
+  --     }
+  --   end,
+  --   main = "ibl",
+  -- }
+  -- NOTE: OK
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = "LazyFile",
+    opts = {
+      -- symbol = "▏",
+      symbol = "╎",
+      options = {
+        -- Type of scope's border: which line(s) with smaller indent to
+        -- categorize as border. Can be one of: 'both', 'top', 'bottom', 'none'.
+        border = "both",
+
+        -- Whether to use cursor column when computing reference indent.
+        -- Useful to see incremental scopes with horizontal cursor movements.
+        indent_at_cursor = true,
+
+        -- Maximum number of lines above or below within which scope is computed
+        n_lines = 10000,
+
+        -- Whether to first check input line to be a border of adjacent scope.
+        -- Use it if you want to place cursor on function header to get scope of
+        -- its body.
+        try_as_border = false,
+      },
+    },
+  },
+
+  -- -- https://github.com/LazyVim/LazyVim/pull/5335/files
+  -- recommended = function()
+  --   return LazyVim.extras.wants({
+  --     ft = "helm",
+  --     root = "Chart.yaml",
+  --   })
+  -- end,
+  --
+  -- { "qvalentin/helm-ls.nvim", ft = "helm" },
+  --
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   opts = { ensure_installed = { "helm" } },
+  -- },
+  --
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     servers = {
+  --       helm_ls = {},
+  --     },
+  --   },
+  -- },
 }
