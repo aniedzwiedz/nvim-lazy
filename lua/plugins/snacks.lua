@@ -167,19 +167,37 @@ return {
 
           -- Used by the `header` section
           header = [[
-███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+
+                      > <     ,     > <
+                 .     '             '      .      .
+                          __.--._          > <
+                  .     .'   L   `.--._     '
+                 > <    `/ c '`    \   `.
+                  '     :           ;    `.    `     ,
+                        |           ;      \
+                       /`.     | ' /        \     .
+                  '   / -.\ \  ^ ;/   _      \   > <
+                     :    \`.:/ \|     `.|    ;   '
+                     |     :''   '       ;    |
+                     |     |`.         _/_    ;
+                     :     :  `-._____/   `. /
+                      \    |         :/ ,   V\
+            /"\   __.--; _ :         `./ /  ; ;
+           :  |\_/     |  \L  _..--.   `.L.'  |`.   __
+           |  | ;`.    ; _ \\'      `.          /`+'.'`.
+           |  | |      | \CT_;        `-.      ' / /   |
+           |-_| |   .-'`.___.            `-.    / /    ;
+           :  ; :.-'                        `-./ /.   /
+            \/_/         _                     \/  `./
+             "                                  `._.'
+    ]],
         },
         sections = {
-          -- { section = "header" },
-          { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
-          { section = "keys", gap = 1, padding = 1 },
+          { section = "header" },
+          -- { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
+          { section = "keys", pane = 2, gap = 1, padding = 1 },
           { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+          -- { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
           {
             pane = 2,
             icon = " ",

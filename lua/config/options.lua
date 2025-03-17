@@ -8,6 +8,50 @@ vim.g.lazyvim_picker = "snacks"
 -- Enable clipboard support
 vim.opt.clipboard = "unnamedplus"
 
+-- Enable LazyVim auto format
+vim.g.autoformat = false
+
+-- vim.g.mkdp_browser = 'firefox' -- iamcco/markdown-preview
+vim.g.mkdp_theme = "dark"
+
+-- vim.g.clipboard = {
+--   name = "win32yank-wsl",
+--   copy = {
+--     ["+"] = "win32yank.exe -i --crlf",
+--     ["*"] = "win32yank.exe -i --crlf",
+--   },
+--   paste = {
+--     ["+"] = "win32yank.exe -o --lf",
+--     ["*"] = "win32yank.exe -o --lf",
+--   },
+--   cache_enabled = true,
+-- }
+--
+-- vim.g.clipboard = {
+--   name = "wsl-clip",
+--   copy = {
+--     ["+"] = "clip.exe",
+--     ["*"] = "clip.exe",
+--   },
+--   paste = {
+--     ["+"] = "powershell.exe Get-Clipboard",
+--     ["*"] = "powershell.exe Get-Clipboard",
+--   },
+--   cache_enabled = false,
+-- }
+vim.g.clipboard = {
+  name = "win32yank-wsl",
+  copy = {
+    ["+"] = "win32yank.exe -i --crlf",
+    ["*"] = "win32yank.exe -i --crlf",
+  },
+  paste = {
+    ["+"] = "win32yank.exe -o --lf",
+    ["*"] = "win32yank.exe -o --lf",
+  },
+  cache_enabled = false,
+}
+
 -- Enable the option to require a Prettier config file
 -- If no prettier config file is found, the formatter will not be used
 vim.g.lazyvim_prettier_needs_config = false
