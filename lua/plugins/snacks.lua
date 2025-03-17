@@ -157,6 +157,7 @@ return {
       },
     },
     opts = {
+      indent = { enabled = false },
       dashboard = {
         width = 60,
         row = nil, -- dashboard position. nil for center
