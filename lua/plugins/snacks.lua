@@ -162,7 +162,7 @@ return {
         width = 60,
         row = nil, -- dashboard position. nil for center
         col = nil, -- dashboard position. nil for center
-        pane_gap = 4, -- empty columns between vertical panes
+        -- pane_gap = 4, -- empty columns between vertical panes
         autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", -- autokey sequence
         preset = {
 

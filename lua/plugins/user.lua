@@ -38,7 +38,60 @@ return {
       },
     },
   },
+  -- { -- Neotree -- TODO: zamienic z Snacks.explore()
+  --   -- Changes key mappings
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   keys = {
+  --     -- don't use with edgy
+  --     -- { "-", "<cmd>Neotree filesystem reveal float<cr>", { desc = "Reveal file in Neotree" } },
+  --   },
+  --   opts = function(_, opts)
+  --     opts.position = "current"
+  --     opts.event_handlers = {
+  --       {
+  --         event = "file_opened",
+  --         handler = function() -- (file_path)
+  --           require("neo-tree.command").execute({ action = "close" })
+  --         end,
+  --       },
+  --     }
+  --   end,
+  -- },
   { "sindrets/diffview.nvim", opts = {} },
+  {
+    "akinsho/git-conflict.nvim",
+    vscode = false,
+    lazy = true,
+    event = "LazyFile",
+    opts = {},
+    keys = {
+      { "<leader>gxl", "<cmd>GitConflictListQf<cr>", desc = "List git conflicts" },
+    },
+  },
+  {
+    "mikavilpas/yazi.nvim",
+    vscode = false,
+    event = "VeryLazy",
+    keys = {
+      {
+        "_",
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        "<leader>fx",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Explore with Yazi (cwd)",
+      },
+    },
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+  },
   {
     "hrsh7th/nvim-cmp",
     optional = true,

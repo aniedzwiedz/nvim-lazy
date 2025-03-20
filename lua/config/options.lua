@@ -9,6 +9,8 @@ vim.g.lazyvim_picker = "fzf"
 -- Enable clipboard support
 vim.opt.clipboard = "unnamedplus"
 
+vim.opt.gdefault = true -- Searches will be global by default
+
 -- Enable the option to require a Prettier config file
 -- If no prettier config file is found, the formatter will not be used
 vim.g.lazyvim_prettier_needs_config = false

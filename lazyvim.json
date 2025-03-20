@@ -28,7 +28,6 @@
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.lsp.neoconf",
-    "lazyvim.plugins.extras.ui.indent-blankline",
     "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.mini-hipatterns",
     "lazyvim.plugins.extras.util.project",
@@ -40,3 +39,4 @@
   },
   "version": 8
 }
+
