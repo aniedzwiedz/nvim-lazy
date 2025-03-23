@@ -43,6 +43,39 @@ vim.keymap.set("n", "<leader>fyn", function()
   vim.notify("→ " .. str)
 end, { desc = " Copy basename" })
 
+-- Replace word under cursor across entire buffer
+map(
+  "n",
+  -- "<leader>cw",
+  "<F2>",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "[c]hange word under cursor" }
+)
+-- -- Add toggle gitsigns blame line
+-- if Util.has("gitsigns.nvim") then
+--   map(
+--     "n",
+--     "<leader>ub",
+--     "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
+--     { desc = "Toggle current line blame" }
+--   )
+--   map("n", "<leader>gl", function()
+--     require("gitsigns").blame_line({ full = false })
+--   end, { desc = "View full Blame" })
+--   --NOTE: <leader>gB
+--   map("n", "<leader>gL", function()
+--     require("gitsigns").blame_line({ full = true })
+--   end, { desc = "View full Git Blame" })
+--   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
+-- end
+-- -- yamk all to clipboard
+-- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank all" })
+
+-- NOTE: do i want to overwrite dimming from LazyVim
+-- map("n", "<leader>uD", function()
+--   vim.diagnostic.config({ virtual_text = false })
+-- end, { desc = "Toggle Diagnosticstic virtual_text" })
+
 -- vscode
 if vim.g.vscode then
   vim.keymap.set(
