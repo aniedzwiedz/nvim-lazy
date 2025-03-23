@@ -31,6 +31,7 @@
     "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.mini-hipatterns",
     "lazyvim.plugins.extras.util.project",
+    "lazyvim.plugins.extras.ui.treesitter-context",
     "lazyvim.plugins.extras.vscode"
   ],
   "install_version": 8,
@@ -39,4 +40,3 @@
   },
   "version": 8
 }
-

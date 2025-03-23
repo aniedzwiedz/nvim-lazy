@@ -5,6 +5,7 @@
 -- NOTE: snacks is a custom picker that is not included in the default options
 -- vim.g.lazyvim_picker = "snacks"
 vim.g.lazyvim_picker = "fzf"
+-- vim.g.lazyvim_picker = "telescope"
 
 -- Enable clipboard support
 vim.opt.clipboard = "unnamedplus"
