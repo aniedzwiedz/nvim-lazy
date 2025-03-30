@@ -18,6 +18,45 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.number = false -- toggle with leader-ul
   end,
 })
+
+-- https://github.com/alesbrelih/gitlab-ci-ls
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".gitlab*",
+  callback = function()
+    vim.bo.filetype = "yaml.gitlab"
+  end,
+})
+
+-- Enable spell checking for certain file types
+vim.api.nvim_create_autocmd(
+  { "BufRead", "BufNewFile" },
+  -- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
+  {
+    pattern = { "*.txt", "*.md", "*.tex" },
+    callback = function()
+      vim.opt.spell = true
+      vim.opt.spelllang = "en,pl"
+    end,
+  }
+)
+
+-- Autocommands (https://neovim.io/doc/user/autocmd.html)
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.json", "*.jsonc" },
+  -- enable wrap mode for json files only
+  command = "setlocal wrap",
+})
+
+-- if a file is a .env or .envrc file, set the filetype to sh
+vim.filetype.add({
+  filename = {
+    [".env"] = "sh",
+    [".envrc"] = "sh",
+    ["*.env"] = "sh",
+    ["*.envrc"] = "sh",
+  },
+})
+
 vim.api.nvim_create_autocmd("BufRead", {
   -- Force `Jenkinsfile` to groovy filetype.
   pattern = { "Jenkinsfile" },
