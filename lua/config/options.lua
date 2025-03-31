@@ -14,12 +14,25 @@ vim.opt.gdefault = true -- Searches will be global by default
 
 -- Enable the option to require a Prettier config file
 -- If no prettier config file is found, the formatter will not be used
-vim.g.lazyvim_prettier_needs_config = false
+vim.g.lazyvim_prettier_needs_config = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
+vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
+vim.opt.winminwidth = 5 -- Minimum window width
+vim.opt.wrap = true -- Enable line wrap
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  -- fold = "⸱",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 -- Convert tabs to spaces
 vim.opt.expandtab = true
 -- Amount to indent with << and >>

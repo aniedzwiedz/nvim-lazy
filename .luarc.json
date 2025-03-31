@@ -1,5 +1,11 @@
 {
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+    "hint.enable": true,
+    "codeLens.enable": true,
     "diagnostics.globals": [
-        "api"
+        "lint_augroup"
+    ],
+    "diagnostics.disable": [
+        "missing-fields"
     ]
 }

@@ -2,12 +2,42 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 --
+local Util = require("lazyvim.util")
+-- Silent keymap option
+-- local opts = { noremap = true, silent = true }
+-- local map = vim.keymap.set
+-- yank to clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank all" })
 -- System clipboard
 vim.keymap.set("v", "<C-c>", '"+y', { desc = "Copy to clipboard" })
 vim.keymap.set("i", "<C-S-v>", '"+p', { desc = "Paste from clipboard" })
 
+vim.keymap.del("n", "<leader>E") -- diable keymap
+
 local map = require("lazyvim.util").safe_keymap_set
 map("n", "<leader>fC", "<cmd>:lua Snacks.picker.lazy()<CR>")
+
+-- Add toggle gitsigns blame line
+if Util.has("gitsigns.nvim") then
+  map(
+    "n",
+    "<leader>ub",
+    "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
+    { desc = "Toggle current line blame" }
+  )
+  map("n", "<leader>gl", function()
+    require("gitsigns").blame_line({ full = false })
+  end, { desc = "View full Blame" })
+  --NOTE: <leader>gB
+  map("n", "<leader>gL", function()
+    require("gitsigns").blame_line({ full = true })
+  end, { desc = "View full Git Blame" })
+  -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
+end
+
+map("n", "<leader>uD", function()
+  vim.diagnostic.config({ virtual_text = false })
+end, { desc = "Toggle Diagnosticstic virtual_text" })
 
 -- NOTE: https://github.com/ibhagwan/fzf-lua
 vim.keymap.set({ "i" }, "<C-x><C-f>", function()
@@ -43,6 +73,18 @@ vim.keymap.set("n", "<leader>fyn", function()
   vim.notify("→ " .. str)
 end, { desc = " Copy basename" })
 
+-- NOTE: new in nvim 11.0
+--
+-- vim.diagnostic.config({
+--   -- Use the default configuration
+--   -- virtual_lines = true,
+--
+--   -- Alternatively, customize specific options
+--   virtual_lines = {
+--     -- Only show virtual line diagnostics for the current cursor line
+--     current_line = true,
+--   },
+-- })
 -- Replace word under cursor across entire buffer
 map(
   "n",

@@ -2,6 +2,7 @@ return {
   "stevearc/conform.nvim",
   optional = true,
   opts = {
+    format_on_save = false, -- Disable autoformatting on save
     formatters = {
       ["markdown-toc"] = {
         condition = function(_, ctx)
@@ -24,7 +25,8 @@ return {
 
     formatters_by_ft = {
       -- ["lua"] = { "stylua", "lua_ls" },
-      ["lua"] = { "lua_ls" },
+      python = { "isort", "black" },
+      ["lua"] = { "stylua" },
       -- ["sh"] = { "bashls" }, --NOTE: format with a LSP
       ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
@@ -35,6 +37,7 @@ return {
       hcl = { "packer_fmt" },
       -- ruby = { formatter },
       eruby = { "erb-format" },
+      go = { "goimports", "gofumpt" },
     },
   },
 }
