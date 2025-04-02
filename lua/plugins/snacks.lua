@@ -221,9 +221,9 @@ return {
           return item
         end,
         sources = {
-          explorer = {
-            layout = { layout = { position = "left" } },
-          },
+          -- explorer = {
+          --   layout = { layout = { position = "left" } },
+          -- },
         },
 
         -- In case you want to make sure that the score manipulation above works
