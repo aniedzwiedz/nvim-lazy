@@ -115,8 +115,8 @@ return {
           "filesystem",
           "buffers",
           "git_status",
-          "diagnostics",
-          -- "document_symbols",
+          -- "diagnostics",
+          "document_symbols",
         },
 
         source_selector = {
@@ -506,7 +506,37 @@ return {
       })
     end,
   },
-
+  {
+    "folke/trouble.nvim",
+    optional = true,
+    keys = {
+      { "<leader>cs", false },
+    },
+  },
+  {
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen" },
+    keys = { -- Example mapping to toggle outline
+      { "<leader>cs", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    opts = {
+      symbols = {
+        icon_fetcher = function(kind, bufnr, symbol)
+          local access_icons = { public = "○", protected = "◉", private = "●" }
+          local icon = require("outline.config").o.symbols.icons[kind].icon
+          -- ctags provider might add an `access` key
+          if symbol and symbol.access then
+            return icon .. " " .. access_icons[symbol.access]
+          end
+          return icon
+        end,
+      },
+      preview_window = {
+        winhl = "NormalFloat:",
+      },
+    },
+  },
   -- -- https://github.com/LazyVim/LazyVim/pull/5335/files
   -- recommended = function()
   --   return LazyVim.extras.wants({
