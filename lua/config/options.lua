@@ -3,29 +3,52 @@
 -- Add any additional options here
 
 -- NOTE: snacks is a custom picker that is not included in the default options
--- vim.g.lazyvim_picker = "snacks"
-vim.g.lazyvim_picker = "fzf"
+vim.g.lazyvim_picker = 'snacks'
+-- vim.g.lazyvim_picker = 'fzf'
 -- vim.g.lazyvim_picker = "telescope"
 
--- Enable clipboard support
-vim.opt.clipboard = "unnamedplus"
+-- Prevent Netrw from showing up at beginning
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+-- vim.o.winborder = 'rounded'
+
+-- Sync clipboard between OS and Neovim.
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
+
+vim.g.clipboard = {
+  name = 'WslClipboard',
+  copy = {
+    ['+'] = 'clip.exe',
+    ['*'] = 'clip.exe',
+  },
+  paste = {
+    ['+'] = "powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace('`r', ''))",
+    ['*'] = "powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace('`r', ''))",
+  },
+  cache_enabled = 0,
+}
 
 -- LazyVim completion engine to use.
 -- Can be one of: nvim-cmp, blink.cmp
 -- Leave it to "auto" to automatically use the completion engine
 -- enabled with `:LazyExtras`
-vim.g.lazyvim_cmp = "auto"
+vim.g.lazyvim_cmp = 'auto'
 
 -- if the completion engine supports the AI source,
 -- use that instead of inline suggestions
-vim.g.ai_cmp = true
+-- vim.g.ai_cmp = true
 
 -- LazyVim root dir detection
 -- Each entry can be:
 -- * the name of a detector function like `lsp` or `cwd`
 -- * a pattern or array of patterns like `.git` or `lua`.
 -- * a function with signature `function(buf) -> string|string[]`
-vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 
 -- Optionally setup the terminal to use
 -- This sets `vim.o.shell` and does some additional configuration for:
@@ -35,7 +58,9 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 -- Set LSP servers to be ignored when used with `util.root.detectors.lsp`
 -- for detecting the LSP root
-vim.g.root_lsp_ignore = { "copilot" }
+-- vim.g.root_lsp_ignore = { 'copilot' }
+
+-- vim.g.lsp_diagnostics = true -- Enable LSP diagnostics
 
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
@@ -55,17 +80,17 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
-vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
+vim.opt.wildmode = 'longest:full,full' -- Command-line completion mode
 vim.opt.winminwidth = 5 -- Minimum window width
 vim.opt.wrap = true -- Enable line wrap
 vim.opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
+  foldopen = '',
+  foldclose = '',
   -- fold = "⸱",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
+  fold = ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = ' ',
 }
 -- Convert tabs to spaces
 vim.opt.expandtab = true
@@ -95,13 +120,13 @@ vim.opt.cursorline = true
 vim.opt.undofile = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -111,7 +136,7 @@ vim.opt.splitbelow = true
 -- See `:help 'list'`
 -- and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 5

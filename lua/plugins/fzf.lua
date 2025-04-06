@@ -1,22 +1,22 @@
 return {
-  "ibhagwan/fzf-lua",
+  'ibhagwan/fzf-lua',
   -- optional for icon support
   -- dependencies = { "nvim-tree/nvim-web-devicons" },
   -- or if using mini.icons/mini.nvim
-  dependencies = { "echasnovski/mini.icons" },
+  dependencies = { 'echasnovski/mini.icons' },
   opts = {
     git = {
-      split = "belowright new", -- open in a split instead?
+      split = 'belowright new', -- open in a split instead?
       files = {
-        prompt = "GitFiles-> ",
-        cmd = "git ls-files --exclude-standard",
+        prompt = 'GitFiles-> ',
+        cmd = 'git ls-files --exclude-standard',
         multiprocess = true, -- run command in a separate process
         git_icons = true, -- show git icons?
         file_icons = true, -- show file icons (true|"devicons"|"mini")?
         color_icons = true, -- colorize file|git icons
         -- force display the cwd header line regardless of your current working
         -- directory can also be used to hide the header when not wanted
-        -- cwd_header = true
+        -- cwd_header = true,
       },
     },
 
@@ -65,9 +65,14 @@ return {
     winopts = {
       row = 1,
       col = 0,
-      width = 1,
-      height = 0.4,
-      title_pos = "left",
+      width = 0.80,
+      height = 0.80,
+      preview = {
+        layout = 'vertical',
+        vertical = 'up:70%',
+        border = 'rounded',
+      },
+      previewer = { toggle_behavior = 'extend' },
       -- border = { "", "─", "", "", "", "", "", "" },
       -- preview = {
       --   layout = "horizontal",
@@ -100,79 +105,79 @@ return {
       -- },
       treesitter = {
         enabled = true,
-        fzf_colors = { ["hl"] = "-1:reverse", ["hl+"] = "-1:reverse" },
+        fzf_colors = { ['hl'] = '-1:reverse', ['hl+'] = '-1:reverse' },
       },
     },
     blines = {
       winopts = {
         row = 1,
         col = 0,
-        width = 1,
-        height = 0.90,
+        width = 0.80,
+        height = 0.80,
         preview = {
-          layout = "vertical",
-          vertical = "up:60%",
-          border = "rounded",
+          layout = 'vertical',
+          vertical = 'up:70%',
+          border = 'rounded',
         },
       },
-      previewer = { toggle_behavior = "extend" },
+      previewer = { toggle_behavior = 'extend' },
     },
     lines = {
       winopts = {
         row = 1,
         col = 0,
-        width = 1,
-        height = 0.90,
+        width = 0.80,
+        height = 0.80,
         preview = {
-          layout = "vertical",
-          vertical = "up:60%",
-          border = "rounded",
+          layout = 'vertical',
+          vertical = 'up:65%',
+          border = 'rounded',
         },
       },
-      previewer = { toggle_behavior = "extend" },
+      previewer = { toggle_behavior = 'extend' },
     },
     grep = {
       winopts = {
         row = 1,
         col = 0,
-        width = 1,
-        height = 0.90,
+        width = 0.80,
+        height = 0.80,
         -- height = 0.85, -- window height
         -- width = 0.80, -- window width
         -- row = 0.35, -- window row position (0=top, 1=bottom)
         -- col = 0.35, -- window col position (0=left, 1=right)
         preview = {
-          layout = "vertical",
-          vertical = "up:60%",
-          border = "rounded",
+          layout = 'vertical',
+          vertical = 'up:65%',
+          border = 'rounded',
         },
       },
-      previewer = { toggle_behavior = "extend" },
+      previewer = { toggle_behavior = 'extend' },
     },
     grep_curbuf = {
       winopts = {
         row = 1,
         col = 0,
-        width = 1,
-        height = 0.90,
+        width = 0.80,
+        height = 0.80,
         preview = {
-          layout = "vertical",
-          vertical = "up:60%",
-          border = "none",
+          layout = 'vertical',
+          vertical = 'up:65%',
+          border = 'none',
         },
       },
-      previewer = { toggle_behavior = "extend" },
+      previewer = { toggle_behavior = 'extend' },
     },
     -- git = {
     --   blame = {
     --     winopts = {
     --       row = 1,
     --       col = 0,
-    --       width = 1,
+    --       width = 0.80,
     --       height = 1,
     --       preview = {
     --         layout = "vertical",
-    --         vertical = "up:60%",
+    --         vertical = "up:65%",
     --         border = "none",
     --       },
     --     },
@@ -184,22 +189,22 @@ return {
       -- set to `false` to remove a flag
       -- set to `true` for a no-value flag
       -- for raw args use `fzf_args` instead
-      ["--ansi"] = true,
-      ["--info"] = "inline-right", -- fzf < v0.42 = "inline"
-      ["--height"] = "100%",
-      ["--layout"] = "reverse",
-      ["--border"] = "none",
-      ["--highlight-line"] = true, -- fzf >= v0.53
+      ['--ansi'] = true,
+      ['--info'] = 'inline-right', -- fzf < v0.42 = "inline"
+      ['--height'] = '100%',
+      ['--layout'] = 'reverse',
+      ['--border'] = 'none',
+      ['--highlight-line'] = true, -- fzf >= v0.53
     },
   },
 
   keys = {
     {
-      "<leader>fd",
+      '<leader>fd',
       function()
-        require("fzf-lua").diagnostics_document()
+        require('fzf-lua').diagnostics_document()
       end,
-      desc = "Find Diagnostics (fzf)",
+      desc = 'Find Diagnostics (fzf)',
     },
     -- {
     --   "<leader>fs", --NOTE: chyba nie do konca o to mi chodzilo
