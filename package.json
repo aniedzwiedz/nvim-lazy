@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ast-grep/napi": "^0.36.2",
+    "neovim": "^5.3.0"
+  }
+}

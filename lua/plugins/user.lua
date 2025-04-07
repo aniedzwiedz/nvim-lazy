@@ -1,19 +1,19 @@
 return {
   {
-    "LazyVim/LazyVim",
+    'LazyVim/LazyVim',
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = 'catppuccin',
     },
   },
   {
-    "catppuccin/nvim",
+    'catppuccin/nvim',
     opts = {
       transparent_background = true,
       integrations = { blink_cmp = true },
     },
   },
   {
-    "nvim-telescope/telescope.nvim",
+    'nvim-telescope/telescope.nvim',
     keys = {
             -- Add a keymap to browse plugin files
             -- stylua: ignore
@@ -26,38 +26,38 @@ return {
     -- change some options
     opts = {
       defaults = {
-        layout_strategy = "horizontal",
-        layout_config = { prompt_position = "bottom" },
+        layout_strategy = 'horizontal',
+        layout_config = { prompt_position = 'bottom' },
         vertical = { width = 0.8 },
-        sorting_strategy = "ascending",
+        sorting_strategy = 'ascending',
         winblend = 0,
       },
       pickers = {
         find_files = {
-          theme = "ivy",
+          theme = 'ivy',
         },
       },
     },
   },
   {
-    "lewis6991/gitsigns.nvim",
+    'lewis6991/gitsigns.nvim',
     enabled = true,
-    event = "LazyFile",
+    event = 'LazyFile',
     opts = {
       signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '▎' },
+        untracked = { text = '▎' },
       },
       signs_staged = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '▎' },
       },
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -95,48 +95,63 @@ return {
     },
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
+    'nvim-neo-tree/neo-tree.nvim',
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "echasnovski/mini.icons",
+      'nvim-lua/plenary.nvim',
+      'echasnovski/mini.icons',
       -- "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
+      'MunifTanjim/nui.nvim',
     },
-    event = "VeryLazy",
+    event = 'VeryLazy',
     keys = {
-      { "<leader>e", ":Neotree toggle left<CR>", silent = true, desc = "File Explorer" },
+      {
+        '<leader>e',
+        ':Neotree toggle left<CR>',
+        silent = true,
+        desc = 'File Explorer',
+      },
       -- { "<leader><tab>", ":Neotree toggle left<CR>",  silent = true, desc = "Left File Explorer" },
     },
-    config = function()
-      local icons = require("lazyvim.config").icons
-      require("neo-tree").setup({
+    config = function(_, opts)
+      local function on_move(data)
+        Snacks.rename.on_rename_file(data.source, data.destination)
+      end
+      local events = require 'neo-tree.events'
+      opts.event_handlers = opts.event_handlers or {}
+      vim.list_extend(opts.event_handlers, {
+        { event = events.FILE_MOVED, handler = on_move },
+        { event = events.FILE_RENAMED, handler = on_move },
+      })
+
+      local icons = require('lazyvim.config').icons
+      require('neo-tree').setup {
         close_if_last_window = true,
         sources = {
-          "filesystem",
-          "buffers",
-          "git_status",
+          'filesystem',
+          'buffers',
+          'git_status',
           -- "diagnostics",
-          "document_symbols",
+          'document_symbols',
         },
 
         source_selector = {
           sources = { -- table
             {
-              source = "filesystem", -- string
-              display_name = " 󰉓 Files ", -- string | nil
+              source = 'filesystem', -- string
+              display_name = ' 󰉓 Files ', -- string | nil
             },
             {
-              source = "buffers", -- string
-              display_name = " 󰈚 Buffers ", -- string | nil
+              source = 'buffers', -- string
+              display_name = ' 󰈚 Buffers ', -- string | nil
             },
             {
-              source = "git_status", -- string
-              display_name = " 󰊢 Git ", -- string | nil
+              source = 'git_status', -- string
+              display_name = ' 󰊢 Git ', -- string | nil
             },
           },
         },
 
-        popup_border_style = "single",
+        popup_border_style = 'single',
         enable_git_status = true,
         enable_modified_markers = true,
         enable_diagnostics = true,
@@ -147,14 +162,14 @@ return {
             with_expanders = true,
           },
           modified = {
-            symbol = " ",
-            highlight = "NeoTreeModified",
+            symbol = ' ',
+            highlight = 'NeoTreeModified',
           },
           icon = {
-            folder_closed = "",
-            folder_open = "",
-            folder_empty = "",
-            folder_empty_open = "",
+            folder_closed = '',
+            folder_open = '',
+            folder_empty = '',
+            folder_empty_open = '',
           },
           git_status = {
             symbols = {
@@ -163,13 +178,13 @@ return {
               added = icons.git.added,
               deleted = icons.git.removed,
               modified = icons.git.modified,
-              renamed = "",
+              renamed = '',
               -- Status type
-              untracked = "",
-              ignored = "",
-              unstaged = "",
-              staged = "",
-              conflict = "",
+              untracked = '',
+              ignored = '',
+              unstaged = '',
+              staged = '',
+              conflict = '',
             },
           },
           -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
@@ -194,7 +209,7 @@ return {
           },
         },
         window = {
-          position = "float",
+          position = 'float',
           width = 35,
         },
         filesystem = {
@@ -203,14 +218,14 @@ return {
             hide_dotfiles = false,
             hide_gitignored = false,
             hide_by_name = {
-              "node_modules",
+              'node_modules',
             },
             never_show = {
-              ".DS_Store",
-              "thumbs.db",
+              '.DS_Store',
+              'thumbs.db',
             },
             always_show = {
-              ".env",
+              '.env',
             },
           },
           follow_current_file = {
@@ -244,44 +259,49 @@ return {
         --     end,
         --   },
         -- },
-      })
+      }
     end,
   },
   {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
+    'sindrets/diffview.nvim',
+    event = 'BufRead',
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    cmd = {
+      'DiffviewOpen',
+      'DiffviewClose',
+      'DiffviewToggleFiles',
+      'DiffviewFocusFiles',
+    },
     keys = {
-      { "<leader>gd", "<cmd>DiffviewOpen <cr>", desc = "Open DiffviewOpen" },
+      { '<leader>gd', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen' },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
-      { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
+      { '<F4>', ':DiffviewClose <cr>', desc = 'Close Diff View' }, -- closing Diffview
     },
   },
   { -- git linker
-    "ruifm/gitlinker.nvim",
+    'ruifm/gitlinker.nvim',
     vscode = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
     lazy = true,
     opts = {},
     keys = {
-      { "<leader>gy", desc = "Copy GitHub URL", mode = { "n", "v" } },
+      { '<leader>gy', desc = 'Copy GitHub URL', mode = { 'n', 'v' } },
     },
   },
 
   {
-    "aaronhallaert/advanced-git-search.nvim",
+    'aaronhallaert/advanced-git-search.nvim',
     dependencies = {
-      "tpope/vim-rhubarb",
-      "nvim-telescope/telescope.nvim",
+      'tpope/vim-rhubarb',
+      'nvim-telescope/telescope.nvim',
     },
-    cmd = { "AdvancedGitSearch" },
+    cmd = { 'AdvancedGitSearch' },
     config = function()
-      require("telescope").load_extension("advanced_git_search")
+      require('telescope').load_extension 'advanced_git_search'
     end,
   },
   -- {
@@ -331,62 +351,66 @@ return {
   --     },
   -- },
   {
-    "akinsho/git-conflict.nvim",
+    'akinsho/git-conflict.nvim',
     vscode = false,
     lazy = true,
-    event = "LazyFile",
+    event = 'LazyFile',
     opts = {},
     keys = {
-      { "<leader>gxl", "<cmd>GitConflictListQf<cr>", desc = "List git conflicts" },
+      {
+        '<leader>gxl',
+        '<cmd>GitConflictListQf<cr>',
+        desc = 'List git conflicts',
+      },
     },
   },
   {
-    "mikavilpas/yazi.nvim",
+    'mikavilpas/yazi.nvim',
     vscode = false,
-    event = "VeryLazy",
+    event = 'VeryLazy',
     keys = {
       {
-        "_",
-        "<cmd>Yazi<cr>",
-        desc = "Open yazi at the current file",
+        '_',
+        '<cmd>Yazi<cr>',
+        desc = 'Open yazi at the current file',
       },
       {
-        "<leader>fx",
-        "<cmd>Yazi cwd<cr>",
-        desc = "Explore with Yazi (cwd)",
+        '<leader>fx',
+        '<cmd>Yazi cwd<cr>',
+        desc = 'Explore with Yazi (cwd)',
       },
     },
     opts = {
       -- if you want to open yazi instead of netrw, see below for more info
       open_for_directories = false,
       keymaps = {
-        show_help = "<f1>",
+        show_help = '<f1>',
       },
     },
   },
   {
-    "hrsh7th/nvim-cmp",
+    'hrsh7th/nvim-cmp',
     optional = true,
     dependencies = {
-      { "petertriho/cmp-git", opts = {} },
+      { 'petertriho/cmp-git', opts = {} },
     },
     ---@module 'cmp'
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      table.insert(opts.sources, { name = "git" })
+      table.insert(opts.sources, { name = 'git' })
     end,
   },
 
   -- add blink.compat to dependencies, https://www.lazyvim.org/extras/coding/blink#blinkcmp
   {
-    "saghen/blink.compat",
+    'saghen/blink.compat',
     optional = true, -- make optional so it's only enabled if any extras need it
     opts = {},
-    version = not vim.g.lazyvim_blink_main and "*",
+    version = not vim.g.lazyvim_blink_main and '*',
   },
   -- Blink integration
   {
-    "saghen/blink.cmp",
+    'saghen/blink.cmp',
     optional = true,
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -397,14 +421,14 @@ return {
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = "normal",
+        nerd_font_variant = 'normal',
       },
       sources = {
         providers = {
           path = {
             -- Path sources triggered by "/" interfere with CopilotChat commands
             enabled = function()
-              return vim.bo.filetype ~= "copilot-chat"
+              return vim.bo.filetype ~= 'copilot-chat'
             end,
           },
         },
@@ -414,11 +438,11 @@ return {
       -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
       --
       -- See the fuzzy documentation for more information
-      fuzzy = { implementation = "prefer_rust_with_warning" },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
   },
   {
-    "yasuhiroki/github-actions-yaml.vim",
+    'yasuhiroki/github-actions-yaml.vim',
   },
   -- {
   --   "lukas-reineke/indent-blankline.nvim",
@@ -451,6 +475,7 @@ return {
   --           "neo-tree",
   --           "notify",
   --           "snacks_dashboard",
+  --           "Outline",
   --           "snacks_notif",
   --           "snacks_terminal",
   --           "snacks_win",
@@ -465,16 +490,16 @@ return {
   -- }
   -- NOTE: OK
   {
-    "echasnovski/mini.indentscope",
+    'echasnovski/mini.indentscope',
     version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = "LazyFile",
+    event = 'LazyFile',
     opts = {
       -- symbol = "▏",
-      symbol = "╎",
+      symbol = '╎',
       options = {
         -- Type of scope's border: which line(s) with smaller indent to
         -- categorize as border. Can be one of: 'both', 'top', 'bottom', 'none'.
-        border = "both",
+        border = 'both',
 
         -- Whether to use cursor column when computing reference indent.
         -- Useful to see incremental scopes with horizontal cursor movements.
@@ -492,48 +517,49 @@ return {
   },
 
   {
-    "vuki656/package-info.nvim",
-    ft = "json",
-    dependencies = { "MunifTanjim/nui.nvim" },
+    'vuki656/package-info.nvim',
+    ft = 'json',
+    dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
-      require("package-info").setup({
+      require('package-info').setup {
         autostart = false,
-        package_manager = "npm",
+        package_manager = 'npm',
         colors = {
-          outdated = "#db4b4b",
+          outdated = '#db4b4b',
         },
         hide_up_to_date = true,
-      })
+      }
     end,
   },
   {
-    "folke/trouble.nvim",
+    'folke/trouble.nvim',
     optional = true,
     keys = {
-      { "<leader>cs", false },
+      { '<leader>cs', false },
     },
   },
   {
-    "hedyhli/outline.nvim",
+    'hedyhli/outline.nvim',
     lazy = true,
-    cmd = { "Outline", "OutlineOpen" },
+    cmd = { 'Outline', 'OutlineOpen' },
     keys = { -- Example mapping to toggle outline
-      { "<leader>cs", "<cmd>Outline<CR>", desc = "Toggle outline" },
+      { '<leader>cs', '<cmd>Outline<CR>', desc = 'Toggle outline' },
     },
     opts = {
       symbols = {
         icon_fetcher = function(kind, bufnr, symbol)
-          local access_icons = { public = "○", protected = "◉", private = "●" }
-          local icon = require("outline.config").o.symbols.icons[kind].icon
+          local access_icons =
+            { public = '○', protected = '◉', private = '●' }
+          local icon = require('outline.config').o.symbols.icons[kind].icon
           -- ctags provider might add an `access` key
           if symbol and symbol.access then
-            return icon .. " " .. access_icons[symbol.access]
+            return icon .. ' ' .. access_icons[symbol.access]
           end
           return icon
         end,
       },
       preview_window = {
-        winhl = "NormalFloat:",
+        winhl = 'NormalFloat:',
       },
     },
   },
