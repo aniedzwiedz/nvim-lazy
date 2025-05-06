@@ -106,7 +106,7 @@ return {
     keys = {
       {
         '<leader>e',
-        ':Neotree toggle left<CR>',
+        ':Neotree toggle right<CR>',
         silent = true,
         desc = 'File Explorer',
       },

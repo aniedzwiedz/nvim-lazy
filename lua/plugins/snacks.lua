@@ -35,32 +35,42 @@ return {
       autokeys = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- autokey sequence
       preset = {
 
-        -- Used by the `header` section
-        --         header = [[
-        -- ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-        -- ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-        -- ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-        -- ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-        -- ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-        -- ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+        header = [[
+
+                      > <     ,     > <
+                 .     '             '      .      .
+                          __.--._          > <
+                  .     .'   L   `.--._     '
+                 > <    `/ c '`    \   `.
+                  '     :           ;    `.    `     ,
+                        |           ;      \
+                       /`.     | ' /        \     .
+                  '   / -.\ \  ^ ;/   _      \   > <
+                     :    \`.:/ \|     `.|    ;   '
+                     |     :''   '       ;    |
+                     |     |`.         _/_    ;
+                     :     :  `-._____/   `. /
+                      \    |         :/ ,   V\
+            /"\   __.--; _ :         `./ /  ; ;
+           :  |\_/     |  \L  _..--.   `.L.'  |`.   __
+           |  | ;`.    ; _ \\'      `.          /`+'.'`.
+           |  | |      | \CT_;        `-.      ' / /   |
+           |-_| |   .-'`.___.            `-.    / /    ;
+           :  ; :.-'                        `-./ /.   /
+            \/_/         _                     \/  `./
+             "                                  `._.'
+    ]],
       },
       sections = {
-        -- { section = "header" },
-        {
-          section = 'terminal',
-          cmd = 'fortune -s | cowsay',
-          hl = 'header',
-          padding = 1,
-          indent = 8,
-        },
-        { section = 'keys', gap = 1, padding = 1 },
+        { section = 'header' },
+        { section = 'keys', pane = 2, gap = 0, padding = 1 },
         {
           pane = 2,
           icon = ' ',
           title = 'Recent Files',
           section = 'recent_files',
-          indent = 2,
-          padding = 1,
+          indent = 1,
+          padding = 0,
         },
         {
           pane = 2,
@@ -88,55 +98,32 @@ return {
       },
     },
 
-          -- Used by the `header` section
-          header = [[
-
-                      > <     ,     > <
-                 .     '             '      .      .
-                          __.--._          > <
-                  .     .'   L   `.--._     '
-                 > <    `/ c '`    \   `.
-                  '     :           ;    `.    `     ,
-                        |           ;      \
-                       /`.     | ' /        \     .
-                  '   / -.\ \  ^ ;/   _      \   > <
-                     :    \`.:/ \|     `.|    ;   '
-                     |     :''   '       ;    |
-                     |     |`.         _/_    ;
-                     :     :  `-._____/   `. /
-                      \    |         :/ ,   V\
-            /"\   __.--; _ :         `./ /  ; ;
-           :  |\_/     |  \L  _..--.   `.L.'  |`.   __
-           |  | ;`.    ; _ \\'      `.          /`+'.'`.
-           |  | |      | \CT_;        `-.      ' / /   |
-           |-_| |   .-'`.___.            `-.    / /    ;
-           :  ; :.-'                        `-./ /.   /
-            \/_/         _                     \/  `./
-             "                                  `._.'
-    ]],
-        },
-        sections = {
-          { section = "header" },
-          -- { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
-          { section = "keys", pane = 2, gap = 1, padding = 1 },
-          { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          -- { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          {
-            pane = 2,
-            icon = " ",
-            title = "Git Status",
-            section = "terminal",
-            enabled = function()
-              return Snacks.git.get_root() ~= nil
-            end,
-            cmd = "git status --short --branch --renames",
-            height = 5,
-            padding = 1,
-            ttl = 5 * 60,
-            indent = 3,
-          },
-          { section = "startup" },
-        },
+    -- Documentation for the picker
+    -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+    picker = {
+      -- My ~/github/dotfiles-latest/neovim/lazyvim/lua/config/keymaps.lua
+      -- file was always showing at the top, I needed a way to decrease its
+      -- score, in frecency you could use :FrecencyDelete to delete a file
+      -- from the database, here you can decrease it's score
+      transform = function(item)
+        if not item.file then
+          return item
+        end
+        -- Demote the "lazyvim" keymaps file:
+        if item.file:match 'lazyvim/lua/config/keymaps%.lua' then
+          item.score_add = (item.score_add or 0) - 30
+        end
+        -- Boost the "neobean" keymaps file:
+        -- if item.file:match("neobean/lua/config/keymaps%.lua") then
+        --   item.score_add = (item.score_add or 0) + 100
+        -- end
+        return item
+      end,
+      sources = {
+        -- explorer = {
+        -- layout = { layout = { position = "left" } },
+        layout = 'vertical',
+        -- },
       },
 
       -- In case you want to make sure that the score manipulation above works
@@ -147,7 +134,8 @@ return {
       -- I like the "ivy" layout, so I set it as the default globaly, you can
       -- still override it in different keymaps
       layout = {
-        preset = 'ivy',
+        -- preset = 'ivy',
+        preset = 'vertical',
         -- When reaching the bottom of the results in the picker, I don't want
         -- it to cycle and go back to the top
         cycle = true,

@@ -38,6 +38,8 @@ vim.g.clipboard = {
 -- Leave it to "auto" to automatically use the completion engine
 -- enabled with `:LazyExtras`
 vim.g.lazyvim_cmp = 'auto'
+vim.g.lazyvim_eslint_auto_format = false
+vim.g.autoformat = false
 
 -- if the completion engine supports the AI source,
 -- use that instead of inline suggestions
