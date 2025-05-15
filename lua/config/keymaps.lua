@@ -52,6 +52,22 @@ vim.keymap.set('n', '<c-p>', function()
   Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true }
 end, { desc = 'Find Files (root dir)' })
 
+vim.keymap.set('n', '<leader>fP', function()
+  Snacks.picker.projects()
+end, { desc = 'Find [P]rojects' })
+
+vim.keymap.set('n', '?', function()
+  Snacks.picker.lines()
+end, { desc = 'Search in lines' })
+
+vim.keymap.set('n', '<leader>sH', function()
+  Snacks.picker.man()
+end, { desc = 'Search in MANuals' })
+
+-- vim.keymap.set('n', '<leader>sw', function()
+--   Snacks.picker.grep_word { live = true }
+-- end, { desc = 'Search [w]ord under the cursor' })
+
 vim.keymap.set('n', '<leader>fya', function()
   local str = vim.fn.expand '%:p'
   vim.fn.setreg('"', str)

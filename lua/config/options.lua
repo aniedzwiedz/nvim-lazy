@@ -63,6 +63,7 @@ vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 -- vim.g.root_lsp_ignore = { 'copilot' }
 
 -- vim.g.lsp_diagnostics = true -- Enable LSP diagnostics
+vim.g.lazyvim_mini_snippets_in_completion = true
 
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false

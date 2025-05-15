@@ -7,9 +7,9 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("custom_markdown", { clear = true }),
-  pattern = { "markdown" },
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('custom_markdown', { clear = true }),
+  pattern = { 'markdown' },
   callback = function()
     vim.opt_local.cursorline = false -- doesn't look good when used with headline.nvim. toggle with leader-uL
     vim.opt_local.spell = false -- I find spellcheck only useful when writing prose. toggle with leader-us
@@ -20,76 +20,92 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- https://github.com/alesbrelih/gitlab-ci-ls
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = ".gitlab*",
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '.gitlab*',
   callback = function()
-    vim.bo.filetype = "yaml.gitlab"
+    vim.bo.filetype = 'yaml.gitlab'
   end,
 })
-
--- Enable spell checking for certain file types
+-- Enable puppet
 vim.api.nvim_create_autocmd(
-  { "BufRead", "BufNewFile" },
+  { 'BufRead', 'BufNewFile' },
   -- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
   {
-    pattern = { "*.txt", "*.md", "*.tex" },
+    pattern = { '*.pp' },
+    callback = function()
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.textwidth = 79
+      vim.opt.expandtab = true
+      vim.opt.autoindent = true
+      vim.opt.fileformat = 'unix'
+    end,
+  }
+)
+-- Enable spell checking for certain file types
+vim.api.nvim_create_autocmd(
+  { 'BufRead', 'BufNewFile' },
+  -- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
+  {
+    pattern = { '*.txt', '*.md', '*.tex' },
     callback = function()
       vim.opt.spell = true
-      vim.opt.spelllang = "en,pl"
+      vim.opt.spelllang = 'en,pl'
     end,
   }
 )
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "*.json", "*.jsonc" },
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.json', '*.jsonc' },
   -- enable wrap mode for json files only
-  command = "setlocal wrap",
+  command = 'setlocal wrap',
 })
 
 -- if a file is a .env or .envrc file, set the filetype to sh
-vim.filetype.add({
+vim.filetype.add {
   filename = {
-    [".env"] = "sh",
-    [".envrc"] = "sh",
-    ["*.env"] = "sh",
-    ["*.envrc"] = "sh",
+    ['.env'] = 'sh',
+    ['.envrc'] = 'sh',
+    ['*.env'] = 'sh',
+    ['*.envrc'] = 'sh',
   },
-})
+}
 
-vim.api.nvim_create_autocmd("BufRead", {
+vim.api.nvim_create_autocmd('BufRead', {
   -- Force `Jenkinsfile` to groovy filetype.
-  pattern = { "Jenkinsfile" },
-  command = "set ft=groovy",
+  pattern = { 'Jenkinsfile' },
+  command = 'set ft=groovy',
 })
 -- Advanced Gemfile
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "Gemfile.*" },
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { 'Gemfile.*' },
   -- enable wrap mode for json files only
-  command = "set filetype=ruby",
+  command = 'set filetype=ruby',
 })
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "docker-compose*.ym*l" },
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { 'docker-compose*.ym*l' },
   -- enable wrap mode for json files only
-  command = "set filetype=yaml.docker-compose",
+  command = 'set filetype=yaml.docker-compose',
 })
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "gitcommit", "NeogitCommitMessage" },
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'gitcommit', 'NeogitCommitMessage' },
   callback = function()
     vim.opt.textwidth = 0
     vim.opt.wrapmargin = 0
     vim.opt.wrap = true
     vim.opt.linebreak = true
     vim.opt.columns = 80
-    vim.opt.colorcolumn = "80"
+    vim.opt.colorcolumn = '80'
     -- vim.opt_local.wrap = true
     vim.opt_local.spell = true
   end,
 })
 
 -- resize neovim split when terminal is resized
-vim.api.nvim_command("autocmd VimResized * wincmd =")
+vim.api.nvim_command 'autocmd VimResized * wincmd ='
 
 -- fix terraform and hcl comment string
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -99,14 +115,14 @@ vim.api.nvim_command("autocmd VimResized * wincmd =")
 --   end,
 --   pattern = { "terraform", "hcl" },
 -- })
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = {
-    "*-ctl/*.yml",
-    "*-ctl/*.yaml",
-    ".*/tasks/.*.yaml",
-    ".*/tasks/.*.yml",
+    '*-ctl/*.yml',
+    '*-ctl/*.yaml',
+    '.*/tasks/.*.yaml',
+    '.*/tasks/.*.yml',
   },
   callback = function()
-    vim.bo.filetype = "yaml.ansible"
+    vim.bo.filetype = 'yaml.ansible'
   end,
 })

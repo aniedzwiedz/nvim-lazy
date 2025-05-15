@@ -1,0 +1,1 @@
+return { 'rodjek/vim-puppet' }

@@ -578,12 +578,12 @@ return {
   --   opts = { ensure_installed = { "helm" } },
   -- },
   --
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     servers = {
-  --       helm_ls = {},
-  --     },
-  --   },
-  -- },
+  {
+    'neovim/nvim-lspconfig',
+    opts = {
+      servers = {
+        helm_ls = {},
+      },
+    },
+  },
 }
