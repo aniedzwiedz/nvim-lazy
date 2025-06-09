@@ -35,6 +35,13 @@ if Util.has 'gitsigns.nvim' then
   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
 end
 
+map(
+  'n',
+  '<leader>cS',
+  '<cmd>FzfLua lsp_finder<CR>',
+  { desc = 'FzfLua lsp_finder' }
+)
+
 map('n', '<leader>uD', function()
   vim.diagnostic.config { virtual_text = false }
 end, { desc = 'Toggle Diagnosticstic virtual_text' })

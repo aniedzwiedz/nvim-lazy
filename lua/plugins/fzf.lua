@@ -63,10 +63,10 @@ return {
     --
 
     winopts = {
-      row = 0,
-      col = 1,
-      -- width = 0.80,
-      -- height = 0.80,
+      -- row = 0,
+      -- col = 1,
+      width = 0.80,
+      height = 0.80,
       preview = {
         layout = 'vertical',
         vertical = 'up:70%',
@@ -108,66 +108,66 @@ return {
         fzf_colors = { ['hl'] = '-1:reverse', ['hl+'] = '-1:reverse' },
       },
     },
-    blines = {
-      winopts = {
-        row = 1,
-        col = 0,
-        width = 0.80,
-        height = 0.80,
-        preview = {
-          layout = 'vertical',
-          vertical = 'up:70%',
-          border = 'rounded',
-        },
-      },
-      previewer = { toggle_behavior = 'extend' },
-    },
-    lines = {
-      winopts = {
-        row = 1,
-        col = 0,
-        width = 0.80,
-        height = 0.80,
-        preview = {
-          layout = 'vertical',
-          vertical = 'up:65%',
-          border = 'rounded',
-        },
-      },
-      previewer = { toggle_behavior = 'extend' },
-    },
-    grep = {
-      winopts = {
-        row = 1,
-        col = 0,
-        width = 0.80,
-        height = 0.80,
-        -- height = 0.85, -- window height
-        -- width = 0.80, -- window width
-        -- row = 0.35, -- window row position (0=top, 1=bottom)
-        -- col = 0.35, -- window col position (0=left, 1=right)
-        preview = {
-          layout = 'vertical',
-          vertical = 'up:65%',
-          border = 'rounded',
-        },
-      },
-      previewer = { toggle_behavior = 'extend' },
-    },
-    grep_curbuf = {
-      winopts = {
-        row = 1,
-        col = 0,
-        width = 0.80,
-        height = 0.80,
-        preview = {
-          layout = 'vertical',
-          vertical = 'up:65%',
-          border = 'none',
-        },
-      },
-      previewer = { toggle_behavior = 'extend' },
-    },
+    -- blines = {
+    --   winopts = {
+    --     row = 1,
+    --     col = 0,
+    --     width = 0.80,
+    --     height = 0.80,
+    --     preview = {
+    --       layout = 'vertical',
+    --       vertical = 'up:70%',
+    --       border = 'rounded',
+    --     },
+    --   },
+    --   previewer = { toggle_behavior = 'extend' },
+    -- },
+    -- lines = {
+    --   winopts = {
+    --     row = 1,
+    --     col = 0,
+    --     width = 0.80,
+    --     height = 0.80,
+    --     preview = {
+    --       layout = 'vertical',
+    --       vertical = 'up:65%',
+    --       border = 'rounded',
+    --     },
+    --   },
+    --   previewer = { toggle_behavior = 'extend' },
+    -- },
+    -- grep = {
+    --   winopts = {
+    --     row = 1,
+    --     col = 0,
+    --     width = 0.80,
+    --     height = 0.80,
+    --     -- height = 0.85, -- window height
+    --     -- width = 0.80, -- window width
+    --     -- row = 0.35, -- window row position (0=top, 1=bottom)
+    --     -- col = 0.35, -- window col position (0=left, 1=right)
+    --     preview = {
+    --       layout = 'vertical',
+    --       vertical = 'up:65%',
+    --       border = 'rounded',
+    --     },
+    --   },
+    --   previewer = { toggle_behavior = 'extend' },
+    -- },
+    -- grep_curbuf = {
+    --   winopts = {
+    --     row = 1,
+    --     col = 0,
+    --     width = 0.80,
+    --     height = 0.80,
+    --     preview = {
+    --       layout = 'vertical',
+    --       vertical = 'up:65%',
+    --       border = 'none',
+    --     },
+    --   },
+    --   previewer = { toggle_behavior = 'extend' },
+    -- },
     -- git = {
     --   blame = {
     --     winopts = {
@@ -193,7 +193,7 @@ return {
       ['--info'] = 'inline-right', -- fzf < v0.42 = "inline"
       ['--height'] = '100%',
       ['--layout'] = 'reverse',
-      ['--border'] = 'none',
+      -- ['--border'] = 'none',
       ['--highlight-line'] = true, -- fzf >= v0.53
     },
   },
