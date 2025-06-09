@@ -1,49 +1,49 @@
 -- if true then return {} end
 
 return {
-  "mfussenegger/nvim-lint",
+  'mfussenegger/nvim-lint',
   event = {
-    "BufReadPre",
-    "BufNewFile",
+    'BufReadPre',
+    'BufNewFile',
   },
   config = function()
-    local lint = require("lint")
+    local lint = require 'lint'
 
     lint.linters_by_ft = {
 
-      fish = { "fish" },
+      fish = { 'fish' },
       python = {
         -- Uncomment whichever linters you prefer
         -- 'flake8',
         -- 'mypy',
-        "pylint",
+        'pylint',
       },
       -- javascript = { "eslint_d" },
       -- typescript = { "eslint_d" },
-      puppet = { "puppet-lint" },
+      puppet = { 'puppet-lint' },
       -- javascriptreact = { "eslint_d" },
       -- typescriptreact = { "eslint_d" },
       -- svelte = { "eslint_d" },
-      dockerfile = { "hadolint" },
+      dockerfile = { 'hadolint' },
       -- terraform = { "tflint" },
       -- ruby = { "standardrb" },
       -- ansible = { "ansible-lint" },
       -- groovy = { "checkstyle" },
-      groovy = { "npm-groovy-lint" },
+      groovy = { 'npm-groovy-lint' },
       -- zsh = { "shfmt" },
       -- lua = { "seleme" },
-      yaml = { "yamllint" },
-      asnible = { "ansible_lint" },
-      terraform = { "terraform_validate" },
-      tf = { "terraform_validate" },
-      ["yaml.gha"] = { "actionlint" },
-      zsh = { "zsh" },
+      yaml = { 'yamllint' },
+      asnible = { 'ansible_lint' },
+      terraform = { 'terraform_validate' },
+      tf = { 'terraform_validate' },
+      ['yaml.gha'] = { 'actionlint' },
+      zsh = { 'zsh' },
       -- javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      javascriptreact = { "eslint_d" },
-      typescriptreact = { "eslint_d" },
-      svelte = { "eslint_d" },
-      markdown = { "markdownlint-cli2" },
+      typescript = { 'eslint_d' },
+      javascriptreact = { 'eslint_d' },
+      typescriptreact = { 'eslint_d' },
+      svelte = { 'eslint_d' },
+      markdown = { 'markdownlint-cli2' },
 
       -- json = { "jsonlint" },
       -- markdown = { "markdownlint" },
@@ -54,17 +54,17 @@ return {
       -- ["*"] = { "typos" },
     }
 
-    local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+    local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
       group = lint_augroup,
       callback = function()
         lint.try_lint()
       end,
     })
 
-    vim.keymap.set("n", "<leader>l", function()
+    vim.keymap.set('n', '<leader>l', function()
       lint.try_lint()
-    end, { desc = "Trigger linting for current file" })
+    end, { desc = 'Trigger linting for current file' })
   end,
 }

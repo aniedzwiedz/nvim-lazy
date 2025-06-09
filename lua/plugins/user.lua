@@ -586,4 +586,10 @@ return {
       },
     },
   },
+  {
+    'grug-far.nvim',
+    opts = {
+      rg_opts = "--hidden --glob '!.git/*'",
+    },
+  },
 }

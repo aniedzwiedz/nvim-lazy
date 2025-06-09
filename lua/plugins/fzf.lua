@@ -63,10 +63,10 @@ return {
     --
 
     winopts = {
-      row = 1,
-      col = 0,
-      width = 0.80,
-      height = 0.80,
+      row = 0,
+      col = 1,
+      -- width = 0.80,
+      -- height = 0.80,
       preview = {
         layout = 'vertical',
         vertical = 'up:70%',

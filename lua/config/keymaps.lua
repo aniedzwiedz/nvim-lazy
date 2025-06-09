@@ -47,6 +47,15 @@ vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
   }
 end, { silent = true, desc = 'Fuzzy complete file' })
 
+-- TODO: nie nadpisuje wbudowanego w vim "z="
+vim.keymap.set('n', 'z=', function()
+  require('fzf-lua').spell_suggest()
+end, {
+  noremap = true,
+  silent = true,
+  desc = 'FzfLua Spell Suggest',
+})
+
 -- find files (default: spc-spc)
 vim.keymap.set('n', '<c-p>', function()
   Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true }
