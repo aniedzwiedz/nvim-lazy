@@ -126,3 +126,10 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.filetype = 'yaml.ansible'
   end,
 })
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '.azuredevops/**/*.yml', '.azuredevops/**/*.yaml' },
+  callback = function()
+    vim.bo.filetype = 'yaml.azure'
+  end,
+})

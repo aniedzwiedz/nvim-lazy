@@ -123,8 +123,55 @@ return {
         { event = events.FILE_RENAMED, handler = on_move },
       })
 
+      local function open_grug_far(prefills)
+        local grug_far = require 'grug-far'
+
+        if not grug_far.has_instance 'explorer' then
+          grug_far.open { instanceName = 'explorer' }
+        else
+          grug_far.get_instance('explorer'):open()
+        end
+        -- doing it seperately because multiple paths doesn't open work when passed with open
+        -- updating the prefills without clearing the search and other fields
+        grug_far.get_instance('explorer'):update_input_values(prefills, false)
+      end
+
       local icons = require('lazyvim.config').icons
       require('neo-tree').setup {
+
+        commands = {
+          -- create a new neo-tree command
+          grug_far_replace = function(state)
+            local node = state.tree:get_node()
+            local prefills = {
+              -- also escape the paths if space is there
+              -- if you want files to be selected, use ':p' only, see filename-modifiers
+              paths = node.type == 'directory'
+                  and vim.fn.fnameescape(
+                    vim.fn.fnamemodify(node:get_id(), ':p')
+                  )
+                or vim.fn.fnameescape(vim.fn.fnamemodify(node:get_id(), ':h')),
+            }
+            open_grug_far(prefills)
+          end,
+          -- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/fbb631e818f48591d0c3a590817003d36d0de691/doc/neo-tree.txt#L535
+          grug_far_replace_visual = function(state, selected_nodes, callback)
+            local paths = {}
+            for _, node in pairs(selected_nodes) do
+              -- also escape the paths if space is there
+              -- if you want files to be selected, use ':p' only, see filename-modifiers
+              local path = node.type == 'directory'
+                  and vim.fn.fnameescape(
+                    vim.fn.fnamemodify(node:get_id(), ':p')
+                  )
+                or vim.fn.fnameescape(vim.fn.fnamemodify(node:get_id(), ':h'))
+              table.insert(paths, path)
+            end
+            local prefills = { paths = table.concat(paths, '\n') }
+            open_grug_far(prefills)
+          end,
+        },
+
         close_if_last_window = true,
         sources = {
           'filesystem',
@@ -210,6 +257,10 @@ return {
         },
         window = {
           position = 'float',
+          mappings = {
+            -- map our new command to z
+            z = 'grug_far_replace',
+          },
           width = 35,
         },
         filesystem = {
@@ -578,18 +629,78 @@ return {
   --   opts = { ensure_installed = { "helm" } },
   -- },
   --
+  { -- lua require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
+    'MagicDuck/grug-far.nvim',
+    opts = { headerMaxWidth = 80 },
+    cmd = 'GrugFar',
+    keys = {
+      {
+        '<leader>sr',
+        function()
+          local grug = require 'grug-far'
+          local ext = vim.bo.buftype == '' and vim.fn.expand '%:e'
+          grug.open {
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
+              extraArgs = { '--hidden', '--smart-case' },
+              search = vim.fn.expand '<cword>',
+            },
+          }
+        end,
+        mode = { 'n', 'v' },
+        desc = 'Search and Replace (grug-far)',
+      },
+    },
+  },
+
   {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
         helm_ls = {},
+        neocmake = {},
+        azure_pipelines_ls = {
+          settings = {
+            yaml = {
+              schemas = {
+                ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = {
+                  '/azure-pipeline*.y*l',
+                  '/*.azure*',
+                  'Azure-Pipelines/**/*.y*l',
+                  'Pipelines/*.y*l',
+                  './auredevops/**/*.{yml,yaml}',
+                  './auredevops/non-production/install/*.{yml,yaml}',
+                },
+              },
+            },
+          },
+        },
+
+        yamlls = {
+          settings = {
+            yaml = {
+              schemas = {
+                -- GitHub Actions schema
+                ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*',
+                -- Azure Pipelines schema
+                -- ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = '.azuredevops/**/*.{yml,yaml}',
+              },
+              -- Optional: disable built-in schema store if you want full control
+              -- schemaStore = {
+              --   enable = false,
+              --   url = '',
+              -- },
+              validate = true,
+              format = {
+                enable = true,
+              },
+              hover = true,
+              completion = true,
+            },
+          },
+        },
       },
-    },
-  },
-  {
-    'grug-far.nvim',
-    opts = {
-      rg_opts = "--hidden --glob '!.git/*'",
     },
   },
 }

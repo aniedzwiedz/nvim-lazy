@@ -43,16 +43,36 @@ return {
     formatters_by_ft = {
       -- ["lua"] = { "stylua", "lua_ls" },
       python = { 'isort', 'black' },
+      awk = { 'gawk' },
       ['lua'] = { 'stylua' },
       -- ["sh"] = { "bashls" }, --NOTE: format with a LSP
       ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
       ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
-      ['zsh'] = { 'beautysh' },
-      terraform = { 'terraform_fmt' },
+      -- ['zsh'] = { 'beautysh' },
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
       hcl = { 'packer_fmt' },
       -- ruby = { formatter },
+      sh = { 'shellcheck' },
+      -- https://www.terraform.io/docs/cli/commands/fmt.html
+      -- https://opentofu.org/docs/cli/commands/fmt/  NOTE: This is an alternative `tofu_fmt`
+      terraform = { 'terraform_fmt' },
+      -- https://github.com/stedolan/jq
+      jq = { 'jq' },
+      -- https://github.com/rhysd/fixjson
+      json = { 'fixjson' },
+
+      -- https://github.com/tamasfe/taplo
+      toml = { 'taplo' },
+      -- http://xmlsoft.org/xmllint.html
+      xml = { 'xmllint' },
+      -- https://github.com/mikefarah/yq
+      yq = { 'yq' },
+      -- https://github.com/ziglang/zig
+      zig = { 'zigfmt' },
+      zon = { 'zigfmt' },
+      -- https://github.com/koalaman/shellcheck
+      zsh = { 'shellcheck' },
       eruby = { 'erb-format' },
       go = { 'goimports', 'gofumpt' },
       -- Use the "*" filetype to run formatters on all filetypes.

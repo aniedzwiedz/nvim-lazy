@@ -21,6 +21,9 @@ return {
       -- javascript = { "eslint_d" },
       -- typescript = { "eslint_d" },
       puppet = { 'puppet-lint' },
+      cmake = { 'cmakelint' },
+      -- make = { 'cmakelint' },
+      make = { 'checkmake' },
       -- javascriptreact = { "eslint_d" },
       -- typescriptreact = { "eslint_d" },
       -- svelte = { "eslint_d" },
@@ -45,7 +48,7 @@ return {
       svelte = { 'eslint_d' },
       markdown = { 'markdownlint-cli2' },
 
-      -- json = { "jsonlint" },
+      json = { 'jsonlint' },
       -- markdown = { "markdownlint" },
       -- Use the "*" filetype to run linters on all filetypes.
       -- ['*'] = { 'global linter' },
