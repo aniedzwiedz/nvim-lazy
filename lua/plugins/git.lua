@@ -84,7 +84,7 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim", -- required
+      "nvim-lua/plenary.nvim",  -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
 
       -- Only one of these is needed, not both.
@@ -139,6 +139,20 @@ return {
   --     require("telescope").load_extension("yaml_schema")
   --   end,
   -- },
+  {
+    "folke/noice.nvim",
+    opts = {
+      cmdline = {
+        view = "cmdline_popup", -- Use popup for command line
+        popup = {
+          size = {
+            width = 180, -- Adjust width
+            height = 10, -- Adjust height
+          },
+        },
+      },
+    },
+  },
 
   {
     "linrongbin16/gitlinker.nvim",
@@ -164,21 +178,21 @@ return {
         router = {
           browse = {
             ["^git.gtech.com"] = "https://git.gtech.com/projects/"
-              .. "{_A.ORG}/"
-              .. "repos/{_A.REPO}/"
-              -- .. "{_A.REV}/"
-              .. "browse/{_A.FILE}"
-              .. "?at=refs/heads/{_A.CURRENT_BRANCH}"
-              .. "#{_A.LSTART}"
-              -- .. "{_A.LEND > _A.LSTART and ('&lines-count=' .. _A.LEND - _A.LSTART + 1) or ''}",
-              .. "{(_A.LEND > _A.LSTART and (':' .. _A.LEND) or '')}",
+                .. "{_A.ORG}/"
+                .. "repos/{_A.REPO}/"
+                -- .. "{_A.REV}/"
+                .. "browse/{_A.FILE}"
+                .. "?at=refs/heads/{_A.CURRENT_BRANCH}"
+                .. "#{_A.LSTART}"
+                -- .. "{_A.LEND > _A.LSTART and ('&lines-count=' .. _A.LEND - _A.LSTART + 1) or ''}",
+                .. "{(_A.LEND > _A.LSTART and (':' .. _A.LEND) or '')}",
           },
         },
       })
     end,
     keys = {
       { "<leader>gY", "<cmd>GitLink blame<cr>", desc = "Git link blame" },
-      { "<leader>gy", "<cmd>GitLink<cr>", desc = "Git link" },
+      { "<leader>gy", "<cmd>GitLink<cr>",       desc = "Git link" },
       { "<leader>gB", false }, -- NOTE: /home/aniedzwiedz/.local/share/LazyVim/lazy/LazyVim/lua/lazyvim/config/keymaps.lua
     },
   },
@@ -192,7 +206,7 @@ return {
     keys = {
       { "<leader>gd", "<cmd>DiffviewOpen <cr>", desc = "Open DiffviewOpen" },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
-      { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
+      { "<F4>",       ":DiffviewClose <cr>",    desc = "Close Diff View" }, -- closing Diffview
     },
   },
 

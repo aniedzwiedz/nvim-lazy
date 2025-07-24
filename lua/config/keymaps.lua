@@ -61,6 +61,14 @@ map("n", "<leader>uD", function()
   vim.diagnostic.config({ virtual_text = false })
 end, { desc = "Toggle Diagnosticstic virtual_text" })
 
+-- NOTE: https://github.com/ibhagwan/fzf-lua
+vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
+  require('fzf-lua').complete_file {
+    cmd = 'rg --files',
+    winopts = { preview = { hidden = true } },
+  }
+end, { silent = true, desc = 'Fuzzy complete file' })
+
 -- Select all
 -- map("n", "<leader>a", "ggVG", { desc = "Select all" })
 
@@ -69,13 +77,32 @@ map("n", "<leader>gD", function()
   require("lazyvim").lazygit({ args = { "log" } })
 end, { desc = "Lazygit Commit Log" })
 
--- -- Copy file paths
--- map("n", "<leader>fz", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy File Name" })
--- map("n", "<leader>fZ", '<cmd>let @+ = expand("%:p")<CR>', { desc = "Copy File Path" })
+-- find files (default: spc-spc)
+vim.keymap.set('n', '<c-p>', function()
+  Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true }
+end, { desc = 'Find Files (root dir)' })
 
--- Copy file paths
-map("n", "<leader>fz", function() vim.fn.setreg("+", vim.fn.expand("%")) end, { desc = "Copy File Name" })
-map("n", "<leader>fZ", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end, { desc = "Copy File Path" })
+vim.keymap.set('n', '<leader>fZ', function()
+  local str = vim.fn.expand '%:p'
+  vim.fn.setreg('"', str)
+  vim.fn.setreg('+', str)
+  vim.notify('→ ' .. str)
+end, { desc = ' Copy absolute path' })
+
+-- vim.keymap.set('n', '<leader>fyr', function()
+--   local str = vim.fn.expand '%:.'
+--   vim.fn.setreg('"', str)
+--   vim.fn.setreg('+', str)
+--   vim.notify('→ ' .. str)
+-- end, { desc = ' Copy relative path' })
+
+vim.keymap.set('n', '<leader>fz', function()
+  local str = vim.fn.expand '%:t'
+  vim.fn.setreg('"', str)
+  vim.fn.setreg('+', str)
+  vim.notify('→ ' .. str)
+end, { desc = ' Copy file name' })
+
 
 -- Replace word under cursor across entire buffer
 map(
@@ -116,6 +143,38 @@ map(
   "<cmd>lua require('package-info').change_version()<cr>",
   { silent = true, noremap = true, desc = "Change package version" }
 )
+if vim.g.vscode then
+  vim.keymap.set(
+    'n',
+    ']d',
+    "<cmd>lua require('vscode').call('editor.action.marker.next')<cr>",
+    { desc = 'Next Diagnostic' }
+  )
+  vim.keymap.set(
+    'n',
+    '[d',
+    "<cmd>lua require('vscode').call('editor.action.marker.previous')<cr>",
+    { desc = 'Prev Diagnostic' }
+  )
+  vim.keymap.set(
+    'n',
+    'gr',
+    "<cmd>lua require('vscode').call('editor.action.goToReferences')<cr>",
+    { desc = 'Goto References' }
+  )
+  vim.keymap.set(
+    'n',
+    'gd',
+    "<cmd>lua require('vscode').call('editor.action.revealDefinition')<cr>",
+    { desc = 'Goto Definition' }
+  )
+  vim.keymap.set(
+    'n',
+    'gy',
+    "<cmd>lua require('vscode').call('editor.action.goToTypeDefinition')<cr>",
+    { desc = 'Goto Type Definition' }
+  )
+end
 -- local default_opts = {noremap = true}
 -- map('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>", default_opts)
 

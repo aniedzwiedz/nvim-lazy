@@ -7,6 +7,15 @@
   },
   "neoconf": {
     "plugins": {
+      "yamlls": {
+        "settings": {
+          "yaml": {
+            "format": {
+              "singleQuote": true
+            }
+          }
+        }
+      },
       "lua_ls": {
         "enabled": true,
         "hint.enable": true
