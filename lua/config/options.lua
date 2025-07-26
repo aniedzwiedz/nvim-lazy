@@ -95,6 +95,8 @@ vim.opt.fillchars = {
   diff = '╱',
   eob = ' ',
 }
+vim.o.grepprg =
+  'rg --smart-case --vimgrep --no-heading --follow --multiline --multiline-dotall --hidden --pcre2 --regexp' -- IMPORTANT: pipes should be escaped! e.g. `"text\.(Success\|Info)\("`
 -- Convert tabs to spaces
 vim.opt.expandtab = true
 -- Amount to indent with << and >>
