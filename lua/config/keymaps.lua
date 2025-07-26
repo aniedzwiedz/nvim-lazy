@@ -80,6 +80,9 @@ vim.keymap.set('n', '<leader>sH', function()
   Snacks.picker.man()
 end, { desc = 'Search in MANuals' })
 
+--   Snacks.picker.help_tags()
+-- end, { desc = 'Find [H]elp tags' })
+
 -- vim.keymap.set('n', '<leader>sw', function()
 --   Snacks.picker.grep_word { live = true }
 -- end, { desc = 'Search [w]ord under the cursor' })

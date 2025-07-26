@@ -52,6 +52,7 @@ return {
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
       hcl = { 'packer_fmt' },
+      ['yaml.azure'] = { 'prettier' },
       -- ruby = { formatter },
       eruby = { 'erb-format' },
       go = { 'goimports', 'gofumpt' },
