@@ -134,8 +134,8 @@ return {
       -- I like the "ivy" layout, so I set it as the default globaly, you can
       -- still override it in different keymaps
       layout = {
-        -- preset = 'ivy',
-        preset = 'vertical',
+        preset = 'ivy',
+        -- preset = 'vertical',
         -- When reaching the bottom of the results in the picker, I don't want
         -- it to cycle and go back to the top
         cycle = true,
