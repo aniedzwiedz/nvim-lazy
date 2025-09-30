@@ -19,6 +19,17 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.filetype.add {
+  extension = {
+    tex = 'tex',
+    zir = 'zir',
+    cr = 'crystal',
+  },
+  pattern = {
+    ['[jt]sconfig.*.json'] = 'jsonc',
+  },
+}
+
 -- https://github.com/alesbrelih/gitlab-ci-ls
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '.gitlab*',
@@ -127,8 +138,17 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = { '.azuredevops/**/*.yml', '.azuredevops/**/*.yaml' },
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = {
+    '*azure-pipelines.yml',
+    '*azure-pipelines.yaml',
+    '*.azure/*.yml',
+    '*.azure/*.yaml',
+    '*.azuredevops/*.yml',
+    '*.azuredevops/*.yaml',
+    '*pipelines/*.yml',
+    '*pipelines/*.yaml',
+  },
   callback = function()
     vim.bo.filetype = 'yaml.azure'
   end,

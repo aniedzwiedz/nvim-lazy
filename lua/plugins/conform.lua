@@ -52,6 +52,7 @@ return {
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
       hcl = { 'packer_fmt' },
+      ['yaml.azure'] = { 'prettier' },
       -- ruby = { formatter },
       sh = { 'shellcheck' },
       -- https://www.terraform.io/docs/cli/commands/fmt.html

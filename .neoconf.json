@@ -12,5 +12,10 @@
                 "hint.enable": true
             }
         }
+    },
+    "lspconfig": {
+        "lua_ls": {
+            "Lua.format.enable": false
+        }
     }
 }

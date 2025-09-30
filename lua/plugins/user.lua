@@ -10,6 +10,13 @@ return {
     opts = {
       transparent_background = true,
       integrations = { blink_cmp = true },
+      -- opts = function(_, opts)
+      --   local module = require 'catppuccin.groups.integrations.bufferline'
+      --   if module then
+      --     module.get = module.get_theme
+      --   end
+      --   return opts
+      -- end,
     },
   },
   {
@@ -99,7 +106,6 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-mini/mini.icons',
-      -- 'echasnovski/mini.icons',
       -- "nvim-tree/nvim-web-devicons",
       'MunifTanjim/nui.nvim',
     },
@@ -169,21 +175,21 @@ return {
             open_grug_far(prefills)
           end,
           -- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/fbb631e818f48591d0c3a590817003d36d0de691/doc/neo-tree.txt#L535
-          grug_far_replace_visual = function(state, selected_nodes, callback)
-            local paths = {}
-            for _, node in pairs(selected_nodes) do
-              -- also escape the paths if space is there
-              -- if you want files to be selected, use ':p' only, see filename-modifiers
-              local path = node.type == 'directory'
-                  and vim.fn.fnameescape(
-                    vim.fn.fnamemodify(node:get_id(), ':p')
-                  )
-                or vim.fn.fnameescape(vim.fn.fnamemodify(node:get_id(), ':h'))
-              table.insert(paths, path)
-            end
-            local prefills = { paths = table.concat(paths, '\n') }
-            open_grug_far(prefills)
-          end,
+          -- grug_far_replace_visual = function(state, selected_nodes, callback)
+          --   local paths = {}
+          --   for _, node in pairs(selected_nodes) do
+          --     -- also escape the paths if space is there
+          --     -- if you want files to be selected, use ':p' only, see filename-modifiers
+          --     local path = node.type == 'directory'
+          --         and vim.fn.fnameescape(
+          --           vim.fn.fnamemodify(node:get_id(), ':p')
+          --         )
+          --       or vim.fn.fnameescape(vim.fn.fnamemodify(node:get_id(), ':h'))
+          --     table.insert(paths, path)
+          --   end
+          --   local prefills = { paths = table.concat(paths, '\n') }
+          --   open_grug_far(prefills)
+          -- end,
         },
 
         close_if_last_window = true,

@@ -127,7 +127,7 @@ return {
                         },
 
                     },
-                    hidden = false,
+                    hidden = true,
                     path_display = { "truncate" },
                     layout_config = {
                         horizontal = { prompt_position = "bottom", preview_width = 0.55 },
