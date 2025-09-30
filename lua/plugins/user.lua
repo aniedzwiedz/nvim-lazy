@@ -98,7 +98,8 @@ return {
     'nvim-neo-tree/neo-tree.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'echasnovski/mini.icons',
+      'nvim-mini/mini.icons',
+      -- 'echasnovski/mini.icons',
       -- "nvim-tree/nvim-web-devicons",
       'MunifTanjim/nui.nvim',
     },
@@ -137,6 +138,19 @@ return {
       end
 
       local icons = require('lazyvim.config').icons
+
+-- NOTE: telemetry to none
+      require('copilot').setup {
+        server_opts_overrides = {
+          settings = {
+            telemetry = {
+              telemetryLevel = 'none',
+            },
+          },
+        },
+      }
+
+
       require('neo-tree').setup {
 
         commands = {
@@ -541,7 +555,7 @@ return {
   -- }
   -- NOTE: OK
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     version = false, -- wait till new 0.7.0 release to put it back on semver
     event = 'LazyFile',
     opts = {
@@ -624,10 +638,10 @@ return {
   --
   -- { "qvalentin/helm-ls.nvim", ft = "helm" },
   --
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   opts = { ensure_installed = { "helm" } },
-  -- },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    opts = { ensure_installed = { 'helm' } },
+  },
   --
   { -- lua require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
     'MagicDuck/grug-far.nvim',
@@ -654,53 +668,53 @@ return {
     },
   },
 
-  {
-    'neovim/nvim-lspconfig',
-    opts = {
-      servers = {
-        helm_ls = {},
-        neocmake = {},
-        azure_pipelines_ls = {
-          settings = {
-            yaml = {
-              schemas = {
-                ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = {
-                  '/azure-pipeline*.y*l',
-                  '/*.azure*',
-                  'Azure-Pipelines/**/*.y*l',
-                  'Pipelines/*.y*l',
-                  './auredevops/**/*.{yml,yaml}',
-                  './auredevops/non-production/install/*.{yml,yaml}',
-                },
-              },
-            },
-          },
-        },
-
-        yamlls = {
-          settings = {
-            yaml = {
-              schemas = {
-                -- GitHub Actions schema
-                ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*',
-                -- Azure Pipelines schema
-                -- ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = '.azuredevops/**/*.{yml,yaml}',
-              },
-              -- Optional: disable built-in schema store if you want full control
-              -- schemaStore = {
-              --   enable = false,
-              --   url = '',
-              -- },
-              validate = true,
-              format = {
-                enable = true,
-              },
-              hover = true,
-              completion = true,
-            },
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   opts = {
+  --     servers = {
+  --       helm_ls = {},
+  --       neocmake = {},
+  --       azure_pipelines_ls = {
+  --         settings = {
+  --           yaml = {
+  --             schemas = {
+  --               ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = {
+  --                 '/azure-pipeline*.y*l',
+  --                 '/*.azure*',
+  --                 'Azure-Pipelines/**/*.y*l',
+  --                 'Pipelines/*.y*l',
+  --                 './auredevops/**/*.{yml,yaml}',
+  --                 './auredevops/non-production/install/*.{yml,yaml}',
+  --               },
+  --             },
+  --           },
+  --         },
+  --       },
+  --
+  --       yamlls = {
+  --         settings = {
+  --           yaml = {
+  --             schemas = {
+  --               -- GitHub Actions schema
+  --               ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*',
+  --               -- Azure Pipelines schema
+  --               -- ['https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json'] = '.azuredevops/**/*.{yml,yaml}',
+  --             },
+  --             -- Optional: disable built-in schema store if you want full control
+  --             -- schemaStore = {
+  --             --   enable = false,
+  --             --   url = '',
+  --             -- },
+  --             validate = true,
+  --             format = {
+  --               enable = true,
+  --             },
+  --             hover = true,
+  --             completion = true,
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }
