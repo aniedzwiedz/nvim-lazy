@@ -1,1 +1,6 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Support
+    url: https://example.com/support
+    about: Please reach out for support or questions.
+    title: Get Support is a community-driven project.
