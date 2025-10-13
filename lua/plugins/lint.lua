@@ -36,7 +36,7 @@ return {
       -- zsh = { "shfmt" },
       -- lua = { "seleme" },
       yaml = { 'yamllint' },
-      asnible = { 'ansible_lint' },
+      ansible = { 'ansible_lint' },
       terraform = { 'terraform_validate' },
       tf = { 'terraform_validate' },
       ['yaml.gha'] = { 'actionlint' },
