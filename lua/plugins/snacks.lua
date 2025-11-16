@@ -120,6 +120,12 @@ return {
         return item
       end,
       sources = {
+        files = {
+          hidden = true,
+        },
+        git_files = {
+          hidden = true,
+        },
         -- explorer = {
         -- layout = { layout = { position = "left" } },
         layout = 'vertical',

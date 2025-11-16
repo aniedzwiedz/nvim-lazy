@@ -3,8 +3,8 @@
 -- Add any additional options here
 
 -- NOTE: snacks is a custom picker that is not included in the default options
--- vim.g.lazyvim_picker = 'snacks'
-vim.g.lazyvim_picker = 'fzf'
+vim.g.lazyvim_picker = 'snacks'
+-- vim.g.lazyvim_picker = 'fzf'
 -- vim.g.lazyvim_picker = "telescope"
 
 -- Prevent Netrw from showing up at beginning

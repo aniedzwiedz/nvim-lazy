@@ -5,6 +5,12 @@ return {
   -- or if using mini.icons/mini.nvim
   dependencies = { 'nvim-mini/mini.icons' },
   opts = {
+    files = {
+      cmd = 'fd --type f --hidden --follow --exclude .git',
+      multiprocess = true,
+      file_icons = true,
+      color_icons = true,
+    },
     git = {
       split = 'belowright new', -- open in a split instead?
       files = {
@@ -195,6 +201,7 @@ return {
       ['--layout'] = 'reverse',
       -- ['--border'] = 'none',
       ['--highlight-line'] = true, -- fzf >= v0.53
+      ['--bind'] = 'alt-h:toggle-all,space:toggle-all',
     },
   },
 

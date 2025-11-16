@@ -65,7 +65,7 @@ end, {
 
 -- find files (default: spc-spc)
 vim.keymap.set('n', '<c-p>', function()
-  Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true }
+  Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true, hidden = true }
 end, { desc = 'Find Files (root dir)' })
 
 vim.keymap.set('n', '<leader>fP', function()
