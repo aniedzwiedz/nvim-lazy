@@ -20,13 +20,70 @@ return {
     },
   },
   {
+    'stevearc/quicker.nvim',
+    ft = 'qf',
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {
+      buflisted = false,
+      number = false,
+      relativenumber = false,
+      signcolumn = 'auto',
+      winfixheight = true,
+      wrap = false,
+    },
+    -- Callback function to run any custom logic or keymaps for the quickfix buffer
+    on_qf = function(bufnr) end,
+    edit = {
+      -- Enable editing the quickfix like a normal buffer
+      enabled = true,
+      -- Set to true to write buffers after applying edits.
+      -- Set to "unmodified" to only write unmodified buffers.
+      autosave = 'unmodified',
+    },
+    -- Keep the cursor to the right of the filename and lnum columns
+    constrain_cursor = true,
+    highlight = {
+      -- Use treesitter highlighting
+      treesitter = true,
+      -- Use LSP semantic token highlighting
+      lsp = true,
+      -- Load the referenced buffers to apply more accurate highlights (may be slow)
+      load_buffers = false,
+    },
+    follow = {
+      -- When quickfix window is open, scroll to closest item to the cursor
+      enabled = false,
+    },
+    -- Map of quickfix item type to icon
+    type_icons = {
+      E = '󰅚 ',
+      W = '󰀪 ',
+      I = ' ',
+      N = ' ',
+      H = ' ',
+    },
+    -- Border characters
+    borders = {
+      vert = '┃',
+      -- Strong headers separate results from different files
+      strong_header = '━',
+      strong_cross = '╋',
+      strong_end = '┫',
+      -- Soft headers separate results within the same file
+      soft_header = '╌',
+      soft_cross = '╂',
+      soft_end = '┨',
+    },
+  },
+  {
     'nvim-telescope/telescope.nvim',
     keys = {
             -- Add a keymap to browse plugin files
             -- stylua: ignore
             {
                 "<leader>fp",
-                function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
+                function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
                 desc = "Find Plugin File",
             },
     },
@@ -42,6 +99,7 @@ return {
       pickers = {
         find_files = {
           theme = 'ivy',
+          hidden = true,
         },
       },
     },
@@ -93,6 +151,7 @@ return {
       map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
       map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
       map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
+      map("n", "<leader>ghS", function() gs.nav_hunk("next") end, "Next Hunk")
       map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
       map("n", "<leader>ghB", function() gs.blame() end, "Blame Buffer")
       map("n", "<leader>ghd", gs.diffthis, "Diff This")

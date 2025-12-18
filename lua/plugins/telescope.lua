@@ -16,7 +16,7 @@ return {
             -- stylua: ignore
             {
                 "<leader>fP",
-                function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
+                function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
                 desc = "Find Plugin File",
             },
             {
@@ -85,6 +85,11 @@ return {
                     if is_git_repo() then
                         opts = {
                             cwd = get_git_root(),
+                            hidden = true,
+                        }
+                    else
+                        opts = {
+                            hidden = true,
                         }
                     end
                     require("telescope.builtin").find_files(opts)
@@ -179,8 +184,8 @@ return {
                 pickers = {
 
                     find_files = {
-                        -- hidden = true,
-                        find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+                        hidden = true,
+                        find_command = { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden" },
                         -- find_command = {
                         --   "rg",
                         --   "--files",
