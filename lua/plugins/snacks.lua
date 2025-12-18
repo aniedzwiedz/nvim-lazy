@@ -101,6 +101,7 @@ return {
     -- Documentation for the picker
     -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
     picker = {
+      -- find_command = { 'fd', '--type', 'f', '--hidden' },
       -- My ~/github/dotfiles-latest/neovim/lazyvim/lua/config/keymaps.lua
       -- file was always showing at the top, I needed a way to decrease its
       -- score, in frecency you could use :FrecencyDelete to delete a file

@@ -145,7 +145,7 @@ return {
 
       local icons = require('lazyvim.config').icons
 
--- NOTE: telemetry to none
+      -- NOTE: telemetry to none
       require('copilot').setup {
         server_opts_overrides = {
           settings = {
@@ -155,7 +155,6 @@ return {
           },
         },
       }
-
 
       require('neo-tree').setup {
 
