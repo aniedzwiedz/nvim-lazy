@@ -176,8 +176,8 @@ return {
                     "rg",
                     "--no-heading",
                     "--with-filename",
-                    "--line-number",
-                    "--column",
+                    -- "--line-number",
+                    -- "--column",
                     "--smart-case",
                     "--trim" -- add this value
                 },

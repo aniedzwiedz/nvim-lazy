@@ -6,20 +6,6 @@ return {
     },
   },
   {
-    'catppuccin/nvim',
-    opts = {
-      transparent_background = true,
-      integrations = { blink_cmp = true },
-      -- opts = function(_, opts)
-      --   local module = require 'catppuccin.groups.integrations.bufferline'
-      --   if module then
-      --     module.get = module.get_theme
-      --   end
-      --   return opts
-      -- end,
-    },
-  },
-  {
     'stevearc/quicker.nvim',
     ft = 'qf',
     ---@module "quicker"

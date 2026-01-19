@@ -3,7 +3,8 @@
     "hint.enable": true,
     "codeLens.enable": true,
     "diagnostics.globals": [
-        "lint_augroup"
+        "lint_augroup",
+        "vim"
     ],
     "diagnostics.disable": [
         "missing-fields"

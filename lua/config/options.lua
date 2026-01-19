@@ -3,8 +3,8 @@
 -- Add any additional options here
 
 -- NOTE: snacks is a custom picker that is not included in the default options
-vim.g.lazyvim_picker = 'snacks'
--- vim.g.lazyvim_picker = 'fzf'
+-- vim.g.lazyvim_picker = 'snacks'
+vim.g.lazyvim_picker = 'fzf'
 -- vim.g.lazyvim_picker = "telescope"
 
 -- Prevent Netrw from showing up at beginning
@@ -19,19 +19,6 @@ vim.g.lazyvim_picker = 'snacks'
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
-
-vim.g.clipboard = {
-  name = 'WslClipboard',
-  copy = {
-    ['+'] = 'clip.exe',
-    ['*'] = 'clip.exe',
-  },
-  paste = {
-    ['+'] = "powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace('`r', ''))",
-    ['*'] = "powershell.exe -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace('`r', ''))",
-  },
-  cache_enabled = 0,
-}
 
 -- LazyVim completion engine to use.
 -- Can be one of: nvim-cmp, blink.cmp
