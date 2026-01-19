@@ -678,6 +678,49 @@ return {
       },
     },
   },
+  {
+    'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, 1, {
+        function()
+          local clients = vim.lsp.get_active_clients { bufnr = 0 }
+          local linters = {}
+
+          -- Get active linters for current buffer
+          local lint_ok, lint = pcall(require, 'lint')
+          if lint_ok and lint.linters_by_ft then
+            local ft = vim.bo.filetype
+            if lint.linters_by_ft[ft] then
+              linters = lint.linters_by_ft[ft]
+            end
+          end
+
+          local parts = {}
+
+          if #clients > 0 then
+            local client_names = {}
+            for _, client in ipairs(clients) do
+              table.insert(client_names, client.name)
+            end
+            table.insert(parts, 'LSP: ' .. table.concat(client_names, ', '))
+          end
+
+          if #linters > 0 then
+            table.insert(parts, 'Lint: ' .. table.concat(linters, ', '))
+          end
+
+          return table.concat(parts, ' | ')
+        end,
+        color = { fg = '#808080' },
+      })
+      -- table.insert(opts.sections.lualine_x, {
+      --   function()
+      --     return "😄"
+      --   end,
+      -- })
+    end,
+  },
   -- -- https://github.com/LazyVim/LazyVim/pull/5335/files
   -- recommended = function()
   --   return LazyVim.extras.wants({
