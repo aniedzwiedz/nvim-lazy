@@ -658,6 +658,9 @@ return {
     keys = { -- Example mapping to toggle outline
       { '<leader>cs', '<cmd>Outline<CR>', desc = 'Toggle outline' },
     },
+    dependencies = {
+      'epheien/outline-treesitter-provider.nvim',
+    },
     opts = {
       symbols = {
         icon_fetcher = function(kind, bufnr, symbol)
@@ -673,6 +676,18 @@ return {
       },
       preview_window = {
         winhl = 'NormalFloat:',
+      },
+      providers = {
+        priority = { 'lsp', 'treesitter', 'coc', 'markdown', 'norg', 'man' },
+        treesitter = {
+          filetypes = {
+            'yaml',
+            'yaml.ansible',
+            'yaml.azure',
+            'yaml.docker-compose',
+            'yaml.gitlab',
+          },
+        },
       },
     },
   },
@@ -731,7 +746,17 @@ return {
   --
   {
     'nvim-treesitter/nvim-treesitter',
-    opts = { ensure_installed = { 'helm' } },
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      if type(opts.ensure_installed) ~= 'table' then
+        opts.ensure_installed = {}
+      end
+      for _, lang in ipairs { 'helm', 'yaml' } do
+        if not vim.tbl_contains(opts.ensure_installed, lang) then
+          table.insert(opts.ensure_installed, lang)
+        end
+      end
+    end,
   },
   --
   { -- lua require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })

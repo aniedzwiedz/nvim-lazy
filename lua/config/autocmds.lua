@@ -154,13 +154,90 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
+do
+  local project_extra_paths = {
+    'src',
+    'src/nvim',
+    'build/src/nvim',
+    'build/src/nvim/auto',
+  }
+  local root_markers = {
+    '.git',
+    '.hg',
+    '.bzr',
+    '.svn',
+    'package.json',
+    'pyproject.toml',
+    'go.mod',
+    'Cargo.toml',
+  }
+  local uv = vim.uv or vim.loop
+  local has_lazy_root, lazy_root = pcall(require, 'lazyvim.util.root')
+
+  local function find_workspace_root(bufname, buf)
+    if not bufname or bufname == '' then
+      return nil
+    end
+    bufname = vim.fs.normalize(bufname)
+    if has_lazy_root then
+      local ok, workspace = pcall(lazy_root.get, { buf = buf, normalize = true })
+      if ok and workspace and workspace ~= '' then
+        return vim.fs.normalize(workspace)
+      end
+    end
+    local dir = vim.fs.dirname(bufname)
+    if dir and dir ~= '' then
+      local workspace = vim.fs.root(dir, root_markers)
+      if workspace and workspace ~= '' then
+        return vim.fs.normalize(workspace)
+      end
+    end
+    local cwd = uv.cwd()
+    if cwd and cwd ~= '' then
+      return vim.fs.normalize(cwd)
+    end
+    return nil
+  end
+
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = vim.api.nvim_create_augroup('workspace_include_paths', { clear = true }),
+    callback = function(event)
+      local bufname = vim.api.nvim_buf_get_name(event.buf)
+      if bufname == '' then
+        return
+      end
+      local workspace_root = find_workspace_root(bufname, event.buf)
+      if not workspace_root then
+        return
+      end
+      if vim.b.workspace_repo_path_augmented then
+        return
+      end
+      local existing = {}
+      for _, entry in ipairs(vim.opt_local.path:get()) do
+        existing[entry] = true
+      end
+      for _, rel in ipairs(project_extra_paths) do
+        local full = vim.fs.normalize(vim.fs.joinpath(workspace_root, rel))
+        local stat = uv.fs_stat(full)
+        if stat and stat.type == 'directory' and not existing[full] then
+          vim.opt_local.path:append(full)
+        end
+      end
+      vim.b.workspace_repo_path_augmented = true
+    end,
+  })
+end
+
+local tbl_isarray = vim.tbl_isarray or vim.tbl_islist
+
 local function encode_sorted_json(value, indent, depth)
   indent = indent or '  '
   depth = depth or 0
   if type(value) ~= 'table' then
     return vim.json.encode(value)
   end
-  if vim.tbl_islist(value) then
+  if tbl_isarray(value) then
     if #value == 0 then
       return '[]'
     end
