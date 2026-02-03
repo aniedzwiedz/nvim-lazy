@@ -72,13 +72,13 @@ return {
                 function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
                 desc = "Find Plugin File",
             },
-            {
-                "<leader>gd",
-                function()
-                    vim.cmd('DiffviewFileHistory %')
-                end,
-                desc = "File history (Diffview)",
-            },
+      {
+        '<leader>gd',
+        function()
+          vim.cmd 'DiffviewFileHistory %'
+        end,
+        desc = 'File history (Diffview)',
+      },
     },
     -- change some options
     opts = {
@@ -196,17 +196,6 @@ return {
       end
 
       local icons = require('lazyvim.config').icons
-
-      -- NOTE: telemetry to none
-      require('copilot').setup {
-        server_opts_overrides = {
-          settings = {
-            telemetry = {
-              telemetryLevel = 'none',
-            },
-          },
-        },
-      }
 
       require('neo-tree').setup {
 
