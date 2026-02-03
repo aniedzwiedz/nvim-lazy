@@ -72,6 +72,13 @@ return {
                 function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
                 desc = "Find Plugin File",
             },
+            {
+                "<leader>gd",
+                function()
+                    vim.cmd('DiffviewFileHistory %')
+                end,
+                desc = "File history (Diffview)",
+            },
     },
     -- change some options
     opts = {
@@ -390,7 +397,7 @@ return {
       'DiffviewFocusFiles',
     },
     keys = {
-      { '<leader>gd', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen' },
+      { '<leader>gD', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen' },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
       { '<F4>', ':DiffviewClose <cr>', desc = 'Close Diff View' }, -- closing Diffview
     },

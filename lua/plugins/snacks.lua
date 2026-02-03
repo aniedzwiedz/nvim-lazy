@@ -121,6 +121,13 @@ return {
         return item
       end,
       sources = {
+        gh_issue = {
+          layout = 'telescope',
+        },
+        gh_pr = {
+          layout = 'telescope',
+        },
+
         files = {
           hidden = true,
         },
@@ -141,8 +148,8 @@ return {
       -- I like the "ivy" layout, so I set it as the default globaly, you can
       -- still override it in different keymaps
       layout = {
-        preset = 'ivy',
-        -- preset = 'vertical',
+        preset = 'vertical',
+        -- preset = 'ivy',
         -- When reaching the bottom of the results in the picker, I don't want
         -- it to cycle and go back to the top
         cycle = true,
@@ -199,6 +206,30 @@ return {
               title = '{preview}',
               height = 0.4,
               border = 'top',
+            },
+          },
+        },
+        telescope = {
+          layout = {
+            backdrop = false,
+            width = 0.9,
+            min_width = 100,
+            height = 0.85,
+            min_height = 30,
+            box = 'vertical',
+            border = 'rounded',
+            title = '{title} {live} {flags}',
+            title_pos = 'center',
+            { win = 'input', height = 1, border = 'bottom' },
+            {
+              box = 'horizontal',
+              { win = 'list', width = 0.45, border = 'none' },
+              {
+                win = 'preview',
+                title = '{preview}',
+                width = 0.55,
+                border = 'left',
+              },
             },
           },
         },
@@ -349,8 +380,37 @@ return {
         -- Go 1 dir above and check `sudo du -sh ./* | sort -hr | head -n 5`
       },
     },
+    gh = {},
   },
   keys = {
+    {
+      '<leader>gi',
+      function()
+        Snacks.picker.gh_issue()
+      end,
+      desc = 'GitHub Issues (open)',
+    },
+    {
+      '<leader>gI',
+      function()
+        Snacks.picker.gh_issue { state = 'all' }
+      end,
+      desc = 'GitHub Issues (all)',
+    },
+    {
+      '<leader>gp',
+      function()
+        Snacks.picker.gh_pr()
+      end,
+      desc = 'GitHub Pull Requests (open)',
+    },
+    {
+      '<leader>gP',
+      function()
+        Snacks.picker.gh_pr { state = 'all' }
+      end,
+      desc = 'GitHub Pull Requests (all)',
+    },
     {
       '<M-g>',
       function()

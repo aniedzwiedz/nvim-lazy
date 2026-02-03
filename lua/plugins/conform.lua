@@ -18,6 +18,13 @@ return {
       lsp_format = 'fallback',
     },
     format_on_save = false, -- Disable autoformatting on save
+    -- Respect .editorconfig files in the workspace
+    exec_path = function()
+      local ft = vim.bo.filetype
+      if ft == 'json' or ft:match('yaml') then
+        return vim.fn.expand('%:p:h')
+      end
+    end,
     formatters = {
       ['markdown-toc'] = {
         condition = function(_, ctx)
@@ -38,6 +45,9 @@ return {
           return #diag > 0
         end,
       },
+      ['prettier'] = {
+        args = { '--parser', 'yaml', '--prose-wrap', 'preserve' },
+      },
     },
 
     formatters_by_ft = {
@@ -52,7 +62,8 @@ return {
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
       hcl = { 'packer_fmt' },
-      ['yaml.azure'] = { 'prettier' },
+       ['yaml.azure'] = { 'prettier' },
+      yaml = { 'yamlfmt', 'prettier' },
       -- ruby = { formatter },
       sh = { 'shellcheck' },
       -- https://www.terraform.io/docs/cli/commands/fmt.html

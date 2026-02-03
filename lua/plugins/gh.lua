@@ -1,3 +1,5 @@
+if true then return {} end
+
 return {
 
   -- depends on the git extra for highlighting and auto-completion of github issues/prs
