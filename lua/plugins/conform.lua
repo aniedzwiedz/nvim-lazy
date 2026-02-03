@@ -3,9 +3,6 @@ return {
   optional = true,
   opts = {
     -- This can also be a function that returns the table.
-    format_after_save = {
-      lsp_format = 'fallback',
-    },
     -- Set the log level. Use `:ConformInfo` to see the location of the log file.
     log_level = vim.log.levels.ERROR,
     -- Conform will notify you when a formatter errors
@@ -64,6 +61,7 @@ return {
       hcl = { 'packer_fmt' },
        ['yaml.azure'] = { 'prettier' },
       yaml = { 'yamlfmt', 'prettier' },
+      editorconfig = { 'trim_whitespace' },
       -- ruby = { formatter },
       sh = { 'shellcheck' },
       -- https://www.terraform.io/docs/cli/commands/fmt.html

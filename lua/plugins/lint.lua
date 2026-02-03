@@ -19,7 +19,6 @@ return {
       -- Configuration and markup
       yaml = { 'yamllint' },
       ['yaml.gha'] = { 'actionlint' },
-      json = { 'jsonlint' },
       markdown = { 'markdownlint-cli2' },
 
       -- Programming languages
@@ -41,6 +40,7 @@ return {
     local lint = require 'lint'
     lint.linters_by_ft = vim.tbl_deep_extend('force', lint.linters_by_ft or {}, opts.linters_by_ft or {})
     lint.linters = vim.tbl_deep_extend('force', lint.linters or {}, opts.linters or {})
+    lint.linters_by_ft.json = opts.linters_by_ft and opts.linters_by_ft.json or nil
 
     local function lint_current_file()
       local buf = vim.api.nvim_get_current_buf()

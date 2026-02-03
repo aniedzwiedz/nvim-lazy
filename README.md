@@ -43,6 +43,7 @@ A powerful and modern Neovim configuration built on top of [LazyVim](https://www
 - **Background transparency** for modern terminal aesthetics
 - **Smart indentation** and formatting
 - **Advanced Git search** with Telescope integration
+- **Visible whitespace** markers (tabs, trailing spaces, nbsp) for cleaner diffs
 
 ## 📋 Requirements
 

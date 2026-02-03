@@ -153,3 +153,59 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.filetype = 'yaml.azure'
   end,
 })
+
+local function encode_sorted_json(value, indent, depth)
+  indent = indent or '  '
+  depth = depth or 0
+  if type(value) ~= 'table' then
+    return vim.json.encode(value)
+  end
+  if vim.tbl_islist(value) then
+    if #value == 0 then
+      return '[]'
+    end
+    local parts = {}
+    local child_indent = string.rep(indent, depth + 1)
+    for idx, item in ipairs(value) do
+      parts[idx] = child_indent .. encode_sorted_json(item, indent, depth + 1)
+    end
+    return '[\n' .. table.concat(parts, ',\n') .. '\n' .. string.rep(indent, depth) .. ']'
+  end
+  local keys = vim.tbl_keys(value)
+  table.sort(keys, function(a, b)
+    return tostring(a) < tostring(b)
+  end)
+  if #keys == 0 then
+    return '{}'
+  end
+  local parts = {}
+  local child_indent = string.rep(indent, depth + 1)
+  for idx, key in ipairs(keys) do
+    parts[idx] = child_indent .. vim.json.encode(key) .. ': ' .. encode_sorted_json(value[key], indent, depth + 1)
+  end
+  return '{\n' .. table.concat(parts, ',\n') .. '\n' .. string.rep(indent, depth) .. '}'
+end
+
+vim.lsp.commands['json.sort'] = function(_, ctx)
+  local bufnr = ctx.bufnr
+  if not vim.api.nvim_buf_is_valid(bufnr) or not vim.bo[bufnr].modifiable then
+    return
+  end
+  local ft = vim.bo[bufnr].filetype
+  if ft ~= 'json' and ft ~= 'jsonc' and ft ~= 'json5' then
+    vim.notify('json.sort is only available in JSON buffers', vim.log.levels.WARN)
+    return
+  end
+  local ok, decoded = pcall(
+    vim.json.decode,
+    table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false), '\n'),
+    { luanil = { object = true, array = true } }
+  )
+  if not ok then
+    vim.notify('json.sort failed: ' .. decoded, vim.log.levels.ERROR)
+    return
+  end
+  local sorted = encode_sorted_json(decoded)
+  local lines = vim.split(sorted, '\n', { plain = true })
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+end
