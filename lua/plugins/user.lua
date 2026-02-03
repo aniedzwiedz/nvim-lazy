@@ -101,6 +101,9 @@ return {
     'lewis6991/gitsigns.nvim',
     enabled = true,
     event = 'LazyFile',
+    keys = function(_, keys)
+      table.insert(keys, { '<leader>gd', false })
+    end,
     opts = {
       signs = {
         add = { text = '▎' },
