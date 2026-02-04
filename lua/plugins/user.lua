@@ -1,11 +1,5 @@
 return {
   {
-    'LazyVim/LazyVim',
-    opts = {
-      colorscheme = 'catppuccin',
-    },
-  },
-  {
     'stevearc/quicker.nvim',
     ft = 'qf',
     ---@module "quicker"
@@ -70,7 +64,7 @@ return {
             {
                 "<leader>fp",
                 function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
-                desc = "Find Plugin File",
+                desc = "Find Plugin File(telescope)",
             },
       {
         '<leader>gd',
@@ -101,9 +95,9 @@ return {
     'lewis6991/gitsigns.nvim',
     enabled = true,
     event = 'LazyFile',
-    keys = function(_, keys)
-      table.insert(keys, { '<leader>gd', false })
-    end,
+    -- keys = function(_, keys)
+    --   table.insert(keys, { '<leader>gd', false })
+    -- end,
     opts = {
       signs = {
         add = { text = '▎' },
