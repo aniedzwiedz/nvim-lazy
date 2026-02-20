@@ -20,9 +20,8 @@ return {
         -- Azure Pipelines Language Server for .azuredevops files
         azure_pipelines_ls = {
           filetypes = { "yaml.azure" },
-          root_dir = function(bufnr)
-            local fname = vim.api.nvim_buf_get_name(bufnr)
-            if fname:match(".azuredevops/") then
+          root_dir = function(fname)
+            if fname and fname:match(".azuredevops/") then
               return require("lspconfig").util.find_git_ancestor(fname)
             end
             return nil
@@ -49,14 +48,8 @@ return {
               },
             },
           },
-          root_dir = function(bufnr)
-            -- Don't start yamlls for .azuredevops files, let azure_pipelines_ls handle it
-            local fname = vim.api.nvim_buf_get_name(bufnr)
-            if fname:match(".azuredevops/") then
-              return nil
-            end
-            return require("lspconfig").util.find_git_ancestor(fname)
-          end,
+          filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab", "yaml.azure" },
+          single_file_support = true,
           before_init = function(_, new_config)
             new_config.settings.yaml.schemas = vim.tbl_deep_extend(
               "force",
@@ -96,6 +89,21 @@ return {
       },
       linters = {
         yamllint = {
+          cmd = "yamllint",
+          stdin = true,
+          stream = "stdout",
+          args = { 
+            "--format", "parsable",
+            "--config-data", "{extends: default, rules: {line-length: {max: 120}, document-start: disable, comments: {min-spaces-from-content: 0}, indentation: {spaces: consistent}}}",
+            "-"
+          },
+          ignore_exitcode = true,
+          parser = require("lint.parser").from_pattern(
+            'stdin:(%d+):(%d+): %[(.+)%] (.+) %((.+)%)',
+            { 'lnum', 'col', 'severity', 'message', 'code' },
+            { ['error'] = vim.diagnostic.severity.ERROR, ['warning'] = vim.diagnostic.severity.WARN },
+            { ['source'] = 'yamllint' }
+          ),
           condition = function(ctx)
             local ft = vim.bo[ctx.buf].filetype
             if ft:match("azure") then
@@ -103,7 +111,6 @@ return {
             end
             return true
           end,
-          args = { "--config-data", "{extends: default, rules: {line-length: {max: 120}, document-start: disable, comments: {min-spaces-from-content: 0}, indentation: {spaces: any}}}" },
         },
       },
     },

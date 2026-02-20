@@ -54,7 +54,8 @@ return {
       ['lua'] = { 'stylua' },
       -- ["sh"] = { "bashls" }, --NOTE: format with a LSP
       ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
-      ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
+      -- ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
+      ['markdown.mdx'] = { 'prettier', 'markdownlint', 'markdown-toc' },
       -- ['zsh'] = { 'beautysh' },
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
