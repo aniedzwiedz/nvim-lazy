@@ -108,6 +108,27 @@ vim.opt.relativenumber = true
 -- Show line under cursor
 vim.opt.cursorline = true
 
+-- Configure LSP diagnostics to show inline like VSCode
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●', -- Could be '■', '▎', 'x', etc.
+    spacing = 4,
+    source = 'if_many',
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    focusable = true,
+    style = 'minimal',
+    border = 'rounded',
+    source = true,
+    header = '',
+    prefix = '',
+  },
+})
+
 -- Store undos between sessions
 vim.opt.undofile = true
 
