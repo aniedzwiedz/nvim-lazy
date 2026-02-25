@@ -233,10 +233,28 @@ return {
       '<M-g>',
       function()
         Snacks.picker.git_branches {
-          layout = 'select',
+          layout = 'telescope',
         }
       end,
       desc = 'Branches',
+    },
+    {
+      '<leader>gs',
+      function()
+        Snacks.picker.git_status {
+          layout = 'telescope',
+        }
+      end,
+      desc = 'Git Status',
+    },
+    {
+      '<leader>gc',
+      function()
+        Snacks.picker.git_commits {
+          layout = 'telescope',
+        }
+      end,
+      desc = 'Git Commits',
     },
     {
       '<M-k>',

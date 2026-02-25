@@ -383,9 +383,16 @@ return {
       'DiffviewFocusFiles',
     },
     keys = {
-      { '<leader>gD', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen' },
+      { '<leader>gD', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen (Diffview)' },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
       { '<F4>', ':DiffviewClose <cr>', desc = 'Close Diff View' }, -- closing Diffview
+      {
+        '<leader>gf',
+        function()
+          vim.cmd 'DiffviewFileHistory %'
+        end,
+        desc = 'File history (Diffview)',
+      },
     },
   },
   { -- git linker
@@ -411,6 +418,13 @@ return {
     config = function()
       require('telescope').load_extension 'advanced_git_search'
     end,
+    keys = {
+      {
+        '<leader>gA',
+        '<cmd>AdvancedGitSearch<cr>',
+        desc = 'Advanced Git Search',
+      },
+    },
   },
   -- {
   --     "NeogitOrg/neogit",
@@ -458,20 +472,6 @@ return {
   --         -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
   --     },
   -- },
-  {
-    'akinsho/git-conflict.nvim',
-    vscode = false,
-    lazy = true,
-    event = 'LazyFile',
-    opts = {},
-    keys = {
-      {
-        '<leader>gxl',
-        '<cmd>GitConflictListQf<cr>',
-        desc = 'List git conflicts',
-      },
-    },
-  },
   {
     'mikavilpas/yazi.nvim',
     vscode = false,
