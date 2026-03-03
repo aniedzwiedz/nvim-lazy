@@ -1,39 +1,64 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
---
-local Util = require 'lazyvim.util'
--- Silent keymap option
--- local opts = { noremap = true, silent = true }
--- local map = vim.keymap.set
--- yank to clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank all' })
--- System clipboard
-vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy to clipboard' })
-vim.keymap.set('i', '<C-S-v>', '"+p', { desc = 'Paste from clipboard' })
-
-vim.keymap.del('n', '<leader>E') -- diable keymap
 
 local map = require('lazyvim.util').safe_keymap_set
-map('n', '<leader>fC', '<cmd>:lua Snacks.picker.lazy()<CR>')
 
--- Add toggle gitsigns blame line
-if Util.has 'gitsigns.nvim' then
-  map(
-    'n',
-    '<leader>ub',
-    "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
-    { desc = 'Toggle current line blame' }
-  )
-  map('n', '<leader>gl', function()
-    require('gitsigns').blame_line { full = false }
-  end, { desc = 'View full Blame' })
-  --NOTE: <leader>gB
-  map('n', '<leader>gL', function()
-    require('gitsigns').blame_line { full = true }
-  end, { desc = 'View full Git Blame' })
-  -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
+-- Helper function
+local function copy_to_clipboards(str)
+  vim.fn.setreg('"', str)
+  vim.fn.setreg('+', str)
+  vim.notify('→ ' .. str)
 end
+
+-- ============================================================================
+-- CLIPBOARD
+-- ============================================================================
+map({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to clipboard' })
+map('v', '<C-c>', '"+y', { desc = 'Copy to clipboard' })
+map('i', '<C-S-v>', '"+p', { desc = 'Paste from clipboard' })
+
+-- ============================================================================
+-- FILES & PATHS
+-- ============================================================================
+map('n', '<leader>fC', function()
+  Snacks.picker.lazy()
+end, { desc = 'LazyVim config' })
+
+map('n', '<leader>fP', function()
+  Snacks.picker.projects({ limit = 100 })
+end, { desc = 'Find [P]rojects' })
+
+map('n', '<leader>fya', function()
+  copy_to_clipboards(vim.fn.expand '%:p')
+end, { desc = 'Copy absolute path to clipboard' })
+
+map('n', '<leader>fyr', function()
+  copy_to_clipboards(vim.fn.expand '%:.')
+end, { desc = 'Copy relative path to clipboard' })
+
+map('n', '<leader>fyn', function()
+  copy_to_clipboards(vim.fn.expand '%:t')
+end, { desc = 'Copy filename to clipboard' })
+
+-- ============================================================================
+-- SEARCH & PICKERS
+-- ============================================================================
+map('n', '<C-p>', function()
+  Snacks.picker.git_files {
+    layout = { preset = 'vscode' },
+    untracked = true,
+    hidden = true,
+  }
+end, { desc = 'Find Files (root dir)' })
+
+map('n', '?', function()
+  Snacks.picker.lines()
+end, { desc = 'Search in lines' })
+
+map('n', '<leader>sH', function()
+  Snacks.picker.man()
+end, { desc = 'Search in MANuals' })
 
 map(
   'n',
@@ -42,146 +67,95 @@ map(
   { desc = 'FzfLua lsp_finder' }
 )
 
-map('n', '<leader>uD', function()
-  vim.diagnostic.config { virtual_text = false }
-end, { desc = 'Toggle Diagnosticstic virtual_text' })
-
--- NOTE: https://github.com/ibhagwan/fzf-lua
-vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
+map({ 'i' }, '<C-x><C-f>', function()
   require('fzf-lua').complete_file {
     cmd = 'rg --files',
     winopts = { preview = { hidden = true } },
   }
 end, { silent = true, desc = 'Fuzzy complete file' })
 
--- TODO: nie nadpisuje wbudowanego w vim "z="
-vim.keymap.set('n', 'z=', function()
+map('n', 'z=', function()
   require('fzf-lua').spell_suggest()
-end, {
-  noremap = true,
-  silent = true,
-  desc = 'FzfLua Spell Suggest',
-})
+end, { silent = true, desc = 'FzfLua Spell Suggest' })
 
--- find files (default: spc-spc)
-vim.keymap.set('n', '<c-p>', function()
-  Snacks.picker.git_files { layout = { preset = 'vscode' }, untracked = true, hidden = true }
-end, { desc = 'Find Files (root dir)' })
+-- ============================================================================
+-- GIT
+-- ============================================================================
+local ok_gitsigns, gitsigns = pcall(require, 'gitsigns')
+if ok_gitsigns then
+  map('n', '<leader>ub', function()
+    gitsigns.toggle_current_line_blame()
+  end, { desc = 'Toggle current line blame' })
 
-vim.keymap.set('n', '<leader>fP', function()
-  Snacks.picker.projects()
-end, { desc = 'Find [P]rojects' })
+  map('n', '<leader>gl', function()
+    gitsigns.blame_line { full = false }
+  end, { desc = 'View full Blame' })
 
-vim.keymap.set('n', '?', function()
-  Snacks.picker.lines()
-end, { desc = 'Search in lines' })
+  map('n', '<leader>gL', function()
+    gitsigns.blame_line { full = true }
+  end, { desc = 'View full Git Blame' })
+end
 
-vim.keymap.set('n', '<leader>sH', function()
-  Snacks.picker.man()
-end, { desc = 'Search in MANuals' })
+-- ============================================================================
+-- LSP & DIAGNOSTICS
+-- ============================================================================
+map('n', '<leader>uD', function()
+  vim.diagnostic.config { virtual_text = false }
+end, { desc = 'Toggle Diagnostics virtual_text' })
 
---   Snacks.picker.help_tags()
--- end, { desc = 'Find [H]elp tags' })
-
--- vim.keymap.set('n', '<leader>sw', function()
---   Snacks.picker.grep_word { live = true }
--- end, { desc = 'Search [w]ord under the cursor' })
-
-vim.keymap.set('n', '<leader>fya', function()
-  local str = vim.fn.expand '%:p'
-  vim.fn.setreg('"', str)
-  vim.fn.setreg('+', str)
-  vim.notify('→ ' .. str)
-end, { desc = ' Copy absolute path' })
-
-vim.keymap.set('n', '<leader>fyr', function()
-  local str = vim.fn.expand '%:.'
-  vim.fn.setreg('"', str)
-  vim.fn.setreg('+', str)
-  vim.notify('→ ' .. str)
-end, { desc = ' Copy relative path' })
-
-vim.keymap.set('n', '<leader>fyn', function()
-  local str = vim.fn.expand '%:t'
-  vim.fn.setreg('"', str)
-  vim.fn.setreg('+', str)
-  vim.notify('→ ' .. str)
-end, { desc = ' Copy basename' })
-
--- NOTE: new in nvim 11.0
---
--- vim.diagnostic.config({
---   -- Use the default configuration
---   -- virtual_lines = true,
---
---   -- Alternatively, customize specific options
---   virtual_lines = {
---     -- Only show virtual line diagnostics for the current cursor line
---     current_line = true,
---   },
--- })
--- Replace word under cursor across entire buffer
+-- ============================================================================
+-- EDITING
+-- ============================================================================
 map(
   'n',
   '<F2>',
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { noremap = true, silent = false, desc = '[c]hange word under cursor' }
+  { noremap = true, silent = false, desc = 'Change word under cursor' }
 )
--- -- Add toggle gitsigns blame line
--- if Util.has("gitsigns.nvim") then
---   map(
---     "n",
---     "<leader>ub",
---     "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>",
---     { desc = "Toggle current line blame" }
---   )
---   map("n", "<leader>gl", function()
---     require("gitsigns").blame_line({ full = false })
---   end, { desc = "View full Blame" })
---   --NOTE: <leader>gB
---   map("n", "<leader>gL", function()
---     require("gitsigns").blame_line({ full = true })
---   end, { desc = "View full Git Blame" })
---   -- map("n", "<leader>gdo", ":DiffviewOpen<cr>", { desc = "DiffviewOpen " })
--- end
--- -- yamk all to clipboard
--- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank all" })
 
--- NOTE: do i want to overwrite dimming from LazyVim
--- map("n", "<leader>uD", function()
---   vim.diagnostic.config({ virtual_text = false })
--- end, { desc = "Toggle Diagnosticstic virtual_text" })
+-- ============================================================================
+-- KEYMAP DELETIONS
+-- ============================================================================
+vim.keymap.del('n', '<leader>E')
 
--- vscode
+-- ============================================================================
+-- VSCODE SPECIFIC
+-- ============================================================================
 if vim.g.vscode then
-  vim.keymap.set(
+  local vscode = function(action)
+    return function()
+      require('vscode').call(action)
+    end
+  end
+
+  map(
     'n',
     ']d',
-    "<cmd>lua require('vscode').call('editor.action.marker.next')<cr>",
+    vscode 'editor.action.marker.next',
     { desc = 'Next Diagnostic' }
   )
-  vim.keymap.set(
+  map(
     'n',
     '[d',
-    "<cmd>lua require('vscode').call('editor.action.marker.previous')<cr>",
+    vscode 'editor.action.marker.previous',
     { desc = 'Prev Diagnostic' }
   )
-  vim.keymap.set(
+  map(
     'n',
     'gr',
-    "<cmd>lua require('vscode').call('editor.action.goToReferences')<cr>",
+    vscode 'editor.action.goToReferences',
     { desc = 'Goto References' }
   )
-  vim.keymap.set(
+  map(
     'n',
     'gd',
-    "<cmd>lua require('vscode').call('editor.action.revealDefinition')<cr>",
+    vscode 'editor.action.revealDefinition',
     { desc = 'Goto Definition' }
   )
-  vim.keymap.set(
+  map(
     'n',
     'gy',
-    "<cmd>lua require('vscode').call('editor.action.goToTypeDefinition')<cr>",
+    vscode 'editor.action.goToTypeDefinition',
     { desc = 'Goto Type Definition' }
   )
 end

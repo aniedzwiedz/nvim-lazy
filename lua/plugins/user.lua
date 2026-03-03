@@ -66,13 +66,6 @@ return {
                 function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root, hidden = true }) end,
                 desc = "Find Plugin File(telescope)",
             },
-      {
-        '<leader>gd',
-        function()
-          vim.cmd 'DiffviewFileHistory %'
-        end,
-        desc = 'File history (Diffview)',
-      },
     },
     -- change some options
     opts = {
@@ -95,9 +88,15 @@ return {
     'lewis6991/gitsigns.nvim',
     enabled = true,
     event = 'LazyFile',
-    -- keys = function(_, keys)
-    --   table.insert(keys, { '<leader>gd', false })
-    -- end,
+    keys = {
+      {
+        '<leader>gd',
+        function()
+          vim.cmd 'DiffviewFileHistory %'
+        end,
+        desc = 'File history (Diffview)',
+      },
+    },
     opts = {
       signs = {
         add = { text = '▎' },
@@ -383,9 +382,16 @@ return {
       'DiffviewFocusFiles',
     },
     keys = {
-      { '<leader>gD', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen' },
+      { '<leader>gD', '<cmd>DiffviewOpen <cr>', desc = 'Open DiffviewOpen (Diffview)' },
       -- ["<F4>"] = { ":DiffviewClose<cr>", desc = "Close Diff View" }, -- closing Diffview
       { '<F4>', ':DiffviewClose <cr>', desc = 'Close Diff View' }, -- closing Diffview
+      {
+        '<leader>gf',
+        function()
+          vim.cmd 'DiffviewFileHistory %'
+        end,
+        desc = 'File history (Diffview)',
+      },
     },
   },
   { -- git linker
@@ -411,6 +417,13 @@ return {
     config = function()
       require('telescope').load_extension 'advanced_git_search'
     end,
+    keys = {
+      {
+        '<leader>gA',
+        '<cmd>AdvancedGitSearch<cr>',
+        desc = 'Advanced Git Search',
+      },
+    },
   },
   -- {
   --     "NeogitOrg/neogit",
@@ -458,20 +471,6 @@ return {
   --         -- { "<F4>", ":DiffviewClose <cr>", desc = "Close Diff View" }, -- closing Diffview
   --     },
   -- },
-  {
-    'akinsho/git-conflict.nvim',
-    vscode = false,
-    lazy = true,
-    event = 'LazyFile',
-    opts = {},
-    keys = {
-      {
-        '<leader>gxl',
-        '<cmd>GitConflictListQf<cr>',
-        desc = 'List git conflicts',
-      },
-    },
-  },
   {
     'mikavilpas/yazi.nvim',
     vscode = false,
