@@ -38,8 +38,16 @@ return {
   },
   config = function(_, opts)
     local lint = require 'lint'
+
+    -- Add Mason bin to PATH for linters
+    local mason_bin = vim.fn.stdpath 'data' .. '/mason/bin'
+    vim.env.PATH = mason_bin .. ':' .. vim.env.PATH
+
     lint.linters_by_ft = vim.tbl_deep_extend('force', lint.linters_by_ft or {}, opts.linters_by_ft or {})
-    lint.linters = vim.tbl_deep_extend('force', lint.linters or {}, opts.linters or {})
+    -- Don't extend linters table - it uses a metatable for lazy loading
+    for name, config in pairs(opts.linters or {}) do
+      lint.linters[name] = config
+    end
     lint.linters_by_ft.json = opts.linters_by_ft and opts.linters_by_ft.json or nil
 
     local function lint_current_file()
