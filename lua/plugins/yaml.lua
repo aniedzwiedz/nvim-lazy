@@ -21,7 +21,7 @@ return {
         azure_pipelines_ls = {
           filetypes = { "yaml.azure" },
           root_dir = function(fname)
-            if fname and fname:match(".azuredevops/") then
+            if type(fname) == "string" and fname:match(".azuredevops/") then
               return require("lspconfig").util.find_git_ancestor(fname)
             end
             return nil
