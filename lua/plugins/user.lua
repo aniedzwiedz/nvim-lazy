@@ -1,4 +1,6 @@
 return {
+  -- Shared dependency for multiple plugins
+  { 'nvim-lua/plenary.nvim' },
   {
     'stevearc/quicker.nvim',
     ft = 'qf',
@@ -152,7 +154,6 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim',
       'nvim-mini/mini.icons',
       -- "nvim-tree/nvim-web-devicons",
       'MunifTanjim/nui.nvim',
@@ -372,9 +373,6 @@ return {
   {
     'sindrets/diffview.nvim',
     event = 'BufRead',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
     cmd = {
       'DiffviewOpen',
       'DiffviewClose',
@@ -397,9 +395,6 @@ return {
   { -- git linker
     'ruifm/gitlinker.nvim',
     vscode = false,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
     lazy = true,
     opts = {},
     keys = {

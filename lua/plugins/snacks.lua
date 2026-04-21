@@ -247,15 +247,16 @@ return {
       end,
       desc = 'Git Status',
     },
-    {
-      '<leader>gc',
-      function()
-        Snacks.picker.git_commits {
-          layout = 'telescope',
-        }
-      end,
-      desc = 'Git Commits',
-    },
+    -- {
+    --   '<leader>gc',
+    --   function()
+    --     ---@diagnostic disable-next-line: undefined-field
+    --     Snacks.picker.git_commits {
+    --       layout = 'telescope',
+    --     }
+    --   end,
+    --   desc = 'Git Commits',
+    -- },
     {
       '<M-k>',
       function()

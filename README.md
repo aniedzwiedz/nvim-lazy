@@ -73,9 +73,8 @@ A powerful and modern Neovim configuration built on top of [LazyVim](https://www
    ln -s ~/.config/nvim-lazy ~/.config/nvim
    ```
 
-3. **Install dependencies:**
+3. **Install Node.js dependencies (required):**
    ```bash
-   # Install Node.js dependencies
    cd ~/.config/nvim-lazy
    npm install
    ```
@@ -85,7 +84,42 @@ A powerful and modern Neovim configuration built on top of [LazyVim](https://www
    nvim
    ```
 
-   LazyVim will automatically install all plugins on first launch.
+   LazyVim will automatically install all plugins on first launch. Use `:Lazy sync` to sync/update all plugins.
+
+5. **Manage LazyVim extras (optional):**
+   ```vim
+   :LazyExtras
+   ```
+   Use this command inside Neovim to enable/disable optional language support and features.
+
+## 🔍 Health Checks & Validation
+
+After installation, verify everything is working correctly:
+
+```bash
+nvim -c "qa!" +LazyHealth  # Non-interactive health check
+```
+
+Or inside Neovim:
+
+```vim
+:checkhealth          # Full system diagnostics
+:LazyHealth           # Plugin system diagnostics
+```
+
+## 📐 Code Quality & Formatting
+
+This configuration enforces code style standards using:
+
+```bash
+stylua lua/          # Format Lua code (2-space indent, 80 cols)
+stylua --check lua/  # Check without modifying
+```
+
+**Style enforced by:**
+- `.editorconfig` - 2-space indents for Lua/JSON/YAML, 4-space for Python
+- `stylua.toml` - 80 column width, Unix line endings, single quotes
+- `.luarc.json` - Lua LSP diagnostics (vim global ignored, missing-fields disabled)
 
 ## ⌨️ Key Mappings
 
@@ -117,40 +151,80 @@ A powerful and modern Neovim configuration built on top of [LazyVim](https://www
 ## 🔧 Configuration Structure
 
 ```
-├── init.lua                 # Entry point
+├── init.lua                 # Entry point (bootstraps lua/config/lazy.lua)
 ├── lua/
 │   ├── config/
-│   │   ├── autocmds.lua    # Auto commands
-│   │   ├── keymaps.lua     # Key mappings
-│   │   ├── lazy.lua        # Lazy.nvim setup
-│   │   └── options.lua     # Neovim options
-│   └── plugins/            # Plugin configurations
-│       ├── colorscheme.lua # Theme configuration
-│       ├── conform.lua     # Code formatting
-│       ├── copilotfix.lua  # Copilot fixes
-│       ├── fzf.lua         # FZF integration
-│       ├── telescope.lua   # Telescope configuration
-│       └── user.lua        # Main user plugins
+│   │   ├── lazy.lua        # Lazy.nvim setup (initializes LazyVim + custom plugins)
+│   │   ├── options.lua     # Neovim options & plugin settings (FZF picker, formatting, clipboard)
+│   │   ├── keymaps.lua     # Keybindings
+│   │   └── autocmds.lua    # Auto commands
+│   └── plugins/            # Plugin configurations (auto-imported)
+│       ├── user.lua        # Main user plugins (Copilot, Telescope, Snacks, etc. - 832 lines)
+│       ├── fzf.lua         # FZF picker integration (default picker)
+│       ├── telescope.lua   # Telescope picker (alternative)
+│       ├── snacks.lua      # Snacks.nvim utilities (dashboard, picker, notifier - 295 lines)
+│       ├── conform.lua     # Code formatting (Prettier & language-specific formatters)
+│       ├── lint.lua        # Linting configuration
+│       ├── colorscheme.lua # Catppuccin theme (transparency enabled by default)
+│       ├── yaml.lua        # YAML language-specific plugins
+│       └── editorconfig.lua, example.lua, disabled.lua  # Templates/reference
 ├── snippets/               # Custom code snippets
 ├── spell/                  # Spell check dictionaries
-└── package.json           # Node.js dependencies
+├── .editorconfig           # Editor configuration (2-space Lua/JSON/YAML, 4-space Python)
+├── stylua.toml             # Lua formatter config (80 cols, Unix line endings)
+├── .luarc.json             # Lua LSP diagnostics
+├── lazyvim.json            # LazyVim extras configuration
+└── package.json            # Node.js dependencies
 ```
+
+### Key Architecture Notes
+
+- **Entry points:** `init.lua` → `lua/config/lazy.lua` → plugin auto-import from `lua/plugins/`
+- **Plugin auto-import:** Any `.lua` file in `lua/plugins/` is automatically loaded as a plugin spec
+- **Lazy-loading:** Custom plugins require explicit `event`, `ft`, `keys`, or `cmd` for lazy-loading (see Plugin Spec Pattern below)
+- **Lazy.nvim pattern:** Plugins use the lazy.nvim lazy-loading specification for on-demand loading
 
 ## 🎨 Customization
 
+### Plugin Spec Pattern
+
+All plugins follow the lazy.nvim lazy-loading pattern:
+
+```lua
+{
+  'author/plugin',
+  event = 'LazyFile',        -- Load on file open
+  ft = 'filetype',           -- Load on specific filetype
+  keys = { ... },            -- Load on keymap press
+  cmd = 'Command',           -- Load on Neovim command
+  opts = { ... },            -- Config table passed to setup()
+  config = function() end,   -- Custom setup after init
+  dependencies = { ... },    -- Required plugins
+}
+```
+
 ### Changing the Picker
-The configuration uses FZF as the default picker. To change it:
+
+FZF is the default picker (configured in `lua/config/options.lua` via `vim.g.lazyvim_picker = 'fzf'`). To change it:
 
 ```lua
 -- In lua/config/options.lua
 vim.g.lazyvim_picker = 'telescope'  -- or 'snacks'
 ```
 
+### Key Configuration Settings
+
+- **Formatting:** Auto-format disabled by default (`vim.g.autoformat = false`). Enable per-project via `:LazyFormat` or toggle.
+- **Completion engine:** Set to `'auto'` (respects `:LazyExtras` selection). Supports `'nvim-cmp'` or `'blink.cmp'`.
+- **Root detection:** LSP uses `.git` or `lua` directories, falls back to current working directory.
+- **Clipboard:** OS clipboard synced to Neovim (configured in `options.lua`). Can be disabled if unwanted.
+
 ### Modifying Theme
-The configuration uses Catppuccin with transparency. To modify:
+
+The configuration uses Catppuccin with transparency enabled by default. To modify:
 
 ```lua
--- In lua/plugins/user.lua
+-- In lua/plugins/colorscheme.lua
 {
   'catppuccin/nvim',
   opts = {
@@ -161,7 +235,8 @@ The configuration uses Catppuccin with transparency. To modify:
 ```
 
 ### Adding Custom Plugins
-Add new plugins to `lua/plugins/user.lua` or create new files in the `lua/plugins/` directory.
+
+Create a new file in `lua/plugins/myfeature.lua` or append to `user.lua`. Use the Plugin Spec Pattern above. Remember to explicitly add `event`, `ft`, `keys`, or `cmd` for lazy-loading.
 
 ## 📦 Included LazyVim Extras
 
@@ -191,23 +266,78 @@ To update the configuration and plugins:
 
 ### Common Issues
 
-1. **Clipboard not working in WSL:**
+1. **Node.js dependency not installed:**
+   - `npm install` must be run before first Neovim launch
+   - Required for language servers and Copilot
+
+2. **Clipboard not working in WSL:**
    - Ensure PowerShell is available in WSL
-   - Check WSL clipboard configuration in `options.lua`
+   - WSL clipboard configuration is in terminal settings (omarchy), not this config
 
-2. **LSP servers not working:**
+3. **LSP servers not working:**
    - Run `:Mason` to install language servers
-   - Check `:LspInfo` for server status
+   - Check `:LspInfo` for current server status
+   - Install specific servers: `:MasonInstall rust-analyzer pyright typescript-language-server`
 
-3. **Copilot not working:**
+4. **Copilot not working:**
    - Run `:Copilot auth` to authenticate
-   - Check `:Copilot status`
+   - Check `:Copilot status` for connection/subscription status
+
+5. **Plugins not loading:**
+   - Run `:Lazy` to see plugin status
+   - Check for errors with `:Lazy log`
 
 ### Health Checks
-```bash
-:checkhealth
-:LazyHealth
+
+```vim
+:checkhealth          # Full system diagnostics
+:LazyHealth           # Plugin system diagnostics
 ```
+
+### Validation
+
+To validate changes without loading plugins:
+
+```bash
+nvim --noplugin -c "qa!"  # Start without plugins, exit immediately
+```
+
+## ⚙️ Common Tasks
+
+### Install a Language Server
+
+```vim
+:Mason
+```
+
+Search and install, or use:
+
+```vim
+:MasonInstall rust-analyzer pyright typescript-language-server
+```
+
+### Add Custom Keybindings
+
+Edit `lua/config/keymaps.lua` or add a `keys` table directly in plugin specs in `lua/plugins/`.
+
+### Add a Custom Plugin
+
+Create `lua/plugins/myfeature.lua` or append to `user.lua`. Use the lazy-loading pattern. Plugins in `lua/plugins/` are auto-imported.
+
+### Check LSP Status
+
+```vim
+:LspInfo                    # Current LSP servers
+:Telescope lsp_definitions  # Jump to definitions
+```
+
+## ⚡ Critical Notes
+
+- **Node.js is required** for language servers and Copilot. Run `npm install` before first launch.
+- **Plugin auto-import:** Any `.lua` file in `lua/plugins/` is automatically loaded.
+- **Custom plugins need explicit lazy-loading:** Add `event`, `ft`, `keys`, or `cmd` to lazy-load on demand.
+- **Clipboard sync enabled:** OS clipboard synced to Neovim. Can be disabled in `options.lua`.
+- **WSL clipboard:** Uses PowerShell (configured in terminal settings, not here).
 
 ## 🤝 Contributing
 

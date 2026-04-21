@@ -18,6 +18,7 @@ return {
 
       -- Configuration and markup
       yaml = { 'yamllint' },
+      ['yaml.ansible'] = { 'yamllint' },
       ['yaml.gha'] = { 'actionlint' },
       markdown = { 'markdownlint-cli2' },
 
@@ -33,6 +34,9 @@ return {
       -- Shell
       fish = { 'fish' },
       zsh = { 'zsh' },
+
+      -- Data/Config files
+      json = { 'jsonlint' },
     },
     linters = {},
   },
@@ -44,11 +48,9 @@ return {
     vim.env.PATH = mason_bin .. ':' .. vim.env.PATH
 
     lint.linters_by_ft = vim.tbl_deep_extend('force', lint.linters_by_ft or {}, opts.linters_by_ft or {})
-    -- Don't extend linters table - it uses a metatable for lazy loading
     for name, config in pairs(opts.linters or {}) do
       lint.linters[name] = config
     end
-    lint.linters_by_ft.json = opts.linters_by_ft and opts.linters_by_ft.json or nil
 
     local function lint_current_file()
       local buf = vim.api.nvim_get_current_buf()

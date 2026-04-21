@@ -171,7 +171,7 @@ do
     'go.mod',
     'Cargo.toml',
   }
-  local uv = vim.uv or vim.loop
+  local uv = vim.uv
   local has_lazy_root, lazy_root = pcall(require, 'lazyvim.util.root')
 
   local function find_workspace_root(bufname, buf)
@@ -229,7 +229,7 @@ do
   })
 end
 
-local tbl_isarray = vim.tbl_isarray or vim.tbl_islist
+local tbl_isarray = vim.tbl_isarray
 
 local function encode_sorted_json(value, indent, depth)
   indent = indent or '  '
