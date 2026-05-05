@@ -1,11 +1,7 @@
-return {
-  "editorconfig/editorconfig-vim",
-  event = "VeryLazy",
-  config = function()
-    -- Enable editorconfig support
-    vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }
-    
-    -- Make sure editorconfig has priority
-    vim.g.EditorConfig_enable = 1
-  end,
-}
+-- Neovim 0.9+ has built-in EditorConfig support enabled by default via
+-- the runtime plugin at runtime/plugin/editorconfig.lua.
+-- The 'editorconfig/editorconfig-vim' plugin is no longer needed.
+--
+-- To disable the built-in for a specific buffer: vim.b.editorconfig = false
+-- To disable globally: vim.g.editorconfig = false
+return {}

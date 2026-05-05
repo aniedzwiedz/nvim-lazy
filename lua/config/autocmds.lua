@@ -37,6 +37,28 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.filetype = 'yaml.gitlab'
   end,
 })
+
+-- Azure DevOps / Pipelines YAML files
+-- Use a high-priority function pattern so it wins over the built-in .yaml extension match.
+-- vim.filetype.add plain patterns lose to extension matching (.yaml -> 'yaml' always wins),
+-- so we must use the {function, priority} form to override that.
+vim.filetype.add({
+  pattern = {
+    ['.*'] = {
+      priority = math.huge,
+      function(path, _bufnr)
+        -- Normalise to just the path string (may be relative or absolute)
+        local p = path or ''
+        if p:match('[/\\]%.azuredevops[/\\]') or p:match('^%.azuredevops[/\\]') then
+          return 'yaml.azure'
+        end
+        if p:match('azure%-pipelines?.*%.ya?ml$') then
+          return 'yaml.azure'
+        end
+      end,
+    },
+  },
+})
 -- Enable puppet
 vim.api.nvim_create_autocmd(
   { 'BufRead', 'BufNewFile' },
@@ -138,19 +160,18 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
+-- Fallback BufRead autocmd for azure YAML detection (catches cases where filetype.add
+-- may not fire, e.g. when neovim re-detects filetype after a plugin resets it).
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = {
-    '*azure-pipelines.yml',
-    '*azure-pipelines.yaml',
-    '*.azure/*.yml',
-    '*.azure/*.yaml',
-    '*.azuredevops/**/*.yml',
-    '*.azuredevops/**/*.yaml',
-    '*pipelines/*.yml',
-    '*pipelines/*.yaml',
-  },
-  callback = function()
-    vim.bo.filetype = 'yaml.azure'
+  pattern = { '*.yml', '*.yaml' },
+  callback = function(ev)
+    local path = vim.api.nvim_buf_get_name(ev.buf)
+    if path == '' then return end
+    if path:match('[/\\]%.azuredevops[/\\]') or path:match('^%.azuredevops[/\\]') then
+      vim.bo[ev.buf].filetype = 'yaml.azure'
+    elseif path:match('azure%-pipelines?.*%.ya?ml$') then
+      vim.bo[ev.buf].filetype = 'yaml.azure'
+    end
   end,
 })
 

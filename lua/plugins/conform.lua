@@ -60,7 +60,7 @@ return {
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
       hcl = { 'packer_fmt' },
-       ['yaml.azure'] = { 'prettier' },
+      ['yaml.azure'] = { 'yamlfmt' },
       yaml = { 'yamlfmt', 'prettier' },
       editorconfig = { 'trim_whitespace' },
       -- ruby = { formatter },

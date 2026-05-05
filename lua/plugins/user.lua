@@ -688,7 +688,7 @@ return {
     opts = function(_, opts)
       table.insert(opts.sections.lualine_x, 1, {
         function()
-          local clients = vim.lsp.get_active_clients { bufnr = 0 }
+          local clients = vim.lsp.get_clients { bufnr = 0 }
           local linters = {}
 
           -- Get active linters for current buffer
