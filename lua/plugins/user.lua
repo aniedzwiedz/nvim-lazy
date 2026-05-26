@@ -686,6 +686,20 @@ return {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
     opts = function(_, opts)
+      -- Override lualine_c to show full path without truncation
+      opts.sections.lualine_c = {
+        {
+          'filename',
+          path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path, 3 = absolute path with tilde
+          shorting_target = 0, -- 0 = disable shortening
+          symbols = {
+            modified = '[+]',
+            readonly = '[-]',
+            unnamed = '[No Name]',
+          },
+        }
+      }
+
       table.insert(opts.sections.lualine_x, 1, {
         function()
           local clients = vim.lsp.get_clients { bufnr = 0 }
