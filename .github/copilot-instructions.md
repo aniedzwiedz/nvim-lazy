@@ -5,7 +5,7 @@ This is a **LazyVim-based Neovim configuration** repository focused on developer
 ## Build & Development
 
 ### Dependencies
-- **Neovim** >= 0.9.0
+- **Neovim** >= 0.10.0 (v0.13.0+ recommended for latest native features)
 - **Node.js** >= 18.0.0 (for LSP servers and GitHub Copilot)
 - **Python** >= 3.8 (for Python LSP)
 - **ripgrep** (fast searching), **fd** (fast file finding)
@@ -63,6 +63,7 @@ This config uses **lazy.nvim** for plugin management with specs defined as Lua t
 2. **Formatting:** Auto-format disabled by default (`vim.g.autoformat = false`)
 3. **Completion Engine:** Set via `:LazyExtras` or `vim.g.lazyvim_cmp = 'auto'`
 4. **Root Detection:** LSP, `.git`/`lua` directories, then cwd (in `options.lua`)
+5. **Native Features:** Uses native Neovim 0.10+ features (commenting, snippets, inlay hints, editorconfig) - see `NATIVE_FEATURES.md`
 
 ### Plugin Categories
 - **AI:** Copilot, Copilot Chat, Sidekick (configured in user.lua)
@@ -134,6 +135,17 @@ Edit `lua/config/keymaps.lua` following existing patterns. Keybindings can also 
 :Copilot auth    # Authenticate with GitHub
 :Copilot status  # Check connection/subscription
 ```
+
+## Native Neovim Features
+
+This config leverages native Neovim 0.10+ features instead of plugins where possible:
+- **Commenting**: Native `gcc`, `gc{motion}`, `gbc` (no plugin needed)
+- **Snippets**: Native `vim.snippet` API with `friendly-snippets` definitions
+- **EditorConfig**: Built-in support (no plugin needed)
+- **Inlay Hints**: Native `vim.lsp.inlay_hint` API
+- **Disabled Plugins**: `ts-comments.nvim`, `mini.comment`, `indent-blankline.nvim`
+
+See `NATIVE_FEATURES.md` for complete details.
 
 ## Testing & Validation
 
