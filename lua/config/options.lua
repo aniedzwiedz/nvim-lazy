@@ -108,14 +108,29 @@ vim.opt.relativenumber = true
 -- Show line under cursor
 vim.opt.cursorline = true
 
--- Configure LSP diagnostics to show inline like VSCode
+-- Configure LSP diagnostics with modern VSCode-style virtual text
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '●', -- Could be '■', '▎', 'x', etc.
     spacing = 4,
-    source = 'if_many',
+    source = false,
+    prefix = '●',
+    format = function(diagnostic)
+      local max_width = 80
+      local message = diagnostic.message
+      if #message > max_width then
+        message = message:sub(1, max_width - 3) .. '...'
+      end
+      return message
+    end,
   },
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = ' ',
+      [vim.diagnostic.severity.WARN] = ' ',
+      [vim.diagnostic.severity.INFO] = ' ',
+      [vim.diagnostic.severity.HINT] = '󰌵 ',
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -126,6 +141,10 @@ vim.diagnostic.config({
     source = true,
     header = '',
     prefix = '',
+    suffix = '',
+    format = function(diagnostic)
+      return string.format('%s', diagnostic.message)
+    end,
   },
 })
 

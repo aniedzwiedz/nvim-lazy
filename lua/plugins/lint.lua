@@ -4,11 +4,18 @@ return {
   opts = {
     linters_by_ft = {
       -- Web development
-      javascript = { 'eslint_d' },
-      javascriptreact = { 'eslint_d' },
-      typescript = { 'eslint_d' },
-      typescriptreact = { 'eslint_d' },
-      svelte = { 'eslint_d' },
+      astro = { 'biomejs' },
+      css = { 'biomejs' },
+      scss = { 'biomejs' },
+      graphql = { 'biomejs' },
+      javascript = { 'biomejs' },
+      javascriptreact = { 'biomejs' },
+      json = { 'biomejs' },
+      jsonc = { 'biomejs' },
+      svelte = { 'biomejs' },
+      typescript = { 'biomejs' },
+      typescriptreact = { 'biomejs' },
+      vue = { 'biomejs' },
 
       -- Infrastructure and DevOps
       dockerfile = { 'hadolint' },
@@ -34,9 +41,6 @@ return {
       -- Shell
       fish = { 'fish' },
       zsh = { 'zsh' },
-
-      -- Data/Config files
-      json = { 'jsonlint' },
     },
     linters = {},
   },
