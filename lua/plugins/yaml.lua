@@ -91,6 +91,21 @@ return {
     },
   },
 
+  -- formatting support for yaml
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        yaml = { "yamlfmt", "prettier", stop_after_first = true },
+        ["yaml.azure"] = { "yamlfmt", "prettier", stop_after_first = true },
+        ["yaml.ansible"] = { "yamlfmt", "prettier", stop_after_first = true },
+        ["yaml.docker-compose"] = { "yamlfmt", "prettier", stop_after_first = true },
+        ["yaml.gitlab"] = { "yamlfmt", "prettier", stop_after_first = true },
+      },
+    },
+  },
+
   -- linting support for yaml
   {
     "mfussenegger/nvim-lint",

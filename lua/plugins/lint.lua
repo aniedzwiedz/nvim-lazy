@@ -3,7 +3,8 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     linters_by_ft = {
-      -- Web development
+      -- Web development: biome is fast and modern (replaces eslint)
+      -- https://biomejs.dev/
       astro = { 'biomejs' },
       css = { 'biomejs' },
       scss = { 'biomejs' },
@@ -17,30 +18,33 @@ return {
       typescriptreact = { 'biomejs' },
       vue = { 'biomejs' },
 
+      -- Python: ruff is much faster than pylint (written in Rust)
+      -- https://github.com/astral-sh/ruff
+      python = { 'ruff' },
+
       -- Infrastructure and DevOps
       dockerfile = { 'hadolint' },
-      terraform = { 'terraform_validate' },
-      tf = { 'terraform_validate' },
+      terraform = { 'terraform_validate', 'tflint' },
+      tf = { 'terraform_validate', 'tflint' },
       ansible = { 'ansible_lint' },
 
       -- Configuration and markup
       yaml = { 'yamllint' },
-      ['yaml.ansible'] = { 'yamllint' },
+      ['yaml.ansible'] = { 'ansible_lint' },
       ['yaml.gha'] = { 'actionlint' },
       markdown = { 'markdownlint-cli2' },
 
-      -- Programming languages
-      python = { 'pylint' },
+      -- Shell: shellcheck for all shell types
+      sh = { 'shellcheck' },
+      bash = { 'shellcheck' },
+      zsh = { 'zsh' },
+
+      -- Other languages
       groovy = { 'npm-groovy-lint' },
       puppet = { 'puppet-lint' },
-
-      -- Build systems
       cmake = { 'cmakelint' },
       make = { 'checkmake' },
-
-      -- Shell
       fish = { 'fish' },
-      zsh = { 'zsh' },
     },
     linters = {},
   },
@@ -66,9 +70,20 @@ return {
     end
 
     local lint_augroup = vim.api.nvim_create_augroup('lint_on_save', { clear = true })
+    
+    -- Lint on save
     vim.api.nvim_create_autocmd('BufWritePost', {
       group = lint_augroup,
       callback = lint_current_file,
+    })
+    
+    -- ADDED: Lint in insert mode (real-time linting)
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
+      group = lint_augroup,
+      callback = function()
+        -- Debounce to avoid too frequent linting
+        vim.defer_fn(lint_current_file, 100)
+      end,
     })
 
     vim.keymap.set('n', '<leader>l', lint_current_file, { desc = 'Trigger linting for current file' })

@@ -38,6 +38,12 @@ This configuration has been optimized to use native Neovim features instead of p
 - **File**: `lua/plugins/user.lua` has `indent-blankline.nvim` commented out
 - **Using**: `mini.indentscope` for current scope (not a duplicate - different feature)
 
+### 6. **Image Display** (Experimental in 0.13-dev)
+- **Status**: ⚠️ Experimental
+- **API**: `vim.ui.img` module for displaying images within Neovim
+- **Note**: This is an experimental feature in Neovim 0.13-dev
+- **Doc**: `:help vim.ui.img` (when available)
+
 ## Plugins That Are NOT Duplicates
 
 These plugins provide functionality beyond native features:
@@ -72,3 +78,43 @@ gc2j " Comment 2 lines down
 - Native Commenting: `:help commenting`
 - Native Snippets: `:help vim.snippet`
 - EditorConfig: `:help editorconfig`
+
+---
+
+## See Also
+
+- **[FORMATTER_LINTER_UPDATES.md](./FORMATTER_LINTER_UPDATES.md)** - Updated formatters and linters configuration (2026)
+
+---
+
+## 🐛 Bug Fixes for Neovim 0.13-dev
+
+### TextYankPost Error Fix
+
+**Problem:**
+LazyVim's `autocmds.lua` uses `vim.hl.hl_op()` for Neovim 0.13, but this API doesn't exist yet in 0.13-dev, causing errors when yanking text:
+```
+Error: attempt to call field 'hl_op' (a nil value)
+```
+
+**Solution:**
+Override the broken autocmd in `lua/config/autocmds.lua`:
+
+```lua
+-- FIX: Override LazyVim's broken TextYankPost for Neovim 0.13-dev
+pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_highlight_yank")
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("custom_highlight_yank", { clear = true }),
+  callback = function()
+    -- Use the stable API that works in both 0.10+ and 0.13-dev
+    vim.highlight.on_yank({ timeout = 200 })
+  end,
+})
+```
+
+**Status:** ✅ Fixed in `lua/config/autocmds.lua`
+
+---
+
+*Last updated: 2026-06-03*
