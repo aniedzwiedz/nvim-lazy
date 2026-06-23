@@ -82,6 +82,18 @@ return {
         command = 'ruff',
         args = { 'format', '--stdin-filename', '$FILENAME', '-' },
       },
+      -- RuboCop: auto-correct via stdin
+      ['rubocop'] = {
+        command = 'rubocop',
+        args = {
+          '--auto-correct',
+          '--format',
+          'quiet',
+          '--stderr',
+          '--stdin',
+          '$FILENAME',
+        },
+      },
     },
 
     formatters_by_ft = {
@@ -133,6 +145,7 @@ return {
       awk = { 'gawk' },
       eruby = { 'erb-format' },
       go = { 'goimports', 'gofumpt' },
+      ruby = { 'rubocop' },
       toml = { 'taplo' },
       xml = { 'xmllint' },
       zig = { 'zigfmt' },

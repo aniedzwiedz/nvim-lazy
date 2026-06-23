@@ -71,12 +71,12 @@ return {
 
           -- Formatters
           if #formatters > 0 then
-            table.insert(parts, 'Fmt: ' .. table.concat(formatters, ', '))
+            table.insert(parts, 'Formatter: ' .. table.concat(formatters, ', '))
           end
 
           -- Linters
           if #linters > 0 then
-            table.insert(parts, 'Lint: ' .. table.concat(linters, ', '))
+            table.insert(parts, 'Linter: ' .. table.concat(linters, ', '))
           end
 
           if #parts > 0 then
