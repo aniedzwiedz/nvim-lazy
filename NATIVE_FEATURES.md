@@ -89,32 +89,36 @@ gc2j " Comment 2 lines down
 
 ## 🐛 Bug Fixes for Neovim 0.13-dev
 
-### TextYankPost Error Fix
+### TextYankPost — historical note (RESOLVED)
 
-**Problem:**
-LazyVim's `autocmds.lua` uses `vim.hl.hl_op()` for Neovim 0.13, but this API doesn't exist yet in 0.13-dev, causing errors when yanking text:
+**Original problem (early 0.13-dev builds):**
+LazyVim's `autocmds.lua` called `vim.hl.hl_op()` for Neovim 0.13, but this API
+did not exist yet in very early 0.13-dev, causing errors when yanking text:
 ```
 Error: attempt to call field 'hl_op' (a nil value)
 ```
 
-**Solution:**
-Override the broken autocmd in `lua/config/autocmds.lua`:
+**Current status: ✅ No longer an issue.**
+- `vim.hl.hl_op()` now exists in current 0.13-dev builds (verified on
+  `v0.13.0-dev-3672`).
+- Upstream LazyVim's `lazyvim_highlight_yank` autocmd already handles both
+  paths: `vim.hl.hl_op()` on `nvim-0.13`, and `vim.hl.on_yank()` otherwise.
+- The previous custom override in `lua/config/autocmds.lua` was **removed**
+  because it deleted LazyVim's augroup and downgraded to the deprecated
+  `vim.highlight.on_yank`, losing operator-aware highlighting.
 
-```lua
--- FIX: Override LazyVim's broken TextYankPost for Neovim 0.13-dev
-pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_highlight_yank")
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("custom_highlight_yank", { clear = true }),
-  callback = function()
-    -- Use the stable API that works in both 0.10+ and 0.13-dev
-    vim.highlight.on_yank({ timeout = 200 })
-  end,
-})
-```
-
-**Status:** ✅ Fixed in `lua/config/autocmds.lua`
+No action required — the native LazyVim autocmd handles highlight-on-yank.
 
 ---
 
-*Last updated: 2026-06-03*
+## Remaining Non-Native Workarounds
+
+### LSP root_dir (`fix-lazyvim-root.lua`)
+- **Reason**: The native `vim.lsp.config` API allows `root_dir` to be a
+  function `fun(bufnr, on_dir)`. LazyVim's `norm`/root detector assumed a
+  string and crashed (`E5108`).
+- **Status**: ⚠️ Still needed. Remove once LazyVim handles the new API upstream.
+
+---
+
+*Last updated: 2026-07-21*

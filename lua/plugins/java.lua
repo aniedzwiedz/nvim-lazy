@@ -51,10 +51,23 @@ return {
           .. '/jdtls/'
           .. project_name
 
-        require('jdtls').start_or_attach(vim.tbl_deep_extend('force', {
+        -- Merge LazyVim's java extra opts first, then force our own
+        -- resolved (string) values on top. LazyVim's extra sets
+        -- `root_dir`/`project_name`/etc. as *functions*, which nvim-HEAD
+        -- passes straight to the process spawn as `cwd`, causing:
+        --   "bad argument #2 to 'spawn' (cwd option must be string)"
+        local config = vim.tbl_deep_extend('force', opts, {
           cmd = { 'jdtls', '-data', workspace_dir },
           root_dir = root_dir,
-        }, opts))
+        })
+
+        -- Drop any leftover function-valued fields the extra injected that
+        -- must not reach the LSP client / spawn options.
+        for _, key in ipairs({ 'project_name', 'jdtls_config_dir', 'jdtls_workspace_dir', 'full_cmd' }) do
+          config[key] = nil
+        end
+
+        require('jdtls').start_or_attach(config)
       end
 
       vim.api.nvim_create_autocmd('FileType', {

@@ -77,6 +77,23 @@ return {
         gh_pr = { layout = 'telescope' },
         files = { hidden = true },
         git_files = { hidden = true },
+        projects = {
+          -- Parent dirs that contain your projects. Snacks runs `fd` here
+          -- looking for `.git`/`package.json`/etc. up to `max_depth`.
+          dev = {
+            '~/a33',
+            '~/plt',
+            '~/det',
+            '~/des',
+            '~/lto',
+            '~/git',
+            '~/work_github',
+            '~/.config',
+            '~/.dotfile',
+          },
+          max_depth = 3,
+          recent = true,
+        },
       },
       layout = {
         preset = 'vertical',

@@ -7,19 +7,12 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- FIX: Override LazyVim's broken TextYankPost for Neovim 0.13-dev
--- LazyVim uses vim.hl.hl_op() which doesn't exist yet in 0.13-dev
--- Safely delete the LazyVim augroup if it exists
-pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_highlight_yank")
-
--- Create our own working version
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("custom_highlight_yank", { clear = true }),
-  callback = function()
-    -- Use the stable API that works in both 0.10+ and 0.13-dev
-    vim.highlight.on_yank({ timeout = 200 })
-  end,
-})
+-- NOTE: The previous TextYankPost override is no longer needed.
+-- It was added when `vim.hl.hl_op()` was missing in early 0.13-dev builds.
+-- That API now exists, and upstream LazyVim already handles both code paths
+-- (vim.hl.hl_op() on 0.13+, vim.hl.on_yank() otherwise). The old override
+-- actually downgraded to the deprecated `vim.highlight.on_yank`, so it was
+-- removed. Let LazyVim's native `lazyvim_highlight_yank` autocmd handle it.
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('custom_markdown', { clear = true }),
