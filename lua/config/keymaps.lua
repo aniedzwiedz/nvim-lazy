@@ -4,13 +4,6 @@
 
 local map = require('lazyvim.util').safe_keymap_set
 
--- Helper function
-local function copy_to_clipboards(str)
-  vim.fn.setreg('"', str)
-  vim.fn.setreg('+', str)
-  vim.notify('→ ' .. str)
-end
-
 -- ============================================================================
 -- CLIPBOARD
 -- ============================================================================
@@ -26,20 +19,58 @@ map('n', '<leader>fC', function()
 end, { desc = 'LazyVim config' })
 
 map('n', '<leader>fP', function()
-  Snacks.picker.projects({ limit = 100 })
+  Snacks.picker.projects { limit = 100 }
 end, { desc = 'Find [P]rojects' })
 
-map('n', '<leader>fya', function()
-  copy_to_clipboards(vim.fn.expand '%:p')
-end, { desc = 'Copy absolute path to clipboard' })
-
-map('n', '<leader>fyr', function()
-  copy_to_clipboards(vim.fn.expand '%:.')
-end, { desc = 'Copy relative path to clipboard' })
-
-map('n', '<leader>fyn', function()
-  copy_to_clipboards(vim.fn.expand '%:t')
-end, { desc = 'Copy filename to clipboard' })
+-- copy path (Spacemacs-style <leader>fy)
+-- lowercase = relative to project root, UPPERCASE = absolute
+local copy_path = require 'util.copy_path'
+map('n', '<leader>fyy', copy_path.copy_relative, { desc = 'Path (relative)' })
+map('n', '<leader>fyY', copy_path.copy_absolute, { desc = 'Path (absolute)' })
+map(
+  'n',
+  '<leader>fyl',
+  copy_path.copy_relative_with_line,
+  { desc = 'Path (relative, :line)' }
+)
+map(
+  'n',
+  '<leader>fyL',
+  copy_path.copy_absolute_with_line,
+  { desc = 'Path (absolute, :line)' }
+)
+map(
+  'n',
+  '<leader>fyc',
+  copy_path.copy_relative_with_line_column,
+  { desc = 'Path (relative, :line:col)' }
+)
+map(
+  'n',
+  '<leader>fyC',
+  copy_path.copy_absolute_with_line_column,
+  { desc = 'Path (absolute, :line:col)' }
+)
+map(
+  'n',
+  '<leader>fyd',
+  copy_path.copy_relative_directory,
+  { desc = 'Directory (relative)' }
+)
+map(
+  'n',
+  '<leader>fyD',
+  copy_path.copy_absolute_directory,
+  { desc = 'Directory (absolute)' }
+)
+map('n', '<leader>fyP', copy_path.copy_project, { desc = 'Project Root' })
+map('n', '<leader>fyn', copy_path.copy_filename, { desc = 'Filename' })
+map(
+  'n',
+  '<leader>fyN',
+  copy_path.copy_filename_no_ext,
+  { desc = 'Filename (no ext)' }
+)
 
 -- ============================================================================
 -- SEARCH & PICKERS

@@ -30,6 +30,11 @@ return {
       init_options = {
         bundles = bundles,
       },
+      settings = {
+        java = {
+          signatureHelp = { enabled = true },
+        },
+      },
     },
     config = function(_, opts)
       local function start_jdtls()
